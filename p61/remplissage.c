@@ -5,11 +5,6 @@ void remplissage(l_elem *l, l_tabhach tabhach[5][100]){
     for(i=0; i<5; i++, dist++, a_dist++){
 	remplissageNbre(tabhach[i], dist, a_dist);
     }
-    /*remplissageNbre(tabhach[0], 2, 1);
-    remplissageNbre(tabhach[1], 3, 2);
-    remplissageNbre(tabhach[2], 4, 3);
-    remplissageNbre(tabhach[3], 5, 4);
-    remplissageNbre(tabhach[4], 6, 5);*/
     remplissageListeNbreOctagonal(l);
 }
 

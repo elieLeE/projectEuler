@@ -11,7 +11,7 @@ EXE: prog
 
 all: clean prog
 
-prog: main.o nbre.o tab.o liste.o tabhach.o remplissage.o
+prog: main.o nbre.o liste.o tabhach.o remplissage.o
 	gcc -o $@ $^ -lm
 
 %.o: %.c
