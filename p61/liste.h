@@ -12,5 +12,6 @@ bool isEmpty(c_elem l);
 void ajoutElem(l_elem *l, char right, char left);
 c_elem creerListe();
 void visuListe(c_elem l, char *name);
+void liberationListe(l_elem *l);
 
 #endif

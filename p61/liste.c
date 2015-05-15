@@ -1,5 +1,14 @@
 #include "liste.h"
 
+void liberationListe(l_elem *l){
+    l_elem p = NULL;
+    while(*l!=NULL){
+	p = (*l);
+	*l = (*l)->suiv;
+	free(p);
+    }
+}
+
 bool isEmpty(c_elem l){
     return l==NULL;
 }
