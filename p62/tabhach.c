@@ -1,8 +1,8 @@
 #include "tabhach.h"
 
-void initTabHach(l_tabhach tab[100]){
+void initTabHach(l_tabhach tab[LIMITE_TAB]){
     char i = 0;
-    for(i=0; i<100; i++){
+    for(i=0; i<LIMITE_TAB; i++){
 	tab[i] = NULL;
     }
 }
@@ -11,20 +11,27 @@ bool tabHachEmpty(l_tabhach t){
     return t == NULL;
 }
 
-void visuTabHach(l_tabhach tab[100], char *name){
+void visuTabHach(l_tabhach tab[LIMITE_TAB]){
     char i = 0;
-    printf("%s\n", name);
-    for(i=0; i<100; i++){
+    for(i=0; i<LIMITE_TAB; i++){
+	printf("tab[%d] => ", i);
 	visuL(tab[i]);
+	printf("\n");
     }
     printf("\n");
 }
 
 void visuL(l_tabhach l){
     l_tabhach p = l;
-    while(p!=NULL){
-	visuListePerm(p->perm);
-	printf("\n");
+    if(p==NULL){
+	printf("vide");
+    }
+    else{
+	while(p!=NULL){
+	    printf("\n\t");
+	    visuListePerm(p->perm);
+	    p = p->suiv;
+	}
     }
 }
 
@@ -39,7 +46,6 @@ bool permutationOK(char *tab1, char *tab2){
 }
 
 l_tabhach findElem(l_tabhach l, char *tab){
-    printf("dans findElem\n");
     char i = 0;
     l_tabhach p = l;
     while(p!=NULL){
@@ -53,26 +59,27 @@ l_tabhach findElem(l_tabhach l, char *tab){
     return NULL;
 }
 
-void ajoutElemTabHach(l_tabhach *l, long nbre, char* tab){
-    printf("dans ajoutElemTabHach\n");
+l_tabhach ajoutElemTabHach(l_tabhach *l, long nbre, char* tab){
     l_tabhach p = findElem(*l, tab);
-    printf("dans ajoutElemTabHach 2\n");
     if(p==NULL){
-	printf("dans le if\n");
 	l_tabhach nouv = (l_tabhach )calloc(1, sizeof(struct l_tabhach));
 	nouv->tab = tab;
-	nouv->perm = NULL;
+	nouv->nbre_perm = 1;
+	ajoutElem(&(nouv->perm), nbre);
 	if(tabHachEmpty(*l)){
 	    nouv->suiv = NULL;
 	}
 	else{
 	    nouv->suiv = *l;
 	}
+	*l = nouv;
+	return *l;
     }
     else{
-	printf("dans le else\n");
+	(p->nbre_perm)++;
 	free(tab);
 	ajoutElem(&(p->perm), nbre);
-    }
+	return p;
+    } 
 }
 

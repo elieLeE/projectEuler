@@ -28,3 +28,16 @@ void visuListePerm(l_perm l){
     }
 }
 
+long searchMin(l_perm l){
+    l_perm p =l->suiv;
+    long min = l->nbre;
+    while(p!=NULL){
+	if(p->nbre < min){
+	    min = p->nbre;
+	}
+	p = p->suiv;
+    }
+    return min;
+}
+
+

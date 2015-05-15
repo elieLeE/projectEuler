@@ -10,5 +10,6 @@ bool isEmpty(l_perm l);
 void ajoutElem(l_perm *l, long nbre);
 l_perm creerListe();
 void visuListePerm(l_perm l);
+long searchMin(l_perm l);
 
 #endif
