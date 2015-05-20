@@ -1,6 +1,6 @@
 #include "nbre.h"
 
-bool nbrePrime(int nbre){
+bool isPrime(int nbre){
     int i = 0;
     for(i=3; i*i<=nbre; i = i+2){
 	if(nbre%i == 0){
@@ -32,7 +32,7 @@ bool nbrePrime(int nbre){
 	    produit = tab_phi[indice_div_debut];
 	    if(tab[debut] != result_div_debut){
 		if(!(result_div_debut%2) == 0 || result_div_debut == 2){
-		    if(nbrePrime(result_div_debut)){	//A changer par une recherche dichotomique dans le tableau de nbre permier
+		    if(isPrime(result_div_debut)){	//A changer par une recherche dichotomique dans le tableau de nbre permier
 			produit *= (1.0*result_div_debut-1)/(result_div_debut);
 			//printf("%d premier\n", result_div_debut);
 		    }
@@ -73,7 +73,7 @@ void remplissageTabPrime(int tab[], int limite, int taille_tab){
     int i = 0, j = 1;
     tab[0] = 2;
     for(i=3; i<=limite && j<taille_tab; i+=2){
-	if(nbrePrime(i)){
+	if(isPrime(i)){
 	    tab[j] = i;
 	    j++;
 	}
@@ -83,7 +83,7 @@ void remplissageTabPrime(int tab[], int limite, int taille_tab){
 int nbreNbrePrime(int limite){
     int i =0, compt = 1;
     for(i=3; i<=limite; i+=2){
-	if(nbrePrime(i)){
+	if(isPrime(i)){
 	    compt++;
 	}
     }
@@ -99,7 +99,7 @@ void aff_tab(double tab[], int taille_tab){
 }
 
 
-bool nbrePrimeTab(int n, int generateur, int tab[]){
+bool isPrimeTab(int n, int generateur, int tab[]){
     int i = 0;
     for(i=0; tab[i]<n; i++){
 	if(i!=generateur){
@@ -121,7 +121,7 @@ int phi2(int limite, int mul, int tab_prime[]){
 	compt_tmp = 1;
 	deja_fait = false;
 	printf("pour %d (1 pris d'office)\n", i);
-	if(!nbrePrimeTab(i, mul, tab_prime)){
+	if(!isPrimeTab(i, mul, tab_prime)){
 	   for(j=j_s; tab_prime[j]*mul<limite;j++){
 	       if((tab_prime[j]!=mul && i%tab_prime[j]==0)){
 		   printf("j : %d => on ne prends pas\n", tab_prime[j]);

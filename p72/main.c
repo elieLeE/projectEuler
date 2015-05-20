@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "nbre.h"
+#include "liste.h"
 
 #define LIMITE_Y (int)8
 #define TAILLE_TAB nbreNbrePrime(LIMITE_Y)
@@ -25,23 +26,22 @@ int main(){
     int compt_aff = 0;
     int phi_y;
     int i = 0;
-    int *tab_prime = NULL;
-    tab_prime = (int *)calloc(nbreNbrePrime(LIMITE_Y), sizeof(int));
+    liste l;
+    remplissageListe(&l);
+    visuListe(l);
+    liste p = l;
 
-    remplissageTabPrime(tab_prime, LIMITE_Y, TAILLE_TAB);
-    //aff_tab(tab_prime, TAILLE_TAB);
-
-    while(i<TAILLE_TAB){
-	printf("mul-tab_prime[%d] : %d\n", i, tab_prime[i]);
-	phi_y = phi2(LIMITE_Y, tab_prime[i], tab_prime);
+    while(p!=NULL){
+	printf("mul-p->nbre : %d\n", p->nbre);
+	//phi_y = phi2(LIMITE_Y, p->nbre, tab_prime);
 	compt += phi_y;
-	printf("mul-tab_prime[i] : %d, phi : %d, compt : %d, i : %d\n", tab_prime[i], phi_y, compt, i);
+	printf("mul-p->nbre : %d, phi : %d, compt : %d, i : %d\n", p->nbre, phi_y, compt, i);
 	if(compt_aff == 1000){
 	    printf("y : %d, phi : %d, compt : %d\n", y, phi_y, compt);
 	    compt_aff = 0;
 	}
 	y++;
-	i++;
+	p = p->suiv;
 	compt_aff++;
     }
 

@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-bool nbrePrime(int nbre);
+bool isPrime(int nbre);
 int nbreNbrePrime(int limite);
 int phi(int nbre, int tab[], int);
 void remplissageTabPrime(int tab[], int, int);
