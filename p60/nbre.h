@@ -5,7 +5,6 @@
 #include <stdbool.h>
 #include "donnees.h"
 
-int nextNbrePrime(int prime);
 bool isPrime(int nbre);
 char nbreDigit(short nbre);
 bool isPerm(element e1, element e2);

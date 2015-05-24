@@ -1,13 +1,5 @@
 #include "nbre.h"
 
-int nextNbrePrime(int prime){
-    int i = prime +2;
-    while(!isPrime(i)){
-	i = i +2;
-    }
-    return i;
-}
-
 bool isPrime(int nbre){
     int i = 0;
     for(i=3; i*i<=nbre; i = i+2){

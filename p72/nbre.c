@@ -111,6 +111,37 @@ bool isPrimeTab(int n, int generateur, int tab[]){
     return true;
 }
 
+liste searchDeb(int n, liste l){
+    liste p = l;
+    while(p!=NULL && p->nbre<=n && n%(p->nbre)!=0){
+	p=p->suiv;
+    }
+    return p;
+}
+
+long phiListe(int n, int maxPrime, liste l){
+    liste p = searchDeb(n, l);
+    int deb = p->nbre;
+    long end = n/deb;
+    long num = n*(deb-1);
+    int denom = deb;
+
+    p = p->suiv;
+    while(p!=NULL){
+	if(p->nbre>end){
+	    break;
+	}
+	else{
+	    if(n%(p->nbre)==0){
+		num *= p->nbre-1;
+		denom *= p->nbre;
+	    }
+	}
+	p = p->suiv;
+    }
+    return num/denom;
+}
+
 int phi2(int limite, int mul, int tab_prime[]){
     int i=mul, j = 0, j_s=0;
     int compt = mul-1;
