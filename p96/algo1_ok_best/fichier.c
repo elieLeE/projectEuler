@@ -1,0 +1,32 @@
+#include "fichier.h"
+
+FILE* ouvFichier(char *name, char *mode){
+    FILE* fichier = fopen(name, mode);
+    if(fichier == NULL){
+	printf("impossible d'ouvrir %s\n", name);
+	exit(1);
+    }
+    return fichier;
+}
+
+void fermerFichier(FILE* fichier){
+    if(fichier == NULL){
+	printf("pointeur null !!\n");
+    }
+    fclose(fichier);
+}
+
+void lectureGrille(FILE* fichier, char **grille){ 
+    char ligne[20];
+    char c = 0;
+    char i = 0, j = 0;
+    fgets(ligne, 20, fichier);
+    for(i=0; i<NBRE_LIGNE; i++){
+	j = 0;
+	while((grille[i][j] = fgetc(fichier) - 48) != -38 && grille[i][j] != -49){
+	    j++;
+	}
+    }
+}
+
+
