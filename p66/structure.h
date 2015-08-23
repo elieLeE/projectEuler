@@ -5,29 +5,29 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <limits.h>
 
 typedef struct alpha alpha;
 typedef struct search_sol search_sol;
 
 struct alpha{
-    long a, b, n;
+    long long a, b, n;
 };
 
 struct search_sol{
-    long norme, m;
+    long long norme, m;
     struct alpha alp;
 };
 
-long normeAlpha(alpha a);
-long alphaCarreSur2(alpha a);
-long alphaCubeSur8(alpha a);
+long long normeAlpha(alpha a);
+void alphaCarreSur2(alpha *a);
+void alphaCubeSur8(alpha *a);
+void alphaSixSur64(alpha *a);
 char* visuAlpha(alpha a);
-long alphaSixSur64(alpha a);
-alpha nextAlpha(struct search_sol sol, long m);
-long searchM(struct search_sol sol);
-long searchSol(long n);
-long searchSolRec(struct search_sol s);
+alpha nextAlpha(struct search_sol sol, long long m);
+long long searchM(struct search_sol sol);
+alpha searchSol(long long n);
+alpha searchSolRec(struct search_sol s);
 
-long searchSol(long n);
 
 #endif
