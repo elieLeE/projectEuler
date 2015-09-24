@@ -16,11 +16,16 @@ int main(){
     for(i=2; i<=MAX; i++){
 	if(i!=n){
 	    res = searchSol(i);
-	    if(res.a > max){
-		max = res.a;
-		d = i;
+	    if(res.a < 0){
+		printf("i : %d => ressultat NULL\n", i);
 	    }
-	    printf("i : %d, => res : %s, norme(res) : %lld\n", i, visuAlpha(res), normeAlpha(res));
+	    else{
+		if(res.a > max){
+		    max = res.a;
+		    d = i;
+		}
+		//printf("i : %d, => res : %s, norme(res) : %lld\n", i, visuAlpha(res), normeAlpha(res));
+	    }
 	}
 	else{
 	    n = n+ajoutN;
@@ -31,6 +36,11 @@ int main(){
     printf("max : %lld, d : %d\n", max, d);
 
     printf("LL_max : %lld\n", LLONG_MAX);
+
+    mpz_t m;
+    mpz_init(m);
+    mpz_set_ui(m, 10);
+    gmp_printf("m : %Zd\n", m);
 
     alpha a;
     a.a = 39;

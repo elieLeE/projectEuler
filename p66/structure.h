@@ -6,27 +6,28 @@
 #include <string.h>
 #include <math.h>
 #include <limits.h>
+#include <gmp.h>
 
 typedef struct alpha alpha;
 typedef struct search_sol search_sol;
 
 struct alpha{
-    long long a, b, n;
+    mpz_t a, b, n;
 };
 
 struct search_sol{
-    long long norme, m;
+    mpz_t norme, m;
     struct alpha alp;
 };
 
-long long normeAlpha(alpha a);
+mpz_t normeAlpha(alpha a);
 void alphaCarreSur2(alpha *a);
 void alphaCubeSur8(alpha *a);
 void alphaSixSur64(alpha *a);
 char* visuAlpha(alpha a);
-alpha nextAlpha(struct search_sol sol, long long m);
-long long searchM(struct search_sol sol);
-alpha searchSol(long long n);
+alpha nextAlpha(struct search_sol sol, mpz_t m);
+mpz_t searchM(struct search_sol sol);
+alpha searchSol(int  n);
 alpha searchSolRec(struct search_sol s);
 
 

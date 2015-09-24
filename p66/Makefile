@@ -12,7 +12,7 @@ EXE: prog
 all: clean prog
 
 prog: main.o structure.o
-	gcc -o $@ $^ -lm
+	gcc -o $@ $^ -lm -lgmp
 
 %.o: %.c
 	gcc -o $@ -c $<
