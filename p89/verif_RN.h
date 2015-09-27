@@ -6,5 +6,6 @@
 #include <stdio.h>
 
 unsigned int nbreCarSaved(char *romanNumeral);
+bool doubleSaved(char, char);
 
 #endif

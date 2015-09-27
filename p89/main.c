@@ -11,27 +11,12 @@ int main(){
     char ligne[20];
     fichier = ouvFichier("p089_roman.txt", "r");
 
-    strcpy(ligne, "MMMDLXVIIII");
-    tmp = nbreCarSaved(ligne);
-    printf("ligne : %s => saved : %d\n", ligne, tmp);
-
-    //return 0;
-
     while(nextLigne(fichier, ligne)){
-	ligne[strlen(ligne)-1] = '\0';
+	if(ligne[strlen(ligne)-1] == '\n'){
+	    ligne[strlen(ligne)-1] = '\0';
+	}
 	tmp = nbreCarSaved(ligne);
 	compt += tmp;
-	printf("%s => saved : %d, compt : %d\n", ligne, tmp, compt);
-	/*if(isMinimal(ligne)){
-	    ligne[strlen(ligne)-1] = '\0';
-	    compt++;
-	    printf("%s minimal\n", ligne);
-	}
-	else{
-	    ligne[strlen(ligne)-1] = '\0';
-	    printf("%s NON minimal\n", ligne);
-	}*/
-	//break;
     }
 
     printf("compt : %d\n", compt);
