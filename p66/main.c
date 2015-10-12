@@ -37,10 +37,8 @@ int main(){
 
     printf("LL_max : %lld\n", LLONG_MAX);
 
-    printf("ici\n");
     mpz_t *f = calloc(1, sizeof(mpz_t));
     mpz_init(*f);
-    printf("ici2\n");
 
     mpz_t m;
     mpz_init(m);
@@ -57,10 +55,8 @@ int main(){
     /*alphaSixSur64(&a);
     printf("a^6/64 : %s\n", visuAlpha(a));*/
 
-    printf("main 1\n");
     //printf("searchSol(61) : %s\n", visuAlpha(searchSol(61)));
     visuAlpha(searchSol(61));
-    printf("main 2\n");
     /*printf("norme(searchSol(61)) : %lld\n", normeAlpha(searchSol(61)));*/
     /*printf("searchSol(103) : %s\n", visuAlpha(searchSol(103).alp));
     printf("searchSol(58) : %s\n", visuAlpha(searchSol(58).alp));*/

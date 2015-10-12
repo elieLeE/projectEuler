@@ -21,7 +21,7 @@ struct search_sol{
     struct alpha alp;
 };
 
-mpz_t* normeAlpha(alpha a);
+void normeAlpha(alpha *a);
 void alphaCarreSur2(alpha *a);
 void alphaCubeSur8(alpha *a);
 void alphaSixSur64(alpha *a);
