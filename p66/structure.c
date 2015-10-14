@@ -1,60 +1,66 @@
 #include "structure.h"
 
-void testDepassement(long long n){
-    if(n > LLONG_MAX){
-	pritnf("on depasse\n");
-	exit(0);
-    }
+mpz_t* normeAlpha(alpha a){
+    mpz_t n1, n2, *m1;
+    m1 = calloc(1, sizeof(mpz_t));
+    mpz_init(*m1);
+    mpz_init(n1);
+    mpz_mul(n1, a.a, a.a);
+    mpz_init(n2);
+    mpz_mul(n2, a.n, a.b);
+    mpz_mul(n2, n2, a.b);
+    mpz_sub(*m1, n1, n2);
+
+    return m1;
 }
 
-void normeAlpha(alpha *a){
-    //printf("norme => a.a*a.a - a.n*a.b*a.b = %lld*%lld - %lld*%lld*%lld = %lld\n", a.a, a.a, a.n, a.b, a.b, (a.a*a.a - a.n*a.b*a.b));
-    mpz_t n1, n2, *m1;
-    //m1 = calloc(1, sizeof(mpz_t));
-    mpz_init(n1);
-    mpz_mul(n1, a->a, a->a);
-    mpz_init(n2);
-    mpz_mul(n2, a->n, a->b);
-    mpz_mul(n2, n2, a->b);
-    mpz_sub(n1, n1, n2);
-    mpz_set(a->n, n1);
-    //return m1;
-    //testDepassement(n);
+void alphaMul(alpha *a1, alpha a2){
+    mpz_t m1, m2, x;
+    mpz_init(m1);
+    mpz_init(m2);
+    mpz_init_set(x, a1->a);
+
+    mpz_mul(m1, a1->a, a2.a);
+    mpz_mul(m2, a1->b, a2.b);
+    mpz_mul(m2, m2, a1->n);
+    mpz_add(a1->a, m1, m2);
+
+    mpz_clear(m1);
+    mpz_clear(m2);
+    mpz_mul(m1, x, a2.b);
+    mpz_mul(m2, a1->b, a2.a);
+    mpz_add(a1->b, m1, m2);
 }
 
 void alphaCarre(alpha *a){
     mpz_t x, n1, n2;
-    mpz_init_set(x, a->a);
+
+    //calcul de a->a
     mpz_init(n1);
     mpz_mul(n1, a->a, a->a);
     mpz_init(n2);
     mpz_mul(n2, a->b, a->b);
     mpz_mul(n2, n2, a->n);
     mpz_add(n1, n1, n2);
+
+
+    //calcul de a->b
+    mpz_mul(a->b, a->a, a->b);
     mpz_set(a->a, n1);
-    mpz_mul(a->b, x, x);
 }
 
 void alphaCarreSur2(alpha *a){
     alphaCarre(a);
-    mpz_sub_ui(a->a, a->a, 2);
-    mpz_sub_ui(a->b, a->b, 2);
-    /*a->a = a->a/2;
-      a->b = a->b/2;*/
-    /*testDepassement(a->a);
-      testDepassement(a->b);
-    //alpha newA;
-    /*long x = a->a;
-    a->a = (a->a*a->a + a->b*a->b*a->n)/2;
-    a->b = x*a->b;*/
-    //return (a.a*a.a + a.b*a.b*a.n)/2;
-    //newA.b = a.a*a.b;
-    //newA.n = a.n;
+    mpz_cdiv_q_ui(a->a, a->a, 2);
+    //on ne div a->b pas par 2 car on ne l'a pas multiplié par
+    //2 dans alphaCarre ((a+b)² => a² + b² + 2ab)
 }
 
 void alphaCubeSur8(alpha *a){
     mpz_t x, n1, n2;
     mpz_init_set(x, a->a);
+
+    //calcul de a->a
     mpz_init(n1);
     mpz_init(n2);
     mpz_mul(n1, a->a, a->a);
@@ -66,8 +72,11 @@ void alphaCubeSur8(alpha *a){
     mpz_div_ui(n1, n1, 8);
     mpz_set(a->a, n1);
 
+    //calcul de a->b
     mpz_clear(n1);
     mpz_clear(n2);
+    mpz_init(n1);
+    mpz_init(n2);
     mpz_mul(n1, x, x);
     mpz_mul_ui(n1, n1, 3);
     mpz_mul(n2, a->b, a->b);
@@ -75,76 +84,13 @@ void alphaCubeSur8(alpha *a){
     mpz_add(n1, n1, n2);
     mpz_mul(n1, n1, a->b);
     mpz_div_ui(n1, n1, 8);
-    /*a->a = a->a*(a->a*a->a + 3*a->b*a->b*a->n)/8;
-      a->b = a->b*(3*x*x + a->b*a->b*a->n)/8;*/
-    //return (a.a*a.a*a.a + 3*a.a*a.b*a.b*a.n)/8;
-    //newA.b = (3*a.a*a.a*a.b+a.b*a.b*a.b*a.n)/8;
-    //newA.n = a.n;
+    mpz_set(a->b, n1);
 }
 
 void alphaSixSur64(alpha *a){
-    mpz_t a2, a4, a6, b2, b4, b6, n2, x;
-    mpz_init(a2);
-    mpz_init(a4);
-    mpz_init(a6);
-    mpz_init(b2);
-    mpz_init(b4);
-    mpz_init(b6);
-    mpz_init(n2);
-    mpz_init_set(x, a->a);
-
-    mpz_mul(a2, a->a, a->a);
-    mpz_mul(a4, a2, a2);
-    mpz_mul(a6, a4, a2);
-    mpz_mul(b2, a->b, a->b);
-    mpz_mul(b4, b2, b2);
-    mpz_mul(n2, a->n, a->n);
-
-    mpz_t m1, m2, m3;
-    mpz_init(m1);
-    mpz_init(m2);
-    mpz_init(m3);
-    mpz_mul(m1, a4, b2);
-    mpz_mul(m1, m1, a->n);
-    mpz_mul_ui(m1, m1, 15);
-    mpz_add(m1, m1, a6);
-    mpz_mul(m2, a2, b4);
-    mpz_mul(m2, m2, n2);
-    mpz_mul_ui(m2, m2, 15);
-    mpz_add(m1, m1, m2);
-    mpz_clear(m2);
-    mpz_mul(m2, n2, a->n);
-    mpz_mul(m2, m2, b6);
-    mpz_add(m1, m1, m2);
-    mpz_div_ui(m1, m1, 64);
-    mpz_set(a->a, m1);
-
-    mpz_clear(m1);
-    mpz_clear(m2);
-    mpz_mul(m1, b2, a->n);
-    mpz_mul_ui(m1, m1, 3);
-    mpz_add(m1, m1, a2);
-    mpz_mul(m2, b2, a->n);
-    mpz_mul_ui(m3, a2, 3);
-    mpz_add(m2, m2, m3);
-    mpz_mul(m1, m1, m2);
-    mpz_mul(m1, m1, x);
-    mpz_mul(m1, m1, a->b);
-    mpz_mul_ui(m1, m1, 2);
-    mpz_div_ui(m1, m1, 64);
-    mpz_set(a->b, m1);
-
-    /*long long a2 = a->a*a->a;
-      long long a4 = a2*a2;
-      long long a6 = a4*a2;
-      long long b2 = a->b*a->b;
-      long long b4 = b2*b2;
-      long long b6 = b4*b2;
-      long long n2 = a->n*a->n;
-      long long x = a->a;
-      a->a = (a6 + 15*a4*b2*a->n + 15*a2*b4*n2 + n2*a->n*b6)/64;
-      a->b = 2*x*a->b*(a2 + 3*b2*a->n)*(3*a2 + b2*a->n)/64;*/
-    //return (a6 + 15*a4*b2*a.n + 15*a2*b4*n2 + n2*a.n*b6)/64;
+    alphaCubeSur8(a);
+    alphaCarre(a);
+    mpz_mul_ui(a->b, a->b, 2);
 }
 
 char* visuAlpha(alpha a){
@@ -175,10 +121,6 @@ alpha nextAlpha(struct search_sol sol, mpz_t m){
 
     mpz_init_set(newA.n, sol.alp.n);
 
-    /*newA.a = (sol.alp.a * m + sol.alp.b * sol.alp.n)/abs(sol.norme);
-      newA.b = (sol.alp.a + m * sol.alp.b)/abs(sol.norme);
-      newA.n = sol.alp.n;*/
-
     return newA;
 }
 
@@ -193,11 +135,7 @@ mpz_t* searchFirstM(int n){
     mpz_init(m5);
     mpz_init_set_ui(mpzN, n);
     mpz_root(*m1, mpzN, 2);
-    //mpz_sqrt(*m1, mpzN);
-    //gmp_floor(*m1, *m1);
-    //*m1 = gmp_root(*m1, 1);
     mpz_add_ui(*m2, *m1, 1);
-    gmp_printf("m1 : %Zd, m2 : %Zd\n", *m1, *m2);
 
     mpz_mul(m3, *m1, *m1);
     mpz_set_ui(m5, n);
@@ -206,7 +144,6 @@ mpz_t* searchFirstM(int n){
     mpz_mul(m4, *m2, *m2);
     mpz_sub_ui(m4, m4, n);
 
-    gmp_printf("m1 : %Zd, m2 : %Zd, m3 : %Zd, m4 : %Zd\n", *m1, *m2, m3, m4);
     if(mpz_cmp(m3, m4) < 0){
 	free(m2);
 	return m1;
@@ -215,20 +152,9 @@ mpz_t* searchFirstM(int n){
 	free(m1);
 	return m2;
     }
-    /*long long m1 = floor(sqrt(n));
-      long long m2 = m1+1;*/
-    /*printf("n : %lld, sqrt(n) : %lld, m1 : %lld, m2 : %lld\n", n, sqrt(n), m1, m2);
-      printf("(n - m1*m1) : %lld, (m2*m2 - n) : %lld\n", (n-m1*m1), (m2*m2 - n));*/
-    /*if((n - m1*m1) < (m2*m2 - n)){
-      return m1;
-      }
-      else{
-      return m2;
-      }*/
 }
 
 mpz_t* searchM(struct search_sol sol){
-    //printf("sol.m : %lld, sol.norme : %lld, sol.alp.n : %lld\n", sol.m, sol.norme, sol.alp.n);
     mpz_t *m;
     m = calloc(1, sizeof(mpz_t));
     mpz_t res1, res2, addM, zero, inter;
@@ -240,12 +166,6 @@ mpz_t* searchM(struct search_sol sol){
     mpz_init_set(addM, sol.norme);
     mpz_abs(addM, addM);
     mpz_sub(*m, res1, sol.m);
-
-    /*long long m = -sol.m, res1 = 0, res2 = 0;
-      long long addM = abs(sol.norme);*/
-    /*if(sol.norme == 0){
-      return 0;
-      }*/
 
     while(mpz_cmp(*m, zero)<0){
 	mpz_add(*m, *m, addM);
@@ -285,16 +205,6 @@ alpha searchSol(int n){
     mpz_sub(sol.norme, sol.norme, sol.alp.n);
 
 
-    /*sol.alp.a = 1;
-      sol.alp.b = 1;
-      sol.alp.n = n;
-      sol.norme = 1;
-      sol.m = 1;
-
-      sol.m = searchFirstM(n);
-      sol.alp.a = sol.m;
-      sol.norme = (sol.alp.a * sol.alp.a) - sol.alp.n;*/
-
     return searchSolRec(sol);
 }
 
@@ -307,6 +217,7 @@ alpha searchSolRec(struct search_sol sol){
     mpz_init(newSol.alp.a);
     mpz_init(newSol.alp.b);
     mpz_init(newSol.alp.n);
+    mpz_set(newSol.alp.n, sol.alp.n);
     mpz_init(newSol.norme);
     mpz_init(newSol.m);
 
@@ -319,14 +230,7 @@ alpha searchSolRec(struct search_sol sol){
 	return newSol.alp;
     }
 
-    /*if(sol.norme == 0){
-      newSol.alp.a = -1;
-      newSol.alp.b = -1;
-      newSol.alp.n = sol.alp.n;
-      newSol.norme = 0;
-      newSol.m = sol.m;
-      return newSol.alp;
-      }*/
+    bool signNorme = mpz_cmp_ui(sol.norme, 0)>0;
     mpz_abs(sol.norme, sol.norme);
     if(mpz_cmp_ui(sol.norme, 1)==0){
 	alphaCarre(&sol.alp);
@@ -345,7 +249,7 @@ alpha searchSolRec(struct search_sol sol){
 	mpz_init_set(xn, sol.alp.n);
 	mpz_mod_ui(xn, xn, 2);
 
-	if(mpz_cmp_ui(xa, 0)==0 && mpz_cmp(xb, 0)){
+	if(mpz_cmp_ui(xa, 0)==0 && mpz_cmp_ui(xb, 0)==0){
 	    if(mpz_cmp_ui(sol.norme, 0)>0){
 		mpz_div_ui(sol.alp.a, sol.alp.a, 2);
 		mpz_div_ui(sol.alp.b, sol.alp.b, 2);
@@ -358,14 +262,15 @@ alpha searchSolRec(struct search_sol sol){
 		return sol.alp;
 	    }
 	}
-	else if(mpz_cmp(xn, 0)==0){
+	else if(mpz_cmp_ui(xn, 0)==0){
 	    alphaCarreSur2(&(sol.alp));
 	    mpz_div_ui(sol.alp.a, sol.alp.a, 2);
 	    mpz_div_ui(sol.alp.b, sol.alp.b, 2);
 	    return sol.alp;
 	}
 	else{
-	    if(mpz_cmp_ui(sol.norme, 0)>0){
+	    alphaCarreSur2(&(sol.alp));
+	    if(signNorme){
 		alphaCubeSur8(&(sol.alp));
 		return sol.alp;
 	    }
@@ -378,7 +283,9 @@ alpha searchSolRec(struct search_sol sol){
     else{
 	mpz_set(newSol.m, *searchM(sol));
 	newSol.alp = nextAlpha(sol, newSol.m);
-	normeAlpha(&(newSol.alp));
+	mpz_set(newSol.norme, *normeAlpha(newSol.alp));
+	mpz_clear(sol.m);
+	mpz_clear(sol.norme);
 	return searchSolRec(newSol);
     }
 }
