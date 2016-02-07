@@ -1,6 +1,6 @@
 #include "algo.h"
 
-liste_elem initTableHachage(char **grille){
+/*liste_elem initTableHachage(char **grille){
     char i = 0, j = 0, nbre_val_poss;
     S_elem e;
     liste_elem file_prio;
@@ -118,5 +118,67 @@ void liberationFilePrio(liste_elem *l){
 	*l = (*l)->suiv;
 	liberationElem(p);
     }
+}*/
+
+
+void resolutionSudoku(S_tab tabRes[8]){
+    initTabRes(tabRes);
 }
+
+void initTabRes(S_tab tabRes[8]){
+    char i = 0;
+    for(i=0; i<8; i++){
+	initSTab(tabRes[i]);
+    }
+}
+
+void initSTab(S_tab t){
+    char i = 0;
+    for(i=0; i<t.nbreElem; i++){
+	initElem(&(t.elems[i]));
+    }
+}
+
+void initElem(S_elem *e){
+    char i = 0;
+
+    e->val = NULL;
+    for(i=0; i<9; i++){
+	e->valPoss[i] = 0;
+    }
+    for(i=0; i<e->nbreElemImp; i++){
+	e->elemImp[i] = NULL;
+    }
+    e->posValPoss = 0;
+    e->nbreElemImp = 0;
+}
+    
+void allocTabRes(S_tab tabRes[8]){
+    char i = 0; 
+
+    for(i=0; i<8; i++){
+	tabRes[i].elems = (S_elem*)calloc(10, sizeof(S_elem));
+	if(tabRes[i].elems == NULL){
+	    printf("allocation impossible dans allocTabRes\n");
+	    exit(0);
+	}
+	allocElem(tabRes[i].elems);
+    }
+}
+
+void allocElems(S_elem* e){
+    char i = 0;
+    for(i=0; i<10; i++){
+	allocElem(&e[i]);
+    }
+}
+
+void allocElem(S_elem* e){
+    e->elemImp = (char**)calloc(10, sizeof(char***));
+    if(e->elemImp == NULL){
+	printf("allocation impossible dans allocElem\n");
+	exit(0);
+    }
+}
+
 

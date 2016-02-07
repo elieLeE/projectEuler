@@ -16,14 +16,15 @@ void fermerFichier(FILE* fichier){
     fclose(fichier);
 }
 
-void lectureGrille(FILE* fichier, char **grille){ 
+void lectureGrille(FILE* fichier, char grille[NBRE_LIGNE][NBRE_COL]){ 
     char ligne[20];
     char c = 0;
     char i = 0, j = 0;
+    bool go = true;
     fgets(ligne, 20, fichier);
     for(i=0; i<NBRE_LIGNE; i++){
 	j = 0;
-	while((grille[i][j] = fgetc(fichier) - 48) != -38 && grille[i][j] != -49){
+	while((grille[i][j] = (char)(fgetc(fichier) - 48)) != (char)-38 && grille[i][j] != (char)-49){
 	    j++;
 	}
     }

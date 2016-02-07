@@ -4,9 +4,9 @@
 
 int main(void)
 {
-    int i = 10000, max = 0, indMax, n;
+    int i, max = 0, indMax, n;
 
-    for(i=1; i<1000; i++){
+    for(i=1; i<=1000; i++){
 	n = nbreTriangleRect(i);
 	if(n>max){
 	    max = n;
@@ -14,7 +14,7 @@ int main(void)
 	}
     }
 
-    printf("p : %d\n", indMax);
+    printf("p : %d, => %d\n", indMax, max);
 
     return 0;
 }

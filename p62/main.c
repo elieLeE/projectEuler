@@ -1,6 +1,7 @@
 #include "liste.h"
 #include "nbre.h"
 #include "math.h"
+#include "tabhach.h"
 
 void visuTab(char *tab){
     char i = 0;
@@ -30,7 +31,7 @@ int main(){
 	}
 	else{
 	    p = (l_tabhach)ajoutElemTabHach(&tabHach[sum], nbre, tab);
-	    if(p != NULL & (p->nbre_perm) == NBRE_PERM){
+	    if(p != NULL && (p->nbre_perm) == NBRE_PERM){
 		break;
 	    }
 	}

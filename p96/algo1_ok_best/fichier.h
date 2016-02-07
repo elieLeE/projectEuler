@@ -9,6 +9,6 @@
 
 FILE* ouvFichier(char *name, char *mode);
 void fermerFichier(FILE* fichier);
-void lectureGrille(FILE* fichier, char **grille);
+void lectureGrille(FILE* fichier, char grille[NBRE_LIGNE][NBRE_COL]);
 
 #endif

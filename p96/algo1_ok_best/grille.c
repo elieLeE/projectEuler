@@ -16,7 +16,7 @@ void liberationGrille(char ***grille){
     free(*grille);
 }
 
-void visuGrille(char **grille){
+void visuGrille(char grille[NBRE_LIGNE][NBRE_COL]){
     char i = 0, j =0, k = 0, l = 0;
     for(i=0; i<NBRE_LIGNE; i = i+3){
 	for(j=0; j<NBRE_LIGNE/3; j++){
@@ -35,7 +35,7 @@ void visuGrille(char **grille){
 int nbreDeValPoss(char **grille, S_elem *e, char ligne, char col){
     bool tab[10] = {false};
     char i = 0, nbre_poss = 0;
-    searchElemImpLigne(grille[ligne], tab, &(e->l_elem_imp), col);
+    /*searchElemImpLigne(grille[ligne], tab, &(e->l_elem_imp), col);
     searchElemImpCol(grille, tab, &(e->l_elem_imp), ligne, col);
     searchElemImpBloc(grille, tab, &(e->l_elem_imp), ligne, col);
     for(i=9; i>0; i--){	//on commence par 9 => comme ca, la liste des val possibles sera triée dans l'ordre croissant
@@ -43,10 +43,10 @@ int nbreDeValPoss(char **grille, S_elem *e, char ligne, char col){
 	    nbre_poss++;
 	    ajoutElemValPoss(&(e->l_val_poss), i);
 	}
-    }
+    }*/
     return nbre_poss;
 }
-
+/*
 void searchElemImpLigne(char *grille, bool *tab, liste_elem_imp *l_elem_imp, char col){
     char j = 0;
     for(j=0; j<NBRE_COL; j++){
@@ -94,6 +94,7 @@ void searchElemImpBloc(char **grille, bool *tab, liste_elem_imp *l_elem_imp, cha
 	}
     }
 }
+*/
 
 bool verificationReponse(char **grille){
     return verifLigne(grille) && verifCol(grille) && verifBlocs(grille);
