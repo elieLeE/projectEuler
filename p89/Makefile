@@ -11,11 +11,11 @@ EXE: prog
 
 all: clean prog
 
-prog: main.o structure.o
-	gcc -o $@ $^ -lm -lgmp
+prog: main.o fichier.o verif_RN.o
+	gcc -std=c99 -Wall -Wextra -o $@ $^
 
 %.o: %.c
-	gcc -o $@ -c $<
+	gcc -std=c99 -Wall -Wextra -o $@ -c $<
 
 clean:
 	rm -f *.o prog
