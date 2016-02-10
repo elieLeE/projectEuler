@@ -12,10 +12,10 @@ EXE: prog
 all: clean prog
 
 prog: main.o nbre.o
-	gcc -o $@ $^
+	gcc -std=c99 -Wall -Wextra -o $@ $^
 
 %.o: %.c
-	gcc -o $@ -c $<
+	gcc -std=c99 -Wall -Wextra -o $@ -c $<
 
 clean:
 	rm -f *.o prog
