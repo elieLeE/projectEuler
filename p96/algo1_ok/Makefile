@@ -12,7 +12,7 @@ EXE: prog
 all: clean prog
 
 prog: main.o fichier.o grille.o liste_elem.o liste_elem_imp.o liste_val_poss.o algo.o grille.o 
-	gcc -o $@ $^
+	gcc -std=c99 -Wall -Wextra -o $@ $^
 
 main.c: donnees.h
 

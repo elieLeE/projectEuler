@@ -6,6 +6,7 @@
 #include "liste_val_poss.h"
 #include "grille.h"
 #include "algo.h"
+#include "fichier.h"
 
 #define NBRE_GRILLE 50
 
