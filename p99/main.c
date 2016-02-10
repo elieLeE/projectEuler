@@ -1,51 +1,60 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "donnees.h"
-#include <gmp.h>
+#include "fichier.h"
+#include <math.h>
 
 #define NBRE_LIGNE 1000
 
+bool courSupMax(duo *max, duo *cour){
+#if MODE
+    if(mpz_cmp(cour->nbre, max->nbre)>0){
+#else 
+    if(cour->nbre > max->nbre){
+#endif
+	return true;
+    }
+    return false;
+}
+
+void calculNbre(duo *cour){
+#if MODE
+	mpz_init(cour->nbre);
+	mpz_add_ui(cour->nbre, cour->nbre, cour->a);
+	mpz_pow_ui(cour->nbre, cour->nbre, cour->b);
+#else
+	cour->nbre = 0.0;
+	cour->nbre = log(cour->a);
+	cour->nbre = cour->b * cour->nbre;
+#endif
+}
+
 int main(){
     FILE* fichier = NULL;
-    duo d_cour, d_max;
-    int i = 0;
-    int diff;
-    double div;
-
-    
+    int i =0;
+    duo cour, max;
+#if MODE
+    mpz_init(max.nbre);
+    mpz_add_ui(max.nbre, max.nbre, 0);
+#else
+    max.nbre = 0.0;
+#endif
 
     fichier = ouvFichier("p099_base_exp.txt", "r+");
     if(fichier == NULL){
         printf("fichier non trouvé\n");
         exit(0);
     }
-    nextDuo(fichier, &d_max);
     while(i!=NBRE_LIGNE){
-    	nextDuo(fichier, &d_cour);
-	if(d_max.nbre > d_cour.nbre){
-	    if(d_max.exp > d_cour.exp){
-		printf("cas 1 => on ne fait rien\n");
-	    }
-	    else{
-		diff = d_max.exp - d_cour.exp;
-		div = (1.0*d_max.nbre)/d_cour.nbre;
-		mpf_ui_pow
-		printf("cas 2\n");
-	    }
+    	nextDuo(fichier, &cour);
+	calculNbre(&cour);
+	cour.lig = i;
+	if(courSupMax(&max, &cour)){
+	    max = cour;
 	}
-	else{
-	    if(d_max.exp > d_cour.exp){
-		printf("cas 3\n");
-	    }
-	    else{
-		printf("cas 4\n");
-		d_max = d_cour;
-	    }
-	}
-    	printf("i : %d, nbre : %d, exp : %d\n", i, d_cour.nbre, d_cour.exp);
     	i++;
     }
-
+    printf("ligne_max : %d\n", max.lig+1);
     fermerFichier(fichier);
     return 0;
 }

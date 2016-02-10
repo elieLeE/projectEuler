@@ -12,7 +12,7 @@ EXE: prog
 all: clean prog
 
 prog: main.o fichier.o 
-	gcc -o $@ $^ -lgmp
+	gcc -o $@ $^ -lgmp -lm
 
 main.c: donnees.h
 

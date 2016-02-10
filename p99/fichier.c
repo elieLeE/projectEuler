@@ -17,9 +17,9 @@ void fermerFichier(FILE* fichier){
 }
 
 void nextDuo(FILE* fichier, duo* d){
-    fscanf(fichier, "%d", &(d->nbre));
+    fscanf(fichier, "%d", &(d->a));
     fseek(fichier, 1, SEEK_CUR);
-    fscanf(fichier, "%d", &(d->exp));
+    fscanf(fichier, "%d", &(d->b));
 }
 
 
