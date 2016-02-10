@@ -43,7 +43,6 @@ void alphaCarre(alpha *a){
     mpz_mul(n2, n2, a->n);
     mpz_add(n1, n1, n2);
 
-
     //calcul de a->b
     mpz_mul(a->b, a->a, a->b);
     mpz_set(a->a, n1);
