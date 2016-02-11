@@ -13,8 +13,12 @@
 int main(){
     FILE* fichier = NULL;
     char grille[NBRE_LIGNE][NBRE_COL];
+#if MODE
     liste_elem tab_hach[9];
     liste_elem file_prio;
+#else 
+    tab_elem tab_hach[9];
+#endif
     int sum = 0, i = 0;
 
     fichier = ouvFichier("p096_sudoku.txt", "r+");
