@@ -3,6 +3,7 @@
 #include "lecture.h"
 #include "alloc.h"
 #include "matrice.h"
+#include "graphe.h"
 
 int main(){
     unsigned int** matrice;
@@ -17,7 +18,7 @@ int main(){
     lireMatrice(fichier, matrice);
     printf("%d\n", shorterWay(matrice));
 
-    liberation(matrice);
+    liberationTab2D(matrice);
     fermerFichier(&fichier);
     return 0;
 }
