@@ -8,10 +8,14 @@ int main(){
     unsigned int** matrice;
 
     allocTab2D(&matrice);
-    FILE* fichier = ouvFichier("p081_matrix.txt");
+#if MODE
+    FILE* fichier = ouvFichier("test.txt");
+#else 
+    FILE* fichier = ouvFichier("p083_matrix.txt");
+#endif
 
     lireMatrice(fichier, matrice);
-    //affMatrice(matrice);
+    printf("%d\n", shorterWay(matrice));
 
     fermerFichier(&fichier);
     return 0;

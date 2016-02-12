@@ -37,6 +37,6 @@ int shorterWay(unsigned int** matrice){
 	}
     }
     min = tab[TAILLE_MATRICE-1][TAILLE_MATRICE-1];
-    free(tab);
+    liberation(tab);
     return min;
 }

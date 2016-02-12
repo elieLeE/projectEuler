@@ -6,5 +6,6 @@
 #include "donnees.h"
 
 void allocTab2D(unsigned int*** matrice);
+void liberation(unsigned int** matrice);
 
 #endif

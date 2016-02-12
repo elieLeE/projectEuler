@@ -18,7 +18,6 @@ void lireMatrice(FILE* fichier, unsigned int* matrice[80]){
     for(i=0; i<TAILLE_MATRICE; i++){
 	for(j=0; j<TAILLE_MATRICE; j++){
 	    fscanf(fichier, "%d", &matrice[i][j]);
-	    printf("(%d, %d) => %d\n", i, j, matrice[i][j]);
 	}
     }
 }

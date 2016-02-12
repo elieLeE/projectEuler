@@ -17,6 +17,7 @@ int main(){
     lireMatrice(fichier, matrice);
     printf("%d\n", shorterWay(matrice));
 
+    liberation(matrice);
     fermerFichier(&fichier);
     return 0;
 }

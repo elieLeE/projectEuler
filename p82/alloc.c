@@ -17,4 +17,11 @@ void allocTab2D(unsigned int*** matrice){
     }
 }
 
+void liberation(unsigned int** matrice){
+    int i;
+    for(i=0; i<TAILLE_MATRICE; i++){
+	free(matrice[i]);
+    }
+    free(matrice);
+}
     
