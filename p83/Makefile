@@ -11,7 +11,7 @@ EXE: prog
 
 all: clean prog
 
-prog: main.o lecture.o matrice.o graphe.o alloc.o
+prog: main.o lecture.o matrice.o graphe.o alloc.o sommet.o
 	gcc -std=c99 -Wall -Wextra -o $@ $^
 
 %.o: %.c

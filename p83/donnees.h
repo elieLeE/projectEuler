@@ -3,9 +3,11 @@
 
 #include <stdbool.h>
 
-#define MODE 1
+#define MODE 0
 #define BIG 10000000
 #define SMALL 0
+
+#define DEBUG 0
 
 #if MODE 
 #define TAILLE_MATRICE 5
@@ -15,16 +17,24 @@
 
 typedef struct sommet sommet;
 typedef struct pos pos;
+typedef enum etat etat;
 
-struct sommet{
-    unsigned int coutSom, coutChemin;
-    bool ajoute;
-    int nbreVoisins;
-    sommet* voisins[4];
+enum etat{
+    NON_ATTEIGNABLE,
+    ATTEIGNABLE,
+    ADDED
 };
 
 struct pos{
     int lig, col;
+};
+
+struct sommet{
+    unsigned int coutSom, coutChemin;
+    etat e;
+    int nbreVoisins;
+    sommet* voisins[4];
+    pos p;
 };
 
 #endif

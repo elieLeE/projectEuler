@@ -8,6 +8,7 @@ void affMatrice(unsigned int** matrice){
 	}
 	printf("\n");
     }
+    printf("\n");
 }
 
 unsigned int minAB(unsigned int a, unsigned int b){

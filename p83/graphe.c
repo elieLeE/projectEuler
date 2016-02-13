@@ -12,79 +12,96 @@ void remplissageGraphe(sommet** g, unsigned int **matrice){
     }
 }
 
-void initSommet(sommet** s, unsigned int** matrice, pos p){
-    s[p.lig][p.col].coutSom = matrice[p.lig][p.col];
-    s[p.lig][p.col].coutChemin = 0;
-    s[p.lig][p.col].ajoute = false;
-    if(p.lig == 0){
-	if(p.col == 0){
-	    s[0][0].nbreVoisins = 2;
-	    s[0][0].voisins[0] = &s[1][0];
-	    s[0][0].voisins[1] = &s[0][1];
+void affGraphe(sommet** g){
+    int i, j;
+    for(i=0; i<TAILLE_MATRICE; i++){
+	for(j=0; j<TAILLE_MATRICE; j++){
+	    printf("(%d, %d) => ", i, j);
+	    affSommet(&g[i][j]);
 	}
-	else if(p.col == TAILLE_MATRICE -1){
-	    s[0][TAILLE_MATRICE-1].nbreVoisins = 2;
-	    s[0][TAILLE_MATRICE-1].voisins[0] = &s[0][TAILLE_MATRICE-2];
-	    s[0][TAILLE_MATRICE-1].voisins[1] = &s[1][TAILLE_MATRICE-1];
-	}
-	else {
-	    s[0][p.col].nbreVoisins = 3;
-	    s[0][p.col].voisins[0] = &s[0][p.col-1];
-	    s[0][p.col].voisins[1] = &s[0][p.col+1];
-	    s[0][p.col].voisins[2] = &s[1][p.col];
+	printf("\n");
+    }
+}
+
+sommet* nextSommet(sommet** g){
+    int i, j;
+    unsigned int min = BIG;
+    sommet *s;
+    for(i=0; i<TAILLE_MATRICE; i++){
+	for(j=0; j<TAILLE_MATRICE; j++){
+	    if((g[i][j].e == ATTEIGNABLE) && (min > g[i][j].coutChemin)){
+		min = g[i][j].coutChemin;
+		s = &g[i][j];
+	    }
 	}
     }
-    else if(p.lig == TAILLE_MATRICE-1){
-	if(p.col == 0){
-	    s[TAILLE_MATRICE-1][0].nbreVoisins = 2;
-	    s[TAILLE_MATRICE-1][0].voisins[0] = &s[TAILLE_MATRICE-2][0];
-	    s[TAILLE_MATRICE-1][0].voisins[1] = &s[TAILLE_MATRICE-1][1];
-	}
-	else if(p.col == TAILLE_MATRICE -1){
-	    s[TAILLE_MATRICE-1][TAILLE_MATRICE-1].nbreVoisins = 2;
-	    s[TAILLE_MATRICE-1][TAILLE_MATRICE-1].voisins[0] = &s[TAILLE_MATRICE-1][TAILLE_MATRICE-2];
-	    s[TAILLE_MATRICE-1][TAILLE_MATRICE-1].voisins[1] = &s[TAILLE_MATRICE-2][TAILLE_MATRICE-1];
-	}
-	else {
-	    s[TAILLE_MATRICE-1][p.col].nbreVoisins = 3;
-	    s[TAILLE_MATRICE-1][p.col].voisins[0] = &s[TAILLE_MATRICE-1][p.col-1];
-	    s[TAILLE_MATRICE-1][p.col].voisins[1] = &s[TAILLE_MATRICE-1][p.col+1];
-	    s[TAILLE_MATRICE-1][p.col].voisins[2] = &s[TAILLE_MATRICE-2][p.col];
-	}
-    }
-    else{
-	if(p.col == 0){
-	    s[p.lig][0].nbreVoisins = 3;
-	    s[p.lig][0].voisins[0] = &s[p.lig-1][0];
-	    s[p.lig][0].voisins[1] = &s[p.lig+1][0];
-	    s[p.lig][0].voisins[2] = &s[p.lig][1];
-	}
-	else if(p.col == TAILLE_MATRICE -1){
-	    s[p.lig][TAILLE_MATRICE-1].nbreVoisins = 3;
-	    s[p.lig][TAILLE_MATRICE-1].voisins[0] = &s[p.lig-1][TAILLE_MATRICE-1];
-	    s[p.lig][TAILLE_MATRICE-1].voisins[1] = &s[p.lig+1][TAILLE_MATRICE-1];
-	    s[p.lig][TAILLE_MATRICE-1].voisins[2] = &s[p.lig][TAILLE_MATRICE-2];
-	}
-	else{
-	    s[p.lig][p.col].nbreVoisins = 4;
-	    s[p.lig][p.col].voisins[0] = &s[p.lig-1][p.col];
-	    s[p.lig][p.col].voisins[1] = &s[p.lig+1][p.col];
-	    s[p.lig][p.col].voisins[2] = &s[p.lig][p.col-1];
-	    s[p.lig][p.col].voisins[3] = &s[p.lig][p.col+1];
+    return s;
+}
+
+void miseAJourGraphe(sommet *s){
+    int i;
+    unsigned int newChemin;
+    s->e = ADDED;
+    for(i=0; i<s->nbreVoisins; i++){
+	switch((s->voisins[i])->e){
+	    case NON_ATTEIGNABLE :
+		(s->voisins[i])->e = ATTEIGNABLE;
+		(s->voisins[i])->coutChemin = (s->voisins[i])->coutSom + s->coutChemin;
+		break;
+
+	    case ATTEIGNABLE :
+		newChemin = (s->voisins[i])->coutSom + s->coutChemin;
+		if(newChemin < (s->voisins[i])->coutChemin){
+		    (s->voisins[i])->coutChemin = newChemin;
+		}
 	}
     }
 }
 
+void affSommetAdded(sommet** g){
+    int i, j;
+    printf("sommet added : ");
+    for(i=0; i<TAILLE_MATRICE; i++){
+	for(j=0; j<TAILLE_MATRICE; j++){
+	    if(g[i][j].e == ADDED){
+		printf("(%d, %d) => %d/%d, ", g[i][j].p.lig, g[i][j].p.col, g[i][j].coutSom, g[i][j].coutChemin);
+	    }
+	}
+    }
+    printf("\n");
+}
 
-	    
+void affNextSomPossible(sommet** g){
+    int i, j;
+    printf("sommet atteignable : ");
+    for(i=0; i<TAILLE_MATRICE; i++){
+	for(j=0; j<TAILLE_MATRICE; j++){
+	    if(g[i][j].e == ATTEIGNABLE){
+		printf("(%d, %d) => %d-%d, ", g[i][j].p.lig, g[i][j].p.col, g[i][j].coutSom, g[i][j].coutChemin);
+	    }
+	}
+    }
+    printf("\n");
+}
 
 unsigned int shorterWay(unsigned int** matrice){
     sommet** grapheInit;
-    //sommet* grapheARemplir[TAILLE_MATRICE*TAILLE_MATRICE];
+    sommet *s;
+    unsigned int min;
 
     allocGraphe(&grapheInit);
     remplissageGraphe(grapheInit, matrice);
 
+    grapheInit[0][0].e = ATTEIGNABLE;
+    grapheInit[0][0].coutChemin = grapheInit[0][0].coutSom;
+
+    do{
+	s = nextSommet(grapheInit);
+	miseAJourGraphe(s);
+    }while(((s->p).lig != TAILLE_MATRICE-1) || ((s->p).col != TAILLE_MATRICE-1));
+	
+    min = grapheInit[TAILLE_MATRICE-1][TAILLE_MATRICE-1].coutChemin;
     liberationGraphe(grapheInit);
-    return 0;
+    return min;
 }
+

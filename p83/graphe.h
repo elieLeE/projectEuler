@@ -6,10 +6,12 @@
 #include <stdbool.h>
 #include "alloc.h"
 #include "donnees.h"
+#include "sommet.h"
+#include "matrice.h"
 
-void initSommet(sommet** s, unsigned int** matrice, pos p);
 void remplissageGraphe(sommet** g, unsigned int** matrice);
 unsigned int shorterWay(unsigned int** matrice);
+void affSommetAdded(sommet** g);
 
 #endif
 
