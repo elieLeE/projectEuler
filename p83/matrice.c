@@ -10,11 +10,3 @@ void affMatrice(unsigned int** matrice){
     }
     printf("\n");
 }
-
-unsigned int minAB(unsigned int a, unsigned int b){
-    if(a>b){
-	return b;
-    }
-    return a;
-}
-
