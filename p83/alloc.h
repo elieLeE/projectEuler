@@ -1,15 +1,16 @@
-#ifndef _ALLOC_H_
-#define _ALLOC_H_
+#ifndef _ALLOC2_H_
+#define _ALLOC2_H_
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "donnees.h"
 #include "graphe.h"
+#include "../shared/alloc.h"
 
-void allocTab2D(unsigned int*** matrice);
+//void allocTab2D(unsigned int*** matrice);
 void allocGraphe(sommet ***g);
 
 void liberationGraphe(sommet** g);
-void liberationTab2D(unsigned int** matrice);
+//void liberationTab2D(unsigned int** matrice);
 
 #endif

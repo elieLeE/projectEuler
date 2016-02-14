@@ -85,11 +85,10 @@ void affNextSomPossible(sommet** g){
 }
 
 unsigned int shorterWay(unsigned int** matrice){
-    sommet** grapheInit;
+    sommet** grapheInit = (sommet**)allocTab2D(TAILLE_MATRICE, TAILLE_MATRICE, sizeof(sommet));
     sommet *s;
     unsigned int min;
 
-    allocGraphe(&grapheInit);
     remplissageGraphe(grapheInit, matrice);
 
     grapheInit[0][0].e = ATTEIGNABLE;
@@ -101,7 +100,8 @@ unsigned int shorterWay(unsigned int** matrice){
     }while(((s->p).lig != TAILLE_MATRICE-1) || ((s->p).col != TAILLE_MATRICE-1));
 	
     min = grapheInit[TAILLE_MATRICE-1][TAILLE_MATRICE-1].coutChemin;
-    liberationGraphe(grapheInit);
+    liberationTab2D((void**)grapheInit, TAILLE_MATRICE);
+
     return min;
 }
 
