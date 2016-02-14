@@ -3,8 +3,6 @@
 #include <stdbool.h>
 #include "tab.h"
 
-bool isSubStringDivisibility(int tab[]);
-
 int main(){
     int t[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, t2[9][10];
     int compt = 1;
@@ -28,26 +26,23 @@ int main(){
 			for(g=5; g<10; g++){
 			    copieTab(t2[6], t, 4);
 			    for(h=6; h<10; h++){
-				copieTab(t2[7], t, 5);
+			    copieTab(t2[7], t, 5);
 				j = 8;
 				for(i=7; i<10; i++){
-/*				    if(compt==1000000){
-					visuTab(t);
-					return 0;
-				    }*/
+				    if(compt==1000000){
+					goto end;
+				    }
 				    copieTab(t2[8], t, 6);
 				    compt++;
-				    visuTab(t);
-				    echange(&t[8], &t[9]);
-				    visuTab(t);
-				    /*if(compt==1000000){
-					visuTab(t);
-					return 0;
-				    }*/
+				    echange(&t[8], &t[9]); 
+
+				    if(compt==1000000){
+					goto end;
+				    }
 				    compt++;
 				    copieTab(t, t2[8], 6);
 				    if(j<10){
-					echange(&t[7], &t[j]);
+					echange(&t[7], &t[j]); 
 				    }
 				    j++;
 				}
@@ -65,7 +60,7 @@ int main(){
 		    echange(&t[3], &t[e+1]);
 		}
 		copieTab(t, t2[3], 1);
-		echange(&t[2], &t[d+1]);
+		echange(&t[2], &t[d+1]); 
 	    }
 	    copieTab(t, t2[2], 0);
 	    echange(&t[1], &t[c+1]);
@@ -74,5 +69,7 @@ int main(){
 	echange(&t[0], &t[b+1]);
     }
 
+end:
+    visuTab(t);
     return 0;
 }

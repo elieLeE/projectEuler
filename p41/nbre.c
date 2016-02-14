@@ -1,10 +1,10 @@
 #include "nbre.h"
 
-bool isPandigital(long n){
-    long n2 = n, n3 = n;
-    char tab[10] = {false};
-    char digit = 0;
-    char nbre_digit = 0, i;
+bool isPandigital(unsigned long n){
+    unsigned long n2 = n, n3 = n;
+    bool tab[10] = {false};
+    unsigned char digit = 0, nbre_digit = 0, i;
+
     while(n2>=1){
 	nbre_digit++;
 	n2 = n2/10;
@@ -28,7 +28,7 @@ bool isPandigital(long n){
     return true;
 }
 
-bool isPrime(long n){
+/*bool isPrime(long n){
     if(n%2 == 0){
 	return false;
     }
@@ -39,4 +39,4 @@ bool isPrime(long n){
 	}
     }
     return true;
-}
+}*/

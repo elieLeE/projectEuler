@@ -1,13 +1,13 @@
 #include "liste.h"
 #include "nbre.h"
 
-int main(){
-    int i = 0;
-    char c;
+/*
+ * passer avec un tableau
+ * */
 
+int main(){
     liste l = creerListe();
     remplissageListe(&(l->end));
-    //visuListe(l->deb);
 
     cell p1 = l->deb, p2 = NULL, p3 = NULL, p4 = NULL, p5 = NULL;
     element tab[5];
@@ -29,7 +29,7 @@ int main(){
 				p5 = p4->suiv;
 				while(p5!=NULL){
 				    if(isPermTab(p5->el, tab, 4)){
-					printf("\np1 : %d, p2 : %d, p3 : %d, p4 : %d, p5 : %d\n", p1->el.nbre, p2->el.nbre, p3->el.nbre, p4->el.nbre, p5->el.nbre);
+					printf("%d\n", (p1->el.nbre + p2->el.nbre + p3->el.nbre + p4->el.nbre + p5->el.nbre));
 					return 0;
 				    }
 				    p5 = p5->suiv;

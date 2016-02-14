@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 bool digitsOfNbre(long n);
-bool isPrime(long n);
+bool isPandigital(unsigned long n);
+//bool isPrime(long n);
 
 #endif

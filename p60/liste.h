@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include "nbre.h"
 #include "donnees.h"
+#include "../shared/alloc.h"
 
 void visuListe(cell l);
 void ajoutCell(cell *l, short nbre);

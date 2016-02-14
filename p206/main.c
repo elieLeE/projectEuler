@@ -20,8 +20,6 @@ int main(){
     printf("i : %ld\n", i);
     bool b = true;
 
-    //racNbre = 1108744497;
-
     while(i<FIN){
 	if(nbreOK(i*i)){
 	    break;

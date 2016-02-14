@@ -1,15 +1,5 @@
 #include "nbre.h"
 
-bool isPrime(int nbre){
-    int i = 0;
-    for(i=3; i*i<=nbre; i = i+2){
-	if(nbre%i == 0){
-	    return false;
-	}
-    }
-    return true;
-}
-
 char nbreDigit(short nbre){
     char nbreDigit = 0;
     while(nbre>=1){
@@ -40,7 +30,7 @@ bool isPerm(element e1, element e2){
 }
 
 bool isPermTab(element e, element tab[], char nbreEval){
-    char i = 0;
+    unsigned char i = 0;
     for(i=0; i<nbreEval; i++){
 	if(!isPerm(e, tab[i])){
 	    return false;

@@ -1,11 +1,12 @@
 #include "nbre.h"
 #include "math.h"
+#include "../shared/nbre.h"
 
 #define FIRST_NBRE 987654321
 #define LAST_NBRE 321
 
 int main(){
-    long i = 0;
+    unsigned long i = 0;
 
     for(i=FIRST_NBRE; i>=LAST_NBRE; i-=2){
 	if(isPandigital(i)){

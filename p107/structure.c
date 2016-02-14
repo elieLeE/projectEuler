@@ -6,20 +6,11 @@ void initTabSommets(sommet tabS[], int maxCo){
 	tabS[i].nbreCoInit = 0;
 	tabS[i].nbreCoRest = 0;
 	tabS[i].num = 0;
-	tabS[i].indSomCo = (int*)my_malloc(maxCo*sizeof(int));
-	tabS[i].tabArete = (arete**)my_malloc(maxCo*sizeof(arete*));
+	/*tabS[i].indSomCo = (int*)my_malloc(maxCo*sizeof(int));
+	tabS[i].tabArete = (arete**)my_malloc(maxCo*sizeof(arete*));*/
+	tabS[i].indSomCo = (int*)my_calloc(maxCo*sizeof(int));
+	tabS[i].tabArete = (arete**)my_calloc(maxCo*sizeof(arete*));
     }
-}
-
-void* my_malloc(int taille){
-    void* p = malloc(taille);
-    assert(p != NULL);
-    return p;
-}
-
-arete* allocArete(int taille){
-    arete *a = (arete*)my_malloc(taille*sizeof(arete));
-    return a;
 }
 
 void affTabInd(int tabI[]){

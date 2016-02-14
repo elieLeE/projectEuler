@@ -1,9 +1,13 @@
 #include "tab.h"
 
 void echange(int *a, int *b){
+#if ECHANGE_GEN
+    echangeGenerique((void*)a, (void*)b, sizeof(int));
+#else
     int c = *a;
     *a = *b;
     *b = c;
+#endif
 }
 
 void copieTab(int *dest, int *src, int ind){

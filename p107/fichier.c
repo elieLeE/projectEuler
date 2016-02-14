@@ -1,14 +1,5 @@
 #include "fichier.h"
 
-FILE* ouvFichier(char *name){
-    FILE* f = fopen(name, "r");
-    if(f==NULL){
-	fprintf(stderr, "erreur ouverture fichier, fichier %s, ligne %d\n", __FILE__, __LINE__);
-	exit(0);
-    }
-    return f;
-}
-
 void nbreMaxCo(FILE* f, int* nbreMax, int *nbreTot){
     int i = 0, j = 0, max = 0, lect, tmp = 0, tot = 0;
     for(i=0; i<NBRE_SOMMETS; i++){
@@ -49,8 +40,3 @@ void lectureFichier(FILE* f, arete tabArete[]){
 	fgets(chaine, 200, f);
     }
 }
-
-void fermetureFichier(FILE** f){
-    fclose(*f);
-}
-

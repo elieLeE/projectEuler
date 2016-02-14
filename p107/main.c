@@ -3,7 +3,8 @@
 #include "fichier.h"
 #include "network.h"
 #include "tri.h"
-
+#include "../shared/fichier.h"
+#include "../shared/alloc.h"
 
 int main(){
     int poidsInit = 0, poidsFinal = 0;
@@ -12,10 +13,10 @@ int main(){
     arete *tabArete;
     sommet tabSommets[NBRE_SOMMETS];
 
-    FILE *f = ouvFichier("p107_network.txt");
+    FILE *f = ouvFichier("p107_network.txt", "r");
 
     nbreMaxCo(f, &nbreCoMax, &nbreCoTot);
-    tabArete = allocArete(nbreCoTot);
+    tabArete = my_calloc(nbreCoTot*sizeof(arete));
     initTabSommets(tabSommets, nbreCoMax);
 
     lectureFichier(f, tabArete);
@@ -23,14 +24,10 @@ int main(){
     poidsInit = poidsNetwork(tabArete, nbreCoTot);
     
     trierTabArete(tabArete, nbreCoTot); 
-    //affTabArete(tabArete, nbreCoTot);
 
     remplissageTabSommets(tabSommets, tabArete, nbreCoTot);
     
     reductionNetwork(tabArete, tabSommets, nbreCoTot);
-
-    //affTabArete(tabArete, nbreCoTot);
-    //affTabSommet(tabSommets);
 
     poidsFinal = poidsNetwork(tabArete, nbreCoTot);
 
@@ -38,7 +35,7 @@ int main(){
 
     free(tabArete);
     libTabSommets(tabSommets); 
-    fermetureFichier(&f);
+    fermerFichier(&f);
 
     return 0;
 }

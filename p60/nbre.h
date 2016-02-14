@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "donnees.h"
+#include "../shared/nbre.h"
 
-bool isPrime(int nbre);
 char nbreDigit(short nbre);
 bool isPerm(element e1, element e2);
 bool isPermTab(element e, element tab[], char nbreEval);

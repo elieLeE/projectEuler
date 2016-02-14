@@ -3,19 +3,17 @@
 #include <stdbool.h>
 #include "tab.h"
 
-bool isSubStringDivisibility(int tab[]);
+bool isSubStringDivisibility(unsigned int tab[]);
 
 int main(){
-    int t[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, t2[9][10];
-    int compt = 1;
-    int b, c, d, e, f, g, h, i, j;
-    long sum = 0.0;
+    unsigned int t[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, t2[9][10];
+    unsigned int b, c, d, e, f, g, h, i;
+    unsigned long sum = 0;
 
     for(i=0; i<9; i++){
 	copieTab(t2[i], t, 0);
     }
 
-    j = 8;
     for(b=0; b<10; b++){
 	copieTab(t2[1], t, 0);
 	for(c=1; c<10; c++){
@@ -46,7 +44,6 @@ int main(){
 				    echange(&t[6], &t[h+1]);
 				    continue;
 				}
-				j = 8;
 				for(i=7; i<10; i++){
 				    if((t[5]*100+t[6]*10+t[7])%11==0){
 					if(((t[6]*100+t[7]*10+t[8])%13==0) && ((t[7]*100+t[8]*10+t[9])%17==0)){
@@ -85,7 +82,7 @@ int main(){
 	copieTab(t, t2[1], 0);
 	echange(&t[0], &t[b+1]);
     }
-    printf("sum => %ld\n", sum);
+    printf("%ld\n", sum);
 
     return 0;
 }

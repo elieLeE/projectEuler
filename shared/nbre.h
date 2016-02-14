@@ -5,6 +5,10 @@
 #include <stdio.h>
 #include <math.h>
 
-bool isPrime(unsigned int n);
+/*
+ * add nbreDigit
+ * */
+
+bool isPrime(unsigned long n);
 
 #endif

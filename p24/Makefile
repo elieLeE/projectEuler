@@ -7,15 +7,27 @@
 #$? : liste des dependances plus recentes que la cible
 #$* : nom du fichier sans le suffixe
 
-EXE: prog
+CC=gcc
+CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
+LDFLAGS=
+EXEC=prog 
+SHARED=../shared
+SRC= $(wildcard *.c $(SHARED)/swap.c $(SHARED)/alloc.c)
+OBJ= $(SRC:.c=.o)
+INCLUDE=-I. -I$(SHARED)
 
-all: clean prog
+all: $(EXEC)
 
-prog: main.o tab.o
-	gcc -std=c99 -Wall -Wextra -o $@ $^ -lm
+$(EXEC): $(OBJ)
+	$(CC) $(INCLUDE) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
-	gcc -std=c99 -Wall -Wextra -o $@ -c $<
+	$(CC) $(INCLUDE) -o $@ -c $< $(CFLAGS)
 
-clean:
-	rm -f *.o prog
+.PHONY: cleanSimple clean 
+
+cleanSimple:
+	rm -rf $(OBJ)
+
+clean: cleanSimple
+	rm -rf $(EXEC)	

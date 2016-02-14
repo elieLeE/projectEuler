@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include "structure.h"
 
-FILE* ouvFichier(char *name);
-void fermetureFichier(FILE** f);
 void nbreMaxCo(FILE *f, int*, int*);
 void lectureFichier(FILE*f, arete tabAretes[]); 
 

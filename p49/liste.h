@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "type_donnees.h"
+#include "../shared/alloc.h"
 
 bool isSol(l_perm p, int tab[3]);
 bool isEmpty(l_perm l);

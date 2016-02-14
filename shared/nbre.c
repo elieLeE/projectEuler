@@ -1,7 +1,7 @@
 #include "nbre.h"
 
-bool isPrime(unsigned int n){
-    int i, carre;
+bool isPrime(unsigned long n){
+    unsigned long i;
     if(n%2==0){
 	return false;
     }
@@ -10,6 +10,7 @@ bool isPrime(unsigned int n){
 	if(n%i == 0){
 	    return false;
 	}
+	i = i+2;
     }
     return true;
 }

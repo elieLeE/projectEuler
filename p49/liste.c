@@ -9,7 +9,7 @@ l_perm creerListe(){
 }
 
 void ajoutElem(l_perm *l, long nbre){
-    l_perm nouv = (l_perm )calloc(1, sizeof(struct l_perm));
+    l_perm nouv = my_calloc(sizeof(l_perm));
     nouv->nbre = nbre;
     nouv->suiv = *l;
     *l = nouv;
@@ -29,12 +29,11 @@ void visuListePerm(l_perm l){
 bool isSol(l_perm p, int tab[3]){
     l_perm p1 = p, p2, p3;
     int dist = 0, dist2 = 0;
-    char compteur = 1;
     bool continuer = true;
-    while(p1!=NULL & continuer){
+    while((p1!=NULL) & continuer){
 	tab[0] = p1->nbre;
 	p2 = p1->suiv;
-	while(p2!=NULL & continuer){
+	while((p2!=NULL) & continuer){
 	    tab[1] = p2->nbre;
 	    dist = p1->nbre - p2->nbre;
 	    p3 = p2->suiv;

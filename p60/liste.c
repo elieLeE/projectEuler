@@ -1,8 +1,8 @@
 #include "liste.h"
 
 liste creerListe(){
-    liste l = (struct liste*)calloc(1, sizeof(struct liste));
-    l->deb = (struct cell*)calloc(1, sizeof(struct cell));
+    liste l = my_calloc(sizeof(struct liste));
+    l->deb = my_calloc(sizeof(struct cell));
     (l->deb)->el.nbre = 3;
     (l->deb)->el.nbreDigit = 1;
     l->end = l->deb;
@@ -19,7 +19,7 @@ void visuListe(cell l){
 }
 
 void ajoutCell(cell *l, short nbre){
-    cell nouv = (struct cell*)calloc(1, sizeof(struct cell));
+    cell nouv = my_calloc(sizeof(struct cell));
     nouv->suiv = NULL;
     (nouv->el).nbre = nbre;
     (nouv->el).nbreDigit = nbreDigit(nbre);

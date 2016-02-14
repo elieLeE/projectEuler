@@ -1,8 +1,8 @@
 #include "tab.h"
 
-long tabToNbre(int *tab){
+long tabToNbre(unsigned int *tab){
     int i = 0;
-    long sum = 0, mul = 1;
+    unsigned long sum = 0, mul = 1;
     for(i=9; i>=0; i--){
 	sum = sum + tab[i]*mul;
 	mul*=10;
@@ -10,21 +10,27 @@ long tabToNbre(int *tab){
     return sum;
 }
 
-void echange(int *a, int *b){
-    int c = *a;
-    *a = *b;
-    *b = c;
+void echange(unsigned int *a, unsigned int *b){
+    bool x = false;
+    if(x){
+	echangeGenerique((void*)a, (void*)b, sizeof(unsigned int));
+    }
+    else{
+	unsigned int c = *a;
+	*a = *b;
+	*b = c;
+    }
 }
 
-void copieTab(int *dest, int *src, int ind){
-    int i = 0;
+void copieTab(unsigned int *dest, unsigned int *src, unsigned int ind){
+    unsigned int i = 0;
     for(i=ind; i<10; i++){
 	dest[i] = src[i];
     }
 }
 
-void visuTab(int *tab){
-    int i = 0;
+void visuTab(unsigned int *tab){
+    unsigned int i = 0;
     for(i=0; i<10; i++){
 	printf("%d", tab[i]);
     }

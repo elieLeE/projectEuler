@@ -1,7 +1,7 @@
 #include "tabhach.h"
 
 void initTabHach(l_tabhach tab[LIMITE_TAB]){
-    char i = 0;
+    unsigned char i = 0;
     for(i=0; i<LIMITE_TAB; i++){
 	tab[i] = NULL;
     }
@@ -12,7 +12,7 @@ bool tabHachEmpty(l_tabhach t){
 }
 
 void visuTabHach(l_tabhach tab[LIMITE_TAB]){
-    char i = 0;
+    unsigned char i = 0;
     for(i=0; i<LIMITE_TAB; i++){
 	printf("tab[%d] => ", i);
 	visuL(tab[i]);
@@ -36,7 +36,7 @@ void visuL(l_tabhach l){
 }
 
 bool permutationOK(char *tab1, char *tab2){
-    char i = 0;
+    unsigned char i = 0;
     for(i=0; i<10; i++){
 	if(tab1[i] != tab2[i]){
 	    return false;
@@ -46,7 +46,6 @@ bool permutationOK(char *tab1, char *tab2){
 }
 
 l_tabhach findElem(l_tabhach l, char *tab){
-    char i = 0;
     l_tabhach p = l;
     while(p!=NULL){
 	if(permutationOK(tab, p->tab)){
@@ -62,7 +61,7 @@ l_tabhach findElem(l_tabhach l, char *tab){
 void ajoutElemTabHach(l_tabhach *l, int nbre, char* tab){
     l_tabhach p = findElem(*l, tab);
     if(p==NULL){
-	l_tabhach nouv = (l_tabhach )calloc(1, sizeof(struct l_tabhach));
+	l_tabhach nouv = my_calloc(sizeof(struct l_tabhach));
 	nouv->tab = tab;
 	nouv->nbre_perm = 1;
 	ajoutElem(&(nouv->perm), nbre);

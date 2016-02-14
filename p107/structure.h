@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
+#include "../shared/alloc.h"
 
 #define NBRE_SOMMETS 40
 //#define NBRE_SOMMETS 
@@ -24,8 +25,6 @@ struct sommet{
     arete **tabArete;
 };
 
-void* my_malloc(int);
-arete* allocArete(int taille);
 void initTabSommets(sommet tabS[], int maxCo);
 void remplissageTabSommets(sommet tabSommet[], arete tabArete[], int);
 

@@ -13,7 +13,7 @@ int main(void)
         i--;
     }
 
-    printf("nbre => %ld\n", nbreToPandigital(i));
+    printf("%ld\n", nbreToPandigital(i));
 
     return 0;
 }
