@@ -34,10 +34,8 @@ void searchMonte(unsigned int** matrice, unsigned int** tabMonte, int col){
 }
 
 int shorterWay(unsigned int** matrice){
-    unsigned int **tabMonte, **tabDescente;
-    allocTab2D(&tabMonte);
-    allocTab2D(&tabDescente);
-
+    unsigned int **tabDescente = (unsigned int**)allocTab2D(TAILLE_MATRICE, TAILLE_MATRICE, sizeof(unsigned int));
+    unsigned int **tabMonte = (unsigned int**)allocTab2D(TAILLE_MATRICE, TAILLE_MATRICE, sizeof(unsigned int));
     unsigned int i, j, min;
 
     for(j=1; j<TAILLE_MATRICE; j++){
@@ -55,7 +53,7 @@ int shorterWay(unsigned int** matrice){
 	}
     }
 
-    liberation(tabDescente);
-    liberation(tabMonte);
+    liberationTab2D((void**)tabDescente, TAILLE_MATRICE);
+    liberationTab2D((void**)tabMonte, TAILLE_MATRICE);
     return min;
 }

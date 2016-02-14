@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "donnees.h"
-#include "alloc.h"
+#include "../shared/alloc.h"
 
 void affMatrice(unsigned int** matrice);
 int shorterWay(unsigned int**matrice);

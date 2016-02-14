@@ -18,8 +18,7 @@ unsigned int minAB(unsigned int a, unsigned int b){
 }
 
 int shorterWay(unsigned int** matrice){
-    unsigned int** tab;
-    allocTab2D(&tab);
+    unsigned int** tab = (unsigned int**)allocTab2D(TAILLE_MATRICE, TAILLE_MATRICE, sizeof(unsigned int));
 
     int i, j, min;
     tab[0][0] = matrice[0][0];
@@ -37,6 +36,6 @@ int shorterWay(unsigned int** matrice){
 	}
     }
     min = tab[TAILLE_MATRICE-1][TAILLE_MATRICE-1];
-    liberation(tab);
+    liberationTab2D((void**)tab, TAILLE_MATRICE);
     return min;
 }
