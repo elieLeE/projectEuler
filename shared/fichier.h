@@ -1,5 +1,5 @@
-#ifndef _FICHIER_H_
-#define _FICHIER_H_
+#ifndef _SHARED_FICHIER_H_
+#define _SHARED_FICHIER_H_
 
 #include <stdio.h>
 #include <stdlib.h>

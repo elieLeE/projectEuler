@@ -1,5 +1,5 @@
-#ifndef _NBRE_H_
-#define _NBRE_H_
+#ifndef _SHARED_NBRE_H_
+#define _SHARED_NBRE_H_
 
 #include <stdbool.h>
 #include <stdio.h>

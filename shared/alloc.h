@@ -1,5 +1,5 @@
-#ifndef _ALLOC_H_
-#define _ALLOC_H_
+#ifndef _SHARED_ALLOC_H_
+#define _SHARED_ALLOC_H_
 
 #include <stdio.h>
 #include <stdlib.h>
