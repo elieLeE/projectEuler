@@ -10,5 +10,6 @@
  * */
 
 bool isPrime(unsigned long n);
+int nbreDigits(int n);
 
 #endif

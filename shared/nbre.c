@@ -14,3 +14,13 @@ bool isPrime(unsigned long n){
     }
     return true;
 }
+
+int nbreDigits(int n){
+    int i = 1;
+    int compt = 0;
+    while(n>=i){
+	i = i*10;
+	compt++;
+    }
+    return compt;
+}
