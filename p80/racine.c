@@ -1,46 +1,45 @@
 #include "racine.h"
 
-unsigned int sum100DecimalDigits(int n){
+unsigned int sum100DecimalDigits(int nbre){
     unsigned int sum = 0, d;
     unsigned int i = 0;
-    int debCompt = nbreDigits(n);
-    int deb = 1, res;
+    mpz_t deb, res, n;
+    mpz_init(deb);
+    mpz_init(res);
+    mpz_init(n);
+
+    mpz_set_ui(deb, 1);
+    mpz_set_ui(n, nbre);
 
     while(i<NBRE_DIGITS){
 	d = nbreSoustraction(n, &deb, &res);
-	deb = nextDeb(deb);
-	n = nextN(res, d);
-	if(debCompt > 0){
-	    debCompt--;
-	}
-	else{
-	    sum = sum + d;
-	    i++;
-	}
+	nextDeb(&deb);
+	nextN(&n, res);
+	sum = sum + d;
+	i++;
     }
-
     return sum;
 }
 
-int nbreSoustraction(int n, int *deb, int* res){
+int nbreSoustraction(mpz_t n, mpz_t *deb, mpz_t* res){
      int compt = 0;
-     n = n - (*deb);
-     while(n>=0){
-	 printf("n => %d, deb => %d\n", n, *deb);
-	 *deb = *deb + 2;
-	 n = n - (*deb);
+     mpz_sub(n, n, *deb);
+     while(mpz_cmp_ui(n, 0)>=0){
+	 mpz_add_ui(*deb, *deb, 2);
+	 mpz_sub(n, n, *deb);
 	 compt++;
      }
-     *res = n + (*deb);
-     *deb = *deb-2;
-     printf("n => %d, deb => %d\n", n, *deb);
+     mpz_add(*res, n, *deb);
+     mpz_sub_ui(*deb, *deb, 2);
      return compt;
 }
 
-int nextDeb(int impair){
-    return (impair+1)*10+1;
+void nextDeb(mpz_t* impair){
+    mpz_add_ui(*impair, *impair, 1);
+    mpz_mul_ui(*impair, *impair, 10);
+    mpz_add_ui(*impair, *impair, 1);
 }
 
-int nextN(int a, int b){
-    return a*nbreDigits(b) + b;
+void nextN(mpz_t* n, mpz_t res){
+    mpz_mul_ui(*n, res, 100);
 }

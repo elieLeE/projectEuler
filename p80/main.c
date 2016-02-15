@@ -16,21 +16,9 @@ int main(){
 	    diffCarre = diffCarre + 2;
 	}
 	else{
-	    //sum = sum + sum100DecimalDigits(i);
+	    sum = sum + sum100DecimalDigits(i);
 	}
     }
-
-    i = 2;
-    printf("%d => %d\n\n", i, sum100DecimalDigits(i));
-
-    int n = 7, deb = 1, res;
-    printf("nbreSoustraction(%d) => %d, ", n, nbreSoustraction(n, &deb, &res));
-    printf("deb => %d, res => %d\n\n", deb, res);
-
-    n = 312;
-    deb = 41;
-    printf("nbreSoustraction(%d) => %d, ", n, nbreSoustraction(n, &deb, &res));
-    printf("deb => %d, res => %d\n", deb, res);
 
     printf("%d\n", sum);
 	    
