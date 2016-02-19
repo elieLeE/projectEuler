@@ -7,12 +7,11 @@
 int main(){
     l_elem listeNbreOctagonal;
     l_tabhach tabHachNbre[5][100];
-    char tabIndice[5] = {-1, -1, -1, -1, -1};
+    int tabIndice[5] = {-1, -1, -1, -1, -1};
     bool nbreFait[5] = {false, false, false, false, false};
     c_elem p;
     c_tabhach t[5];
     bool continuer = true;
-    char i = 0;
 
     remplissage(&listeNbreOctagonal, tabHachNbre);
 
@@ -46,14 +45,18 @@ int main(){
 				    }
 				}
 				if(continuer){
-				    nbreFait[tabIndice[3]] = false;
+				    if(tabIndice[3] >= 0){
+					nbreFait[tabIndice[3]] = false;
+				    }
 				    tabIndice[3] = -1;
 				    t[2] = t[2]->suiv;
 				}
 			    }
 			}
 			if(continuer){
-			    nbreFait[tabIndice[2]] = false;
+			    if(tabIndice[2] >= 0){
+				nbreFait[tabIndice[2]] = false;
+			    }
 			    t[1] = t[1]->suiv;
 			    tabIndice[2] = -1;
 			}
@@ -61,14 +64,18 @@ int main(){
 		}
 		if(continuer){
 		    t[0] = t[0]->suiv;
-		    nbreFait[tabIndice[1]] = false;
+		    if(tabIndice[1] >= 0){
+			nbreFait[tabIndice[1]] = false;
+		    }
 		    tabIndice[1] = -1;
 		}
 	    }
 	}
 	if(continuer){
 	    p = p->suiv;
-	    nbreFait[tabIndice[0]] = false;
+	    if(tabIndice[0] >= 0){
+		nbreFait[tabIndice[0]] = false;
+	    }
 	    tabIndice[0] = -1;
 	}
     }

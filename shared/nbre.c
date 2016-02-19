@@ -1,5 +1,19 @@
 #include "nbre.h"
 
+int min(unsigned int a, unsigned int b){
+    if(a < b){
+	return a;
+    }
+    return b;
+}
+
+int max(unsigned int a, unsigned int b){
+    if(a > b){
+	return a;
+    }
+    return b;
+}
+
 bool isPrime(unsigned long n){
     unsigned long i;
     if(n%2==0){

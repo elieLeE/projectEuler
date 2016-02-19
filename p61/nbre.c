@@ -1,17 +1,19 @@
 #include "nbre.h"
 
-bool nextNbre(bool tab[5], char *ind, l_tabhach tabHach[5][100], char n){
-    char i = 0, deb;
+bool nextNbre(bool tab[5], int *ind, l_tabhach tabHach[5][100], unsigned char n){
+    int i = 0, deb;
     if(*ind < 0){
 	deb = 0;
     }
     else{
 	deb = *ind;
     }
-    for(i=deb; i<5 & (tab[i] || tabHachEmpty(tabHach[i][n])); i++);
+    for(i=deb; (i<5) & (tab[i] || tabHachEmpty((tabHach[i][n]).deb)); i++);
 
     if(i<5){
-	tab[*ind] = false;
+	if(*ind >= 0){
+	    tab[*ind] = false;
+	}
 	tab[i] = true;
 	*ind = i;
 	return true;
@@ -21,8 +23,8 @@ bool nextNbre(bool tab[5], char *ind, l_tabhach tabHach[5][100], char n){
     }
 }
 	 
-bool dernierNbre(l_tabhach tabHach[5][100], char left, char right, bool tab[5], char *ind){
-    char i = 0;
+bool dernierNbre(l_tabhach tabHach[5][100], unsigned char left, unsigned char right, bool tab[5], int *ind){
+    unsigned char i = 0;
     for(i=0; i<5; i++){
 	if(!tab[i]){
 	    break;

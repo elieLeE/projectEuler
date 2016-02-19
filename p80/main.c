@@ -5,9 +5,9 @@
 #define LIMITE 100
 
 int main(){
-    int i;
-    int diffCarre = 3;
-    int nextCarre = 1;
+    unsigned int i;
+    unsigned int diffCarre = 3;
+    unsigned int nextCarre = 1;
     unsigned int sum = 0;
 
     for(i=1; i<LIMITE; i++){

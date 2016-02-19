@@ -25,7 +25,7 @@ mpz_t* normeAlpha(alpha a);
 void alphaCarreSur2(alpha *a);
 void alphaCubeSur8(alpha *a);
 void alphaSixSur64(alpha *a);
-char* visuAlpha(alpha a);
+void visuAlpha(alpha a);
 alpha nextAlpha(struct search_sol sol, mpz_t m);
 mpz_t* searchM(struct search_sol sol);
 alpha searchSol(int  n);

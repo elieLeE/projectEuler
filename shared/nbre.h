@@ -9,6 +9,8 @@
  * add nbreDigit
  * */
 
+int min(unsigned int a, unsigned int b);
+int max(unsigned int a, unsigned int b);
 bool isPrime(unsigned long n);
 int nbreDigits(int n);
 

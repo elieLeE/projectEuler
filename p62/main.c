@@ -4,7 +4,7 @@
 #include "tabhach.h"
 
 void visuTab(char *tab){
-    char i = 0;
+    unsigned char i = 0;
     for(i=0; i<10; i++){
 	printf("tab[%d] : %d, ", i, tab[i]);
     }
@@ -12,14 +12,13 @@ void visuTab(char *tab){
 }
 
 int main(){
-    int i = 0;
+    unsigned int i = 0;
     long nbre = 0;
     short sum = 0;
     l_tabhach p = NULL;
     l_tabhach tabHach[LIMITE_TAB];
 
     initTabHach(tabHach);
-    l_perm l = creerListe();
 
     for(i=1; i<=LIMITE_SEARCH; i++){
 	nbre = (long)pow(i, 3);

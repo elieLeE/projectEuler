@@ -2,7 +2,7 @@
 
 int main(){
     int compt = 0, i =1;
-    int puis = 2, tmp;
+    int tmp;
     do{
 	tmp = nbre_integer(i);
 	compt += tmp;

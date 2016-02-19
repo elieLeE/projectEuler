@@ -1,6 +1,6 @@
 #include "racine.h"
 
-unsigned int sum100DecimalDigits(int nbre){
+unsigned int sum100DecimalDigits(unsigned int nbre){
     unsigned int sum = 0, d;
     unsigned int i = 0;
     mpz_t deb, res, n;
@@ -21,7 +21,7 @@ unsigned int sum100DecimalDigits(int nbre){
     return sum;
 }
 
-int nbreSoustraction(mpz_t n, mpz_t *deb, mpz_t* res){
+unsigned int nbreSoustraction(mpz_t n, mpz_t *deb, mpz_t* res){
      int compt = 0;
      mpz_sub(n, n, *deb);
      while(mpz_cmp_ui(n, 0)>=0){

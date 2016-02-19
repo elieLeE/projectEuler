@@ -15,7 +15,7 @@ struct l_tabhach{
 };
 
 struct c_tabhach{
-    char right;
+    unsigned char right;
     struct c_tabhach *suiv;
 };
 
@@ -24,7 +24,7 @@ struct l_elem{
 };
 
 struct c_elem{
-    char left, right;
+    unsigned char left, right;
     struct c_elem* suiv;
 };
 

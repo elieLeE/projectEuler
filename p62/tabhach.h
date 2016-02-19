@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "type_donnees.h"
+#include "liste.h"
 
 bool tabHachEmpty(l_tabhach t);
 void visuTabHach(l_tabhach tab[LIMITE_TAB]);

@@ -1,10 +1,10 @@
 #include "liste.h"
 
 void liberationListe(l_elem *l){
-    l_elem p = NULL;
-    while(*l!=NULL){
-	p = (*l);
-	*l = (*l)->suiv;
+    c_elem p = l->deb;
+    while(p!=NULL){
+	p = (*l).deb;
+	l->deb = p->suiv;
 	free(p);
     }
 }

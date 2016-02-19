@@ -13,7 +13,7 @@ char* digitsOfNbre(long n){
 }
 
 short sumDigits(char *tab){
-    char i = 0;
+    unsigned char i = 0;
     short sum = 0;
     for(i=0; i<10; i++){
 	sum += (i*tab[i]);

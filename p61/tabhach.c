@@ -1,7 +1,7 @@
 #include "tabhach.h"
 
 void initTabHach(l_tabhach tab[100]){
-    char i = 0;
+    unsigned char i = 0;
     for(i=0; i<100; i++){
 	tab[i].deb = creerTabHach();
 	tab[i].end = tab[i].deb;
@@ -17,7 +17,7 @@ bool tabHachEmpty(c_tabhach t){
 }
 
 void visuTabHach(l_tabhach tab[100], char *name){
-    char i = 0;
+    unsigned char i = 0;
     printf("%s\n", name);
     for(i=0; i<100; i++){
 	visuElemTabHach(tab[i].deb, i);

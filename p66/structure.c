@@ -33,7 +33,7 @@ void alphaMul(alpha *a1, alpha a2){
 }
 
 void alphaCarre(alpha *a){
-    mpz_t x, n1, n2;
+    mpz_t n1, n2;
 
     //calcul de a->a
     mpz_init(n1);
@@ -92,7 +92,7 @@ void alphaSixSur64(alpha *a){
     mpz_mul_ui(a->b, a->b, 2);
 }
 
-char* visuAlpha(alpha a){
+void visuAlpha(alpha a){
     gmp_printf("alpha : %Zd + %Zd*sqrt(%Zd)\n", a.a, a.b, a.n);
 }
 
@@ -208,10 +208,6 @@ alpha searchSol(int n){
 }
 
 alpha searchSolRec(struct search_sol sol){
-    search_sol s2;
-    s2 = sol;
-    char c;
-
     search_sol newSol;
     mpz_init(newSol.alp.a);
     mpz_init(newSol.alp.b);
