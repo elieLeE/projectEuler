@@ -9,7 +9,7 @@
 
 CC=gcc
 CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
-LDFLAGS=
+LDFLAGS=-lm
 EXEC=prog 
 SHARED=../shared
 SRC= $(wildcard *.c $(SHARED)/fichier.c $(SHARED)/liste.c $(SHARED)/nbre.c $(SHARED)/alloc.c) 

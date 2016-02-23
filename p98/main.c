@@ -11,19 +11,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../shared/fichier.h"
-#include "fichier.h"
 #include "../shared/alloc.h"
+#include "../shared/liste.h"
+#include "fichier.h"
+#include "tabHach.h"
+#include "mot.h"
+#include "visu.h"
 
 int main(){
     FILE* f = ouvFichier("p098_words.txt", "r");
     unsigned int maxLongMot, maxSumMotAscii;
-    liste** tabHach; 
+    liste*** tabhach; 
 
     maxWords(f, &maxLongMot, &maxSumMotAscii);
-    printf("maxLongMot : %d, maxSumMotAscii : %d\n", maxLongMot, maxSumMotAscii);
 
-    tabHach = my_calloc(maxLongMot, maxSumMotAscii, sizeof(
+    /*
+     * simplfie le parcours dans le tab
+     * */
+    maxLongMot++;
+    maxSumMotAscii++;
 
+    tabhach = (liste ***)allocTab2D(maxLongMot, maxSumMotAscii, sizeof(struct liste*));
+
+    remplissageTabHach(f, tabhach);
+
+    printf("%d\n", maxSquare(tabhach, maxLongMot, maxSumMotAscii));
+    
+    liberationTabHach(tabhach, maxLongMot, maxSumMotAscii);
     fermerFichier(&f);
 
     return 0;

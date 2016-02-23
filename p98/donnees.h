@@ -3,12 +3,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "../shared/liste.h"
 
-typedef struct dataHach;
+typedef struct dataHach dataHach;
 
 struct dataHach{
     liste* lMot;
-    firstMot[20];
+    char firstMot[50];
+    unsigned char tabAnalyseMot[26];
     unsigned int nbreMot;
 };
 

@@ -7,7 +7,6 @@
 #include "../shared/alloc.h"
 #include "../shared/nbre.h"
 
-void maxWords(FILE* f, unsigned int* maxLong, unsigned int* maxSumAscii);
-void lecture(FILE *f, liste** tabHach);
+bool lireMot(FILE* f, char *nextMot);
 
 #endif
