@@ -4,19 +4,40 @@
 #include <math.h>
 #include <gmp.h>
 
-#define LIMITE 2000
+#define LIMITE 5000
 #define PRECISION 0.0000000001
 #define DEBUG 0
+
+/*
+ * solution 
+ * 1818 => 1000456
+ * */
 
 typedef struct cuboid cuboid;
 struct cuboid{
     unsigned int l, L, H;
 };
 
+double calculMinDouble(unsigned int a, unsigned int b, unsigned int c){
+    double minX = 1.0*a*b;
+    return minX/(1.0*(a+c));
+}
+
+double calculWayDouble(unsigned int a, unsigned int b, unsigned int c){
+    double minX = calculMinDouble(a, b, c);
+    //printf("(double)minX : %lf\n", minX);
+    double num = sqrt(minX*minX + 1.0*a*a);
+    double denum = sqrt(1.0*c*c + ((b-minX)*(b-minX)));
+    //printf("double) => num : %lf, denum : %lf ==> %lf\n", num, denum, (num+denum));
+    return num+denum;
+    //return num/denum;
+}
+
 void calculMinMpz(mpf_t *minX, unsigned int a, unsigned int b, unsigned int c){
     mpf_init(*minX);
     mpf_set_ui(*minX, 1.0*a*b);
     mpf_div_ui(*minX, *minX, 1.0*(a+c));
+    //gmp_printf("(mpf)minX : %.10Ff\n", *minX);
 }
 
 void calculWayMpz(mpf_t *way, unsigned int a, unsigned int b, unsigned int c){
@@ -38,6 +59,7 @@ void calculWayMpz(mpf_t *way, unsigned int a, unsigned int b, unsigned int c){
     mpf_sqrt(y, y);
 
     mpf_add(*way, x, y);
+    //gmp_printf("(mpf) => x : %.10Ff, y : %.10Ff ==> %.10Ff\n", x, y, *way);
 }
 
 void minMpz(mpf_t *minD, mpf_t a, mpf_t b){
@@ -74,9 +96,22 @@ bool shortestWayInteger(cuboid *c){
     gmp_printf("actual : %10Ff, diff : %10Ff\n", minW, previous);
     mpf_set(previous, minW);
     getchar();*/
+
+    /*double minD = calculWayDouble(c->l, c->L, c->H);
+    double fmd = floor(minD);*/
+    /*gmp_printf("(%.10Ff, %.10Ff) <==> (%lf, %lf)\n", minW, minWF, minD, fmd);
+    getchar();*/
     if((mpf_cmp_d(minW2, PRECISION) < 0) || (mpf_cmp_d(minW3, PRECISION) < 0)){
+	/*if((minD - fmd)>0.01){
+	    printf("mpz true et double false => minD : %lf, fmd : %lf\n", minD, fmd);
+	    getchar();
+	}*/
 	return true;
     }
+    /*if((minD - fmd)<0.01){
+	printf("mpz false et double true => minD : %lf, fmd : %lf\n", minD, fmd);
+	getchar();
+    }*/
     return false;
 }
 
@@ -108,7 +143,6 @@ int main(){
     m = 1840;
     m = 0;
     printf("%d => %d\n", m, nbreShortestWayInteger(m));
-    unsigned int oldH = 0, oldH2 = 0;
 
     do{
 	m++;
@@ -147,11 +181,39 @@ int main(){
 	}
     }while(compt < LIMITE);
 
-    /*for(i=0; i<=m; i++){
+    for(i=0; i<=m; i=i+5){
 	printf("%d => %d\n", i, tab[i]);
-    }*/
+    }
     printf("m : %d\n", m);
     printf("compt : %d\n", compt);
+
+    double a = 0.0984179041;
+    double b = 2.1611582137;
+
+    double a2 = 2.9272569012;
+    double b2 = 0.4625242209;
+
+    double x = 1000000;
+    x = pow(x, b2);
+    x = x*a2;
+    printf("x : %lf\n", x);
+
+    /*x = x/a;
+    x = pow(x, 1/b);
+    printf("x : %lf\n", x);*/
+
+    /*mpf_t x;
+    mpf_init_set_ui(x, 2000);
+    double d = 0.5;
+
+    printf("main 1\n");
+    //mpf_div_ui(x, x, d);
+    mpf_mul_ui(x, x, 10,160752854);
+    gmp_printf("x : %.10Ff\n", x);
+    mpf_pow_ui(x, x, b);
+    gmp_printf("x : %.10Ff\n", x);*/
+
+
 
     return 0;
 }
