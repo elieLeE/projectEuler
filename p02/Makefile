@@ -11,10 +11,10 @@ CC=gcc
 CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
 LDFLAGS=
 EXEC=prog 
-SRC= $(wildcard *.c) 
+SRC= $(wildcard *.c)
 OBJ= $(SRC:.c=.o)
 
-all: $(EXEC)
+all: $(EXEC) cleanSimple
 
 $(EXEC): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
@@ -22,7 +22,7 @@ $(EXEC): $(OBJ)
 %.o: %.c
 	$(CC) -o $@ -c $< $(CFLAGS)
 
-.PHONY: cleanSimple clean 
+.PHONY: cleanSimple clean
 
 cleanSimple:
 	rm -rf $(OBJ)
