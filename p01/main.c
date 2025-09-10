@@ -5,7 +5,8 @@
 #define NBRE_1 3
 #define NBRE_2 5
 
-int main(){
+int main()
+{
     const unsigned int enDouble = NBRE_1 * NBRE_2;
     int sol;
 
