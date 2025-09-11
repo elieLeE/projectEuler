@@ -1,6 +1,6 @@
 #Makefile
 #cible: dependances
-#	commandes
+#commandes
 #$@ : cible
 #$< : nom de la premiere dependance
 #$^ : liste des dependances
@@ -30,4 +30,4 @@ cleanSimple:
 	rm -rf $(OBJ)
 
 clean: cleanSimple
-	rm -rf $(EXEC)	
+	rm -rf $(EXEC)

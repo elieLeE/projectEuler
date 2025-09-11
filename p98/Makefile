@@ -10,13 +10,13 @@
 CC=gcc
 CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
 LDFLAGS=-lm
-EXEC=prog 
+EXEC=prog
 SHARED=../shared
-SRC= $(wildcard *.c $(SHARED)/fichier.c $(SHARED)/liste.c $(SHARED)/nbre.c $(SHARED)/alloc.c) 
+SRC= $(wildcard *.c $(SHARED)/fichier.c $(SHARED)/liste.c $(SHARED)/nbre.c $(SHARED)/alloc.c)
 OBJ= $(SRC:.c=.o)
 INCLUDE=-I. -I$(SHARED)
 
-all: $(EXEC)
+all: $(EXEC) cleanSimple
 
 $(EXEC): $(OBJ)
 	$(CC) $(INCLUDE) -o $@ $^ $(LDFLAGS)
@@ -24,10 +24,10 @@ $(EXEC): $(OBJ)
 %.o: %.c
 	$(CC) $(INCLUDE) -o $@ -c $< $(CFLAGS)
 
-.PHONY: cleanSimple clean 
+.PHONY: cleanSimple clean
 
 cleanSimple:
 	rm -rf $(OBJ)
 
 clean: cleanSimple
-	rm -rf $(EXEC)	
+	rm -rf $(EXEC)

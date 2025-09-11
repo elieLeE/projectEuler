@@ -1,6 +1,6 @@
 #Makefile
 #cible: dependances
-#	commandes
+#commandes
 #$@ : cible
 #$< : nom de la premiere dependance
 #$^ : liste des dependances
@@ -12,12 +12,12 @@ EXE: prog
 all: clean prog1 prog2
 
 prog1: main1.o nbre.o
-	gcc -o $@ $^ -lm 
+	gcc -o $@ $^ -lm
 
 main1.c: nbre.h
 
 prog2: main2.o nbre.o
-	gcc -o $@ $^ -lm 
+	gcc -o $@ $^ -lm
 
 main2.c: nbre.h
 

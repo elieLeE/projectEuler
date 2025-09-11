@@ -1,6 +1,6 @@
 #Makefile
 #cible: dependances
-#	commandes
+#ommandes
 #$@ : cible
 #$< : nom de la premiere dependance
 #$^ : liste des dependances
@@ -12,7 +12,7 @@ CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
 LDFLAGS=
 EXEC=prog 
 SHARED=../shared
-SRC= $(wildcard *.c) 
+SRC= $(wildcard *.c)
 OBJ= $(SRC:.c=.o)
 INCLUDE=-I. -I$(SHARED)
 
@@ -24,10 +24,10 @@ $(EXEC): $(OBJ)
 %.o: %.c
 	$(CC) $(INCLUDE) -o $@ -c $< $(CFLAGS)
 
-.PHONY: cleanSimple clean 
+.PHONY: cleanSimple clean
 
 cleanSimple:
 	rm -rf $(OBJ)
 
 clean: cleanSimple
-	rm -rf $(EXEC)	
+	rm -rf $(EXEC)

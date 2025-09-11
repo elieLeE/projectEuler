@@ -1,21 +1,31 @@
 #Makefile
 #cible: dependances
-#	commandes
+#commandes
 #$@ : cible
 #$< : nom de la premiere dependance
 #$^ : liste des dependances
 #$? : liste des dependances plus recentes que la cible
 #$* : nom du fichier sans le suffixe
 
-EXE: prog
+CC=gcc
+CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
+LDFLAGS=-lm
+EXEC=prog
+SRC= $(wildcard *.c)
+OBJ= $(SRC:.c=.o)
 
-all: clean prog
+all: $(EXEC) cleanSimple
 
-prog: main.o nbre.o tab.o
-	gcc -o $@ $^ -lm 
+$(EXEC): $(OBJ)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
-	gcc -o $@ -c $<
+	$(CC) -o $@ -c $< $(CFLAGS)
 
-clean:
-	rm -f *.o prog
+.PHONY: cleanSimple clean
+
+cleanSimple:
+	rm -rf $(OBJ)
+
+clean: cleanSimple
+	rm -rf $(EXEC)

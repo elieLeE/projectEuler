@@ -1,6 +1,6 @@
 #Makefile
 #cible: dependances
-#	commandes
+#commandes
 #$@ : cible
 #$< : nom de la premiere dependance
 #$^ : liste des dependances
@@ -10,11 +10,11 @@
 CC=gcc
 CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
 LDFLAGS=-lgmp
-EXEC=prog 
-SRC= $(wildcard *.c) 
+EXEC=prog
+SRC= $(wildcard *.c)
 OBJ= $(SRC:.c=.o)
 
-all: $(EXEC)
+all: $(EXEC) cleanSimple
 
 $(EXEC): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
@@ -22,10 +22,10 @@ $(EXEC): $(OBJ)
 %.o: %.c
 	$(CC) -o $@ -c $< $(CFLAGS)
 
-.PHONY: cleanSimple clean 
+.PHONY: cleanSimple clean
 
 cleanSimple:
 	rm -rf $(OBJ)
 
 clean: cleanSimple
-	rm -rf $(EXEC)	
+	rm -rf $(EXEC)
