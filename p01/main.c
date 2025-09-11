@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../shared/sum.h"
+#include "../libC/src/math/sum.h"
 
 #define LIMITE 999
 #define NBRE_1 3
@@ -7,11 +7,12 @@
 
 int main()
 {
-    const unsigned int enDouble = NBRE_1 * NBRE_2;
+    const unsigned int en_double = NBRE_1 * NBRE_2;
     int sol;
 
-    sol = (NBRE_1*sum1ToN(LIMITE/NBRE_1) + NBRE_2*sum1ToN(LIMITE/NBRE_2) -
-           enDouble*sum1ToN(LIMITE/(enDouble)));
+    sol = (NBRE_1 * sum1_to_n(LIMITE / NBRE_1) +
+           NBRE_2 * sum1_to_n(LIMITE / NBRE_2) -
+           en_double * sum1_to_n(LIMITE / (en_double)));
 
     printf("%d\n", sol);
 

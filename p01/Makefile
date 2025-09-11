@@ -11,8 +11,8 @@ CC=gcc
 CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
 LDFLAGS=
 EXEC=prog
-SHARED=../shared
-SRC= $(wildcard *.c $(SHARED)/sum.c)
+SHARED=../libC/src
+SRC= $(wildcard *.c $(SHARED)/math/sum.c)
 OBJ= $(SRC:.c=.o)
 INCLUDE=-I. -I$(SHARED)
 
