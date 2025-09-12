@@ -9,7 +9,7 @@
 
 CC=gcc
 CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
-LDFLAGS=
+LDFLAGS=-lm
 EXEC=prog
 libC=../libC/src
 SRC= $(wildcard *.c $(libC)/mem/mem.c $(libC)/math/prime.c)
