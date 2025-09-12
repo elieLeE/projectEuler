@@ -9,12 +9,17 @@
 
 CC=gcc
 CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
-LDFLAGS=
+LDFLAGS=-lm
 EXEC=prog
-SRC= $(wildcard *.c $(SHARED)/nbre.c)
+LIB_C=../libC/src
+SRC= $(wildcard *.c $(LIB_C)/math/prime.c $(LIB_C)/math/nbre.c $(LIB_C)/mem/mem.c)
 OBJ= $(SRC:.c=.o)
 
 all: $(EXEC) cleanSimple
+
+debug: CFLAGS += -DDDEBUG -g
+debug: LDFLAGS += -DDDEBUG -g
+debug: all
 
 $(EXEC): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
