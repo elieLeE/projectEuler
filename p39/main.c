@@ -1,20 +1,43 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include "triangle.h"
+
+static bool
+is_triangle_rectangle(unsigned int a, unsigned int b, unsigned int c)
+{
+    return (a * a + b * b == c * c);
+}
+
+static int get_triangle_rect_nber(unsigned int p)
+{
+    unsigned int k, compt = 0;
+
+    for (unsigned int i = 1; i < p/2; i++) {
+        for (unsigned int j = i + 1; j < p/2; j++) {
+            k = p - i - j;
+
+            if ((i + j > k) && is_triangle_rectangle(i, j, k)) {
+                compt++;
+            }
+        }
+    }
+    return compt;
+}
 
 int main(void)
 {
-    int i, max = 0, indMax, n;
+    unsigned int count_max = 0;
+    unsigned int answer;
 
-    for(i=1; i<=1000; i++){
-	n = nbreTriangleRect(i);
-	if(n>max){
-	    max = n;
-	    indMax=i;
-	}
+    for (unsigned int i = 3; i <= 1000; i++) {
+        unsigned int count = get_triangle_rect_nber(i);
+
+        if (count > count_max) {
+            count_max = count;
+            answer=i;
+        }
     }
 
-    printf("p : %d, => %d\n", indMax, max);
+    printf("p : %d, => %d\n", answer, count_max);
 
     return 0;
 }
