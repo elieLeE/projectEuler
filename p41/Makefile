@@ -9,20 +9,23 @@
 
 CC=gcc
 CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
-LDFLAGS=
+LDFLAGS=-lm
 EXEC=prog
-SHARED=../shared
-SRC= $(wildcard *.c $(SHARED)/nbre.c)
+LIB_C=../libC/src
+SRC= $(wildcard *.c $(LIB_C)/math/prime.c $(LIB_C)/math/nbre.c $(LIB_C)/mem/mem.c)
 OBJ= $(SRC:.c=.o)
-INCLUDE=-I. -I$(SHARED)
 
 all: $(EXEC)
 
+debug: CFLAGS += -DDDEBUG -g
+debug: LDFLAGS += -DDDEBUG -g
+debug: all
+
 $(EXEC): $(OBJ)
-	$(CC) $(INCLUDE) -o $@ $^ $(LDFLAGS)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
-	$(CC) $(INCLUDE) -o $@ -c $< $(CFLAGS)
+	$(CC) -o $@ -c $< $(CFLAGS)
 
 .PHONY: cleanSimple clean
 
