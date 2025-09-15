@@ -52,5 +52,7 @@ int main()
         n -= 2;
     }
 
+    p_free((void **)(&primes_nber));
+
     printf("n: %d\n", best_n);
 }
