@@ -10,7 +10,7 @@
  * Give the divisor too */
 bool does_x_divide_sub_n(unsigned char digits[], unsigned int x)
 {
-    return (build_number_from_digits(digits, 0, 3) % x) == 0;
+    return (build_number_from_digits(digits, 0, 2) % x) == 0;
 }
 
 bool does_n_respect_the_property(unsigned char digits[NBRE_OF_DIGIT])
@@ -35,7 +35,7 @@ get_all_pandigitals_with_prop_sum_rec(unsigned char digits[NBRE_OF_DIGIT],
 
     if (depth == NBRE_OF_DIGIT) {
         if (does_n_respect_the_property(digits)) {
-            return build_number_from_digits(digits, 0, NBRE_OF_DIGIT);
+            return build_number_from_digits(digits, 0, NBRE_OF_DIGIT - 1);
         }
         return 0;
     }

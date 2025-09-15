@@ -46,7 +46,7 @@ int main()
 
     if (search_perm_rec(digits_nbre, digits_done, &count, 0) == 0) {
         printf("%ld\n",
-               build_number_from_digits(digits_nbre, 0, NBRE_OF_DIGIT));
+               build_number_from_digits(digits_nbre, 0, NBRE_OF_DIGIT - 1));
     } else {
         printf("permutation not foind\n");
     }

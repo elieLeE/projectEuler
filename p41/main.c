@@ -11,7 +11,10 @@ search_pandigital_prime_nber_rec(unsigned char digits[10],
                                  int depth, int last_digit)
 {
     if (depth == last_digit) {
-        unsigned long n = build_number_from_digits(digits, 0, last_digit);
+        /* 0 is skipped. There is no 0 in the array digits.
+         * So, the digits from 1 to 'last_digit' are on 'last_digit - 1' sits.
+         */
+        unsigned long n = build_number_from_digits(digits, 0, last_digit - 1);
 
         return is_prime(n) ? 0 : -1;
     }
@@ -54,7 +57,11 @@ int main()
         unsigned char digits[10] = {0};
 
         if (search_pandigital_prime_nber(digits, i) == 0) {
-            printf("%ld\n", build_number_from_digits(digits, 0, i));
+            /* 0 is skipped. There is no 0 in the array digits.
+             * So, the digits from 1 to 'last_digit' are on 'last_digit - 1'
+             * sits.
+             */
+            printf("%ld\n", build_number_from_digits(digits, 0, i - 1));
 
             break;
         }

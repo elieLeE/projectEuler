@@ -8,11 +8,11 @@
 int main()
 {
     int n;
-    unsigned int *primes_nber;
+    unsigned long *primes_nber;
     unsigned int best_n;
     unsigned int idx_max;
     double quotient_min = (double)LIMITE;
-    unsigned int limite_prime;
+    unsigned long limite_prime;
 
     n = best_n = LIMITE;
 
@@ -23,7 +23,7 @@ int main()
      * */
     limite_prime = floor(sqrt(LIMITE)) + 1;
     primes_nber = p_calloc(sizeof(int) * limite_prime);
-    idx_max = remplissage_tab_prime(primes_nber, limite_prime);
+    idx_max = get_all_primes_below_n(limite_prime, limite_prime, primes_nber);
 
     /* We want to maximize the quotient n / phi(n). So, we want to maximize
      * phi(n). As any even number will have, at maximum, n/2 relatively prime
