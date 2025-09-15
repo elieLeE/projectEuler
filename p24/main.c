@@ -1,18 +1,10 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include "../libC/src/math/nbre.h"
+
 #define NBRE_OF_DIGIT 10
 #define PERM_IDX 1000000
-
-static void visu_tab(unsigned char *tab)
-{
-    int i = 0;
-
-    for (i = 0; i < NBRE_OF_DIGIT; i++) {
-        printf("%d", tab[i]);
-    }
-    printf("\n");
-}
 
 int search_perm_rec(unsigned char digits_nbre[NBRE_OF_DIGIT],
                     bool digits_done[NBRE_OF_DIGIT], unsigned int *count,
@@ -53,7 +45,8 @@ int main()
     unsigned int count = 0;
 
     if (search_perm_rec(digits_nbre, digits_done, &count, 0) == 0) {
-        visu_tab(digits_nbre);
+        printf("%ld\n",
+               build_number_from_digits(digits_nbre, 0, NBRE_OF_DIGIT));
     } else {
         printf("permutation not foind\n");
     }

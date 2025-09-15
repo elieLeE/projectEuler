@@ -11,8 +11,8 @@ CC=gcc
 CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
 LDFLAGS=
 EXEC=prog
-SHARED=../shared
-SRC= $(wildcard *.c)
+LIB_C=../libC/src
+SRC= $(wildcard *.c $(LIB_C)/math/nbre.c $(LIB_C)/mem/mem.c)
 OBJ= $(SRC:.c=.o)
 
 all: $(EXEC) cleanSimple
