@@ -11,18 +11,21 @@ CC=gcc
 CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
 LDFLAGS=
 EXEC=prog
-SHARED=../shared
-SRC= $(wildcard *.c $(SHARED)/swap.c $(SHARED)/alloc.c)
+LIB_C=../libC/src
+SRC= $(wildcard *.c $(LIB_C)/math/nbre.c $(LIB_C)/mem/mem.c ../shared/swap.c ../shared/alloc.c)
 OBJ= $(SRC:.c=.o)
-INCLUDE=-I. -I$(SHARED)
 
 all: $(EXEC) cleanSimple
 
+debug: CFLAGS += -DDDEBUG -g
+debug: LDFLAGS += -DDDEBUG -g
+debug: all
+
 $(EXEC): $(OBJ)
-	$(CC) $(INCLUDE) -o $@ $^ $(LDFLAGS)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
-	$(CC) $(INCLUDE) -o $@ -c $< $(CFLAGS)
+	$(CC) -o $@ -c $< $(CFLAGS)
 
 .PHONY: cleanSimple clean
 

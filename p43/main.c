@@ -1,88 +1,74 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
-#include "tab.h"
 
-bool isSubStringDivisibility(unsigned int tab[]);
+#include "../libC/src/math/nbre.h"
 
-int main(){
-    unsigned int t[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, t2[9][10];
-    unsigned int b, c, d, e, f, g, h, i;
-    unsigned long sum = 0;
+#define NBRE_OF_DIGIT 10
 
-    for(i=0; i<9; i++){
-	copieTab(t2[i], t, 0);
+/* Give the array of digits. All sub_n are on 3 digits, so it is just
+ * necessary to give the address of the first digit.
+ * Give the divisor too */
+bool does_x_divide_sub_n(unsigned char digits[], unsigned int x)
+{
+    return (build_number_from_digits(digits, 0, 3) % x) == 0;
+}
+
+bool does_n_respect_the_property(unsigned char digits[NBRE_OF_DIGIT])
+{
+    /* Could add a static array to store all results in order to not re-do the
+     * same calculation again. But the algorithm is enough fast */
+    return does_x_divide_sub_n(&digits[1], 2) &&
+        does_x_divide_sub_n(&digits[2], 3)    &&
+        does_x_divide_sub_n(&digits[3], 5)    &&
+        does_x_divide_sub_n(&digits[4], 7)    &&
+        does_x_divide_sub_n(&digits[5], 11)   &&
+        does_x_divide_sub_n(&digits[6], 13)   &&
+        does_x_divide_sub_n(&digits[7], 17);
+}
+
+unsigned long
+get_all_pandigitals_with_prop_sum_rec(unsigned char digits[NBRE_OF_DIGIT],
+                                      bool digits_done[NBRE_OF_DIGIT],
+                                      unsigned int depth)
+{
+    unsigned long long sum = 0;
+
+    if (depth == NBRE_OF_DIGIT) {
+        if (does_n_respect_the_property(digits)) {
+            return build_number_from_digits(digits, 0, NBRE_OF_DIGIT);
+        }
+        return 0;
     }
 
-    for(b=0; b<10; b++){
-	copieTab(t2[1], t, 0);
-	for(c=1; c<10; c++){
-	    copieTab(t2[2], t, 0);
-	    for(d=2; d<10; d++){
-		copieTab(t2[3], t, 1);
-		for(e=3; e<10; e++){
-		    copieTab(t2[4], t, 2);
-		    if((t[1]*100+t[2]*10+t[3])%2!=0){
-			echange(&t[3], &t[e+1]);
-			continue;
-		    }
-		    for(f=4; f<10; f++){
-			copieTab(t2[5], t, 3);
-			if((t[2]*100+t[3]*10+t[4])%3!=0){
-			    echange(&t[4], &t[f+1]);
-			    continue;
-			}
-			for(g=5; g<10; g++){
-			    copieTab(t2[6], t, 4);
-			    if((t[3]*100+t[4]*10+t[5])%5!=0){
-				echange(&t[5], &t[g+1]);
-				continue;
-			    }
-			    for(h=6; h<10; h++){
-				copieTab(t2[7], t, 5);
-				if((t[4]*100+t[5]*10+t[6])%7!=0){
-				    echange(&t[6], &t[h+1]);
-				    continue;
-				}
-				for(i=7; i<10; i++){
-				    if((t[5]*100+t[6]*10+t[7])%11==0){
-					if(((t[6]*100+t[7]*10+t[8])%13==0) && ((t[7]*100+t[8]*10+t[9])%17==0)){
-					    copieTab(t2[8], t, 6);
-					    sum+=tabToNbre(t);
-					}
-					echange(&t[8], &t[9]);
-					if(((t[6]*100+t[7]*10+t[8])%13==0) && ((t[7]*100+t[8]*10+t[9])%17==0)){
-					    copieTab(t2[8], t, 6);
-					    visuTab(t);
-					}
-					copieTab(t, t2[8], 6);
-				    }
-				    if(i+1<10){
-					echange(&t[7], &t[i+1]);
-				    }
-				}
-				copieTab(t, t2[7], 5);
-				echange(&t[6], &t[h+1]);
-			    }
-			    copieTab(t, t2[6], 4);
-			    echange(&t[5], &t[g+1]);
-			}
-			copieTab(t, t2[5], 3);
-			echange(&t[4], &t[f+1]);
-		    }
-		    copieTab(t, t2[4], 2);
-		    echange(&t[3], &t[e+1]);
-		}
-		copieTab(t, t2[3], 1);
-		echange(&t[2], &t[d+1]);
-	    }
-	    copieTab(t, t2[2], 0);
-	    echange(&t[1], &t[c+1]);
-	}
-	copieTab(t, t2[1], 0);
-	echange(&t[0], &t[b+1]);
+    for (unsigned int i = 0; i < NBRE_OF_DIGIT; i++) {
+        if ((depth == 0) && (i == 0)) {
+            continue;
+        }
+
+        if (digits_done[i]) {
+            continue;
+        }
+
+        digits[depth] = i;
+        digits_done[i] = true;
+
+        sum += get_all_pandigitals_with_prop_sum_rec(digits, digits_done,
+                                                     depth + 1);
+        digits_done[i] = false;
     }
-    printf("%ld\n", sum);
+
+    return sum;
+}
+
+int main()
+{
+    unsigned char digits[NBRE_OF_DIGIT] = {0};
+    bool digits_done[NBRE_OF_DIGIT] = {false};
+    unsigned long long sum;
+
+    sum = get_all_pandigitals_with_prop_sum_rec(digits, digits_done, 0);
+
+    printf("%lld\n", sum);
 
     return 0;
 }
