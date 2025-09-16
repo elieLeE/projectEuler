@@ -27,5 +27,7 @@ int main(void)
 
     printf("%ld\n", sum);
 
+    p_free((void **)&primes);
+
     return 0;
 }
