@@ -203,15 +203,6 @@ unsigned long get_max_product(unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH])
     return max;
 }
 
-void visu_nbers(unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH])
-{
-    for (int i = 0; i < SIDE_LENGTH; i++) {
-        for (int j = 0; j < SIDE_LENGTH; j++) {
-            printf("%d\n", nbers[i][j]);
-        }
-    }
-}
-
 int main(void)
 {
     unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH];
