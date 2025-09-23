@@ -217,8 +217,6 @@ int main(void)
     unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH];
 
     if (read_numbers(nbers) == 0) {
-        //visu_nbers(nbers);
-
         printf("%ld\n", get_max_product(nbers));
     }
 
