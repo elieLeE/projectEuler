@@ -1,28 +1,63 @@
-#include "calcul_fraction.h"
 #include <stdbool.h>
+#include <stdio.h>
+#include <math.h>
+#include <gmp.h>
 
 #define LIMITE 10000
 #define TAILLE_TAB 7
 
-bool dans_tab(int nbre, int tab[]){
-    int i = 0; 
-    for(i=0; i<TAILLE_TAB; i++){
-	if(nbre == tab[i]){
-	    return false;
-	}
+int get_sqrt_period(int n)
+{
+    double sqrt_n;
+    int x;
+    int period = 0;
+
+    sqrt_n = sqrt(n);
+    x = floor(sqrt_n);
+
+    /* n is a perfect square => no period */
+    if (x != sqrt_n) {
+        int num = 1;
+        int denum, first_num, first_denum;
+
+        first_num = num;
+        first_denum = denum = -x;
+
+        /* As the numerator and denominator are respectively different from
+         * the first numerator and the first denominator, we do not have reach
+         * to the end of the period, and so we continue. */
+        do {
+            int tmp;
+
+            x = floor(num / (sqrt_n + denum));
+            tmp = n - denum * denum;
+
+            if (num != 1) {
+                tmp = tmp / num;
+                num = 1;
+            }
+
+            denum = - (num * denum + x * tmp);
+            num = tmp;
+            period++;
+        } while((first_num != num) | (first_denum != denum));
     }
-    return true;
+
+    return period;
 }
 
-int main(){
+int main()
+{
     int compt = 0, i;
 
-    for(i=2; i<=LIMITE; i++){
-	if(calcul_periode(i)%2 != 0){
-	    compt++;
-	}
+    for (i = 2; i <= LIMITE; i++) {
+        int period = get_sqrt_period(i);
+
+        if (period % 2 != 0) {
+            compt++;
+        }
     }
-    printf("compteur : %d\n", compt);
+    printf("%d\n", compt);
 
     return 0;
 }
