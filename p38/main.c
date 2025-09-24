@@ -30,7 +30,7 @@ static bool can_become_a_pandigital(unsigned int nbre)
     }
 }
 
-static void display_pandigital_nber_from_n(int n)
+static unsigned long get_pandigital_nber_from_n(int n)
 {
     unsigned int nbre_digits = 0;
     unsigned int total_nber_digits = 0;
@@ -39,8 +39,7 @@ static void display_pandigital_nber_from_n(int n)
     while (true) {
         unsigned char current_digits[10] = {0};
 
-        nbre_digits =
-            get_digits_from_number(n, current_digits);
+        nbre_digits = get_digits_from_number(n, current_digits);
 
         total_nber_digits += nbre_digits;
         if (total_nber_digits <= 9) {
@@ -49,19 +48,20 @@ static void display_pandigital_nber_from_n(int n)
         }
 
         if (total_nber_digits >= 9) {
-            for (int i = 8; i >= 0; i--) {
-                printf("%d", all_digits[i]);
-            }
-            printf("\n");
-
-            return;
+            break;
         }
         n += n;
     }
+
+    return build_number_from_digits_rev(all_digits, 0, 9);
 }
 
 int main(void)
 {
+    /* We have to concatenate 2 numbers in order to form a 9-digit member.
+     * So, maximum of the basic number has to have less than 5 digits as all
+     * 5-digits number product will have at least 5 digits and so the
+     * concatenations of the number will overtake the maximum of 9 digits */
     int n = 10000;
 
     /* Determine if the number n, with the concatenation of its multiple,
@@ -74,6 +74,6 @@ int main(void)
         n--;
     }
 
-    display_pandigital_nber_from_n(n);
+    printf("%ld\n", get_pandigital_nber_from_n(n));
 
 }
