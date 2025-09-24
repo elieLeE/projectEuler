@@ -16,6 +16,10 @@ OBJ= $(SRC:.c=.o)
 
 all: $(EXEC) cleanSimple
 
+debug: CFLAGS += -DDDEBUG -g
+debug: LDFLAGS += -DDDEBUG -g
+debug: all
+
 $(EXEC): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 

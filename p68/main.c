@@ -1,91 +1,158 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
-#include "tab.h"
-#include "triplet.h"
+#include "limits.h"
 
-int main(){
-    int t[NBRE_DIGIT], t2[9][NBRE_DIGIT];
-    double maxTriplet = 0, n;
-    int b, c, d, e, f, g, h, i;
-    triplet gon[NBRE_TRIPLETS];
+#define NBRE_RING 10
+#define MAX_DIGIT NBRE_RING + 1
+#define NBRE_TRIPLETS 5
 
-    initTab(t);
-    /*printf("tab => ");
-    visuTab(t);*/
-    initTriplets(gon, t);
+/* A triplet has 3 rings. Each ring has an integer in it. */
+typedef struct triplet_t {
+    int values[3];
+} triplet_t;
 
-    //n = tripletsToNbre(gon);
-    /*affTriplets(gon);
-    printf("nbre : %ld\n", tripletsToNbre(gon));*/
+void init_triplets(triplet_t triplets[NBRE_TRIPLETS], int digits[MAX_DIGIT])
+{
+    triplet_t *t;
 
-    for(i=0; i<NBRE_DIGIT; i++){
-	copieTab(t2[i], t, 0);
+    for (int i = 0, j = NBRE_TRIPLETS; i < NBRE_TRIPLETS - 1; i++, j++) {
+        t = &(triplets[i]);
+
+        t->values[0] = digits[i];
+        t->values[1] = digits[j];
+        t->values[2] = digits[j+1];
+    }
+    t = &(triplets[NBRE_TRIPLETS - 1]);
+
+    t->values[0] = digits[NBRE_TRIPLETS - 1];
+    t->values[1] = digits[NBRE_RING - 1];
+    t->values[2] = digits[NBRE_TRIPLETS];
+}
+
+int get_triplet_sum(triplet_t *t)
+{
+    return (t->values[0]) + (t->values[1]) + (t->values[2]);
+}
+
+bool is_possible_solution(triplet_t triplets[NBRE_TRIPLETS])
+{
+    int sum;
+
+    for (int i = 0; i < NBRE_TRIPLETS; i++) {
+        int *values = (triplets[i].values);
+
+        /* If 10 is present is several triplets (so at pos 2 or 3 of triplets,
+         * it will be impossible to have same sum for the triplets */
+        if (((values[1]) == 10) || ((values[2]) == 10)) {
+            return false;
+        }
     }
 
-    for(b=0; b<NBRE_DIGIT; b++){
-	copieTab(t2[1], t, 0);
-	for(c=1; c<NBRE_DIGIT; c++){
-	    copieTab(t2[2], t, 0);
-	    for(d=2; d<NBRE_DIGIT; d++){
-		copieTab(t2[3], t, 1);
-		for(e=3; e<NBRE_DIGIT; e++){
-		    copieTab(t2[4], t, 2);
-		    for(f=4; f<NBRE_DIGIT; f++){
-			copieTab(t2[5], t, 3);
-			for(g=5; g<NBRE_DIGIT; g++){
-			    copieTab(t2[6], t, 4);
-			    for(h=6; h<NBRE_DIGIT; h++){
-				copieTab(t2[7], t, 5);
-				for(i=7; i<NBRE_DIGIT; i++){
-				    //visuTab(t);
-				    if(solPossible(gon)){
-					n = tripletsToNbre(gon);
-					/*printf("%lf\n", n);
-					affTriplets(gon);*/
-					if(n>maxTriplet){
-					    maxTriplet = n;
-					}
-				    }
-				    copieTab(t2[8], t, 6);
-				    echange(&t[8], &t[9]);
-				    if(solPossible(gon)){
-					n = tripletsToNbre(gon);
-					/*printf("%lf\n", n);
-					affTriplets(gon);*/
-					if(n>maxTriplet){
-					    maxTriplet = n;
-					}
-				    }
-				    //visuTab(t);
-				    copieTab(t, t2[8], 6);
-				    if((i+1)<NBRE_DIGIT){
-					echange(&t[7], &t[i+1]);
-				    }
-				}
-
-				copieTab(t, t2[7], 5);
-				echange(&t[6], &t[h+1]);
-			    }
-			    copieTab(t, t2[6], 4);
-			    echange(&t[5], &t[g+1]);
-			}
-			copieTab(t, t2[5], 3);
-			echange(&t[4], &t[f+1]);
-		    }
-		    copieTab(t, t2[4], 2);
-		    echange(&t[3], &t[e+1]);
-		}
-		copieTab(t, t2[3], 1);
-		echange(&t[2], &t[d+1]);
-	    }
-	    copieTab(t, t2[2], 0);
-	    echange(&t[1], &t[c+1]);
-	}
-	copieTab(t, t2[1], 0);
-	echange(&t[0], &t[b+1]);
+    /* all triplets have to have the same sum */
+    sum = get_triplet_sum(&triplets[0]);
+    for (int i = 1; i < NBRE_TRIPLETS; i++) {
+        if (sum != get_triplet_sum(&triplets[i])) {
+            return false;
+        }
     }
-    printf("maxTriplet => %lf\n", maxTriplet);
+    return true;
+}
+
+/* looking for the triplet that has the minimal value for its external node */
+int get_lowest_external_node_triplet_idx(triplet_t triplets[NBRE_TRIPLETS])
+{
+    int min, ind;
+
+    min = (triplets[0].values[0]);
+    ind = 0;
+
+    for (int i = 1; i < NBRE_TRIPLETS; i++) {
+        triplet_t *t = &(triplets[i]);
+
+        if (min > (t->values[0])) {
+            min = (t->values[0]);
+            ind = i;
+        }
+    }
+    return ind;
+}
+
+int get_nber_from_triplet(triplet_t *t)
+{
+    return (t->values[0]) * 100 + (t->values[1]) * 10 + (t->values[2]);
+}
+
+unsigned long get_nber_from_triplets(triplet_t *t)
+{
+    int current_idx, idx_start;
+    unsigned long n;
+
+    idx_start = get_lowest_external_node_triplet_idx(t);
+    n = get_nber_from_triplet(&t[idx_start]);
+
+    current_idx = (idx_start + 1) % NBRE_TRIPLETS;
+    do {
+        /* 10 value be only on the ring 1 of one of the triplet
+         * (cf is_possible_solution) */
+        if ((t[current_idx].values[0]) == 10) {
+            n *= 10000;
+        } else {
+            n *= 1000;
+        }
+        n += get_nber_from_triplet(&t[current_idx]);
+
+        current_idx = (current_idx + 1) % NBRE_TRIPLETS;
+    } while (current_idx != idx_start);
+
+    return n;
+}
+
+unsigned long search_best_triplet_rec(int digits[MAX_DIGIT],
+                                      bool digits_done[NBRE_RING],
+                                      int depth)
+{
+    unsigned long max_n = 0;
+
+    if (depth == NBRE_RING) {
+        /* 0 is skipped. There is no 0 in the array digits.
+         * So, the digits from 1 to 'last_digit' are on 'last_digit - 1' sits.
+         */
+        triplet_t triplets[NBRE_TRIPLETS];
+
+        init_triplets(triplets, digits);
+
+        if (is_possible_solution(triplets)) {
+            return get_nber_from_triplets(triplets);
+        }
+        return 0;
+    }
+
+    for (int i = 1; i <= MAX_DIGIT; i++) {
+        unsigned long tmp;
+
+        if (digits_done[i]) {
+            continue;
+        }
+
+        digits[depth] = i;
+        digits_done[i] = true;
+
+        tmp = search_best_triplet_rec(digits, digits_done, depth + 1);
+        if (tmp > max_n) {
+            max_n = tmp;
+        }
+        digits_done[i] = false;
+    }
+
+    return max_n;
+}
+
+int main()
+{
+    int digits[MAX_DIGIT] = {0};
+    bool digits_done[MAX_DIGIT] = {false};
+
+    printf("%ld\n", search_best_triplet_rec(digits, digits_done, 0));
 
     return 0;
 }
