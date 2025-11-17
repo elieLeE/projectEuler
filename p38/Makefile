@@ -12,7 +12,7 @@ CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
 LDFLAGS=-lm
 EXEC=prog
 LIB_C=../libC/src
-SRC= $(wildcard *.c $(LIB_C)/math/nbre.c)
+SRC= $(wildcard *.c $(LIB_C)/math/nber_helper.c)
 OBJ= $(SRC:.c=.o)
 
 all: $(EXEC) cleanSimple

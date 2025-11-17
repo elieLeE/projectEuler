@@ -8,21 +8,21 @@
 
 int main(void)
 {
-    unsigned long *primes;
-    unsigned int primes_count;
+    gv_t(uint64) primes;
     unsigned long sum = 0;
-    unsigned int size_tab;
+    int size_vector;
 
     /* it appears that there is approximately N / log(N) primes number below N.
      * So, we do not need to allocate a tab with the size of N, but just
      * N / log(N). Multiply anyway by 2 in order to have a margin. */
-    size_tab = (LIMIT / ((unsigned int)log(LIMIT))) * 2;
-    primes = p_calloc(sizeof(long) * size_tab);
+    size_vector = (LIMIT / ((unsigned int)log(LIMIT))) * 2;
 
-    primes_count = get_all_primes_below_n(LIMIT, size_tab, primes);
+    gv_init_size(&primes, size_vector);
 
-    for (unsigned int i = 0; i <= primes_count; i++) {
-        sum += primes[i];
+    get_all_primes_below_n(LIMIT, &primes);
+
+    gv_for_each_pos(pos, &primes) {
+        sum += primes.tab[pos];
     }
 
     printf("%ld\n", sum);

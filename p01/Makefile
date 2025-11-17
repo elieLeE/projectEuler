@@ -11,18 +11,18 @@ CC=gcc
 CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
 LDFLAGS=
 EXEC=prog
-SHARED=../libC/src
-SRC= $(wildcard *.c $(SHARED)/math/sum.c)
+LIB_C=../libC/src
+SRC= $(wildcard *.c $(LIB_C)/math/sum.c)
 OBJ= $(SRC:.c=.o)
-INCLUDE=-I. -I$(SHARED)
+OBJ_PATH=./obj
 
 all: $(EXEC) cleanSimple
 
 $(EXEC): $(OBJ)
-	$(CC) $(INCLUDE) -o $@ $^ $(LDFLAGS)
+	$(CC) -o $@ $^
 
 %.o: %.c
-	$(CC) $(INCLUDE) -o $@ -c $< $(CFLAGS)
+	$(CC) -o $@ -c $< $(CFLAGS)
 
 .PHONY: cleanSimple clean
 

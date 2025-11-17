@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "../libC/src/math/prime.h"
-#include "../libC/src/math/nbre.h"
+#include "../libC/src/math/nber_helper.h"
 
 /* Create recursively all pandigitals numbers from 987654321 to the 12 until
  * one of them is a prime */

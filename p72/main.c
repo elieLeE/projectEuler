@@ -1,33 +1,28 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include "nbre.h"
-#include "liste.h"
 
-#define LIMITE_Y (int)1000000
-#define TAILLE_TAB nbreNbrePrime(LIMITE_Y)
+#include "../libC/src/vector/vector.h"
+#include "../libC/src/math/prime.h"
 
-/**
- * algo correcte et assez rapide pour peu de nombre mais quand limite_y trop grand => les tableaux sont trop grands => deviznt très lent.
- * */
+#define LIMITE_Y 1000000
 
-int main(){
-    long compt = 1;
-    long phi_y;
-    int i = 0;
-    liste l;
-    remplissageListe(&l);
-    liste p = l;
+int main(void)
+{
+    unsigned long counter = 0;
+    gv_t(int64) phi_ns;
 
-    for(i=3; i<=LIMITE_Y; i++){
-	if(p->suiv!=NULL && i == p->suiv->nbre){
-	    p = p->suiv;
-	    compt += p->nbre-1;
-	}
-	else{
-	    compt += phiListe(i, p->nbre, l);
-	}
+    gv_init_size(&phi_ns, LIMITE_Y);
+
+    get_all_phi_from_1_to_n(LIMITE_Y, &phi_ns);
+
+    gv_for_each_pos(pos, &phi_ns) {
+        counter += phi_ns.tab[pos];
     }
 
-    printf("compt : %ld\n", compt);
+    /* remove value for 1 */
+    counter--;
+    printf("%ld\n", counter);
+
+    gv_wipe(&phi_ns, NULL);
+
     return 0;
 }

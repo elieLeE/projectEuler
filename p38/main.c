@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../libC/src/math/nbre.h"
+#include "../libC/src/math/nber_helper.h"
 
 static bool can_become_a_pandigital(unsigned int nbre)
 {

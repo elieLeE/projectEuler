@@ -6,11 +6,13 @@
 
 int main(void)
 {
-    unsigned long primes[LIMIT] = {0};
+    gv_t(uint64) primes;
 
-    get_all_n_first_primes(LIMIT, LIMIT, primes);
+    gv_init_size(&primes, LIMIT);
 
-    printf("%ld\n", primes[LIMIT - 1]);
+    get_all_n_first_primes(LIMIT, &primes);
+
+    printf("%ld\n", primes.tab[LIMIT - 1]);
 
     return 0;
 }

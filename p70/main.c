@@ -1,18 +1,14 @@
-#include <math.h>
-#include "../libC/src/math/nbre.h"
+#include "../libC/src/math/nber_helper.h"
 #include "../libC/src/math/prime.h"
-#include "../libC/src/mem/mem.h"
 
 #define LIMITE 10000000
 
 int main()
 {
     int n;
-    unsigned long *primes_nber;
+    gv_t(int64) phi_n;
     unsigned int best_n;
-    unsigned int idx_max;
     double quotient_min = (double)LIMITE;
-    unsigned long limite_prime;
 
     n = best_n = LIMITE;
 
@@ -21,29 +17,28 @@ int main()
      * associated divisor, then either p or q are less than or equal to n.
      * So, we just need to get all primes less then or equal the square of n.
      * */
-    limite_prime = floor(sqrt(LIMITE)) + 1;
-    primes_nber = p_calloc(sizeof(int) * limite_prime);
-    idx_max = get_all_primes_below_n(limite_prime, limite_prime, primes_nber);
+    gv_init_size(&phi_n, LIMITE);
+
+    get_all_phi_from_1_to_n(LIMITE, &phi_n);
 
     /* We want to maximize the quotient n / phi(n). So, we want to maximize
      * phi(n). As any even number will have, at maximum, n/2 relatively prime
      * number (in fact much less than that), we can skip them */
-    if (n  % 2 == 0) {
+    if (n % 2 == 0) {
         n--;
     }
 
     while (n >= 3) {
         double quotient;
-        unsigned int phi_n;
 
         /* for any number, the way to maximize n / phi(n) is when n is a prime
          * number. Indeed, if n is a prime number, then phi(n) = n-1. But, n
          * and n-1 will be never permutations from each other. So, we try with
          * numbers that are only the product of two prime numbers. */
-        phi_n = get_phi(n, primes_nber, idx_max, true);
-        quotient = ((double)n) / ((double)phi_n);
+        quotient = ((double)n) / (phi_n.tab[n]);
+        //printf("n: %d, phi_n: %d, quotient: %f\n", n, phi_n, quotient);
 
-        if (are_permutation_nbers(n, phi_n)) {
+        if (are_permutation_nbers(n, phi_n.tab[n])) {
             if (quotient < quotient_min) {
                 quotient_min = quotient;
                 best_n = n;
@@ -52,7 +47,7 @@ int main()
         n -= 2;
     }
 
-    p_free((void **)(&primes_nber));
+    gv_wipe(&phi_n, NULL);
 
     printf("n: %d\n", best_n);
 }

@@ -8,11 +8,12 @@
 #$* : nom du fichier sans le suffixe
 
 CC=gcc
-CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
+CFLAGS=-std=c99 -Wextra -Wall -Werror# -ansi -pedantic
 LDFLAGS=-lm
 EXEC=prog
-libC=../libC/src
-SRC= $(wildcard *.c $(libC)/mem/mem.c $(libC)/math/prime.c)
+LIBC=../libC/src
+SRC= $(wildcard *.c $(LIBC)/mem/mem.c $(LIBC)/math/prime.c\
+	 $(LIBC)/logger/logger.c $(LIBC)/vector/vector.c)
 OBJ= $(SRC:.c=.o)
 
 all: $(EXEC) cleanSimple

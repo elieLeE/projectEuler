@@ -1,34 +1,33 @@
-#include "nbre.h"
-#include "../shared/nbre.h"
+#include <stdio.h>
+#include <assert.h>
 
-int main(){
-    unsigned int i = 0;
-    unsigned int tabPrime[TAILLE_TAB] = {0};
-    remplissageTabPrime(tabPrime);
+#include "../libC/src/math/prime.h"
 
-#if ALGO_FAST
-    unsigned int n = 2;
-    i = 0;
-    while(n * tabPrime[i] < LIMITE){
-	n = n * tabPrime[i];
-	i++;
+#define LIMITE 1000000
+
+int main()
+{
+    int n;
+    double quotient_max = 0.0;
+    gv_t(int64) phi_n;
+
+    gv_init_size(&phi_n, LIMITE);
+
+    get_all_phi_from_1_to_n(LIMITE, &phi_n);
+
+    gv_for_each_pos(pos, &phi_n) {
+        double quotient;
+
+        quotient = ((double)pos) / phi_n.tab[pos];
+
+        if (quotient > quotient_max) {
+            quotient_max = quotient;
+            n = pos;
+        }
     }
     printf("%d\n", n);
 
-#else
-    double phi_max = 0;
-    int nbre_phi_max;
-    double calcul;
-
-    for(i=6; i<=LIMITE; i+=4){
-	calcul = phi(i, tabPrime);
-	if(calcul > phi_max){
-	    phi_max = calcul;
-	    nbre_phi_max = i;
-	}
-    }
-    printf("phi max : %f, pour le nombre : %d\n", phi_max, nbre_phi_max);
-#endif
+    gv_wipe(&phi_n, NULL);
 
     return 0;
 }

@@ -4,8 +4,17 @@
 #include "limits.h"
 
 #include "../libC/src/math/prime.h"
+#include "../libC/src/vector/vector.h"
 
 #define MAX_DIVISOR 20
+
+static int cmp_primes_factors(const void *_pf1, const void *_pf2)
+{
+    const prime_factor_t *pf1 = _pf1;
+    const prime_factor_t *pf2 = _pf2;
+
+    return pf1->prime - pf2->prime;
+}
 
 /* To resolve this problem, it is important to see that if p divide n, that
  * means all the primes factors multiplied by theirs iterations divide n.
@@ -17,56 +26,55 @@
 int main()
 {
     /* all primes number below MAX_DIVISOR */
-    unsigned long all_primes[MAX_DIVISOR] = {0};
-    unsigned int primes_nber_found = 0;
-    unsigned int primes_factors_found = 0;
+    gv_t(uint64) primes;
     /* all primes factors of all number below MAX_DIVISOR */
-    prime_factor_t all_primes_factors[MAX_DIVISOR];
+    gv_t(primes_factors) all_primes_factors;
+    gv_t(primes_factors) current_primes_factors;
+
     unsigned int answer = 1;
 
-    memset(all_primes_factors, 0, MAX_DIVISOR * sizeof(prime_factor_t));
+    gv_init(&primes);
+    gv_init(&all_primes_factors);
+    gv_init(&current_primes_factors);
 
-    primes_nber_found =
-        get_all_primes_below_n(MAX_DIVISOR, MAX_DIVISOR, all_primes);
+    get_all_primes_below_n(MAX_DIVISOR, &primes);
 
     for (unsigned int i = 2; i <= MAX_DIVISOR; i++) {
-        prime_factor_t current_primes_factors[MAX_DIVISOR] = {0};
-        unsigned int primes_factors_counter;
+        get_all_primes_factors_of_n(i, &primes, &current_primes_factors);
 
-        primes_factors_counter =
-            get_all_primes_factors_of_n(i, all_primes, primes_nber_found + 1,
-                                        MAX_DIVISOR, current_primes_factors);
-
-        for (unsigned int j = 0; j < primes_factors_counter; j++) {
+        gv_for_each_pos(pos, &current_primes_factors) {
+            int pos2;
             prime_factor_t *tmp = NULL;
+            prime_factor_t *current_prime_factor = NULL;
 
-            for (unsigned int k = 0; k < primes_factors_found; k++) {
-                if (current_primes_factors[j].prime ==
-                    all_primes_factors[k].prime)
-                {
-                    tmp = &all_primes_factors[k];
+            current_prime_factor = &(current_primes_factors.tab[pos]);
 
-                    if (current_primes_factors[j].iteration > tmp->iteration) {
-                        tmp->iteration = current_primes_factors[j].iteration;
-                    }
-                    break;
+            pos2 = gv_find(&all_primes_factors, *current_prime_factor,
+                           cmp_primes_factors);
+
+            if (pos2 != -1) {
+                tmp = &(all_primes_factors.tab[pos2]);
+                if (current_prime_factor->iteration > tmp->iteration) {
+                    tmp->iteration = current_prime_factor->iteration;
                 }
-            }
-            /* the prime factor has not been found. we add it. */
-            if (tmp == NULL) {
-                all_primes_factors[primes_factors_found] =
-                    current_primes_factors[j];
-                primes_factors_found++;
+            } else {
+                /* the prime factor has not been found. We add it. */
+                gv_add(&all_primes_factors, *current_prime_factor);
             }
         }
+        gv_clear(&current_primes_factors, NULL);
     }
 
-    for (unsigned int i = 0; i < MAX_DIVISOR; i++) {
-        answer = answer * pow(all_primes_factors[i].prime,
-                              all_primes_factors[i].iteration);
+    gv_for_each_pos(pos, &all_primes_factors) {
+        answer = answer * pow(all_primes_factors.tab[pos].prime,
+                              all_primes_factors.tab[pos].iteration);
     }
 
     printf("%d\n", answer);
+
+    gv_wipe(&primes, NULL);
+    gv_wipe(&all_primes_factors, NULL);
+    gv_wipe(&current_primes_factors, NULL);
 
     return 0;
 }

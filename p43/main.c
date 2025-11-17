@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#include "../libC/src/math/nbre.h"
+#include "../libC/src/math/nber_helper.h"
 
 #define NBRE_OF_DIGIT 10
 
