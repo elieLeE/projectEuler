@@ -3,26 +3,21 @@
 #include <stdbool.h>
 #include "../libC/src/math/prime.h"
 
-#define NBRE 600851475143
-
-bool prime_div(unsigned long div)
-{
-    return ((NBRE % div == 0) && (is_prime(NBRE / div)));
-}
+#define N 600851475143
 
 int main()
 {
-    unsigned long div = 3, max_div = 0, other_div;
-    unsigned long rac = (unsigned long)sqrt(NBRE);
+    unsigned long div = 3, max_div = 0;
+    unsigned long other_div;
 
-    while(div <= rac) {
-        if(NBRE % div==0) {
-            if((max_div < div) && is_prime(div)) {
+    while (div * div <= N) {
+        if (N % div == 0) {
+            if ((max_div < div) && is_prime(div)) {
                 max_div = div;
             } else {
-                other_div = NBRE / div;
+                other_div = N / div;
 
-                if((max_div < other_div) && is_prime(other_div)) {
+                if ((max_div < other_div) && is_prime(other_div)) {
                     max_div = other_div;
                 }
             }
