@@ -17,6 +17,7 @@ all_euler_projects=()
 action=
 action_str=
 project=
+VERBOSE=0
 
 tmp_file="tmp.txt"
 
@@ -31,8 +32,8 @@ display_usage() {
 
 # NOTE: This requires GNU getopt.  On Mac OS X and FreeBSD, you have to install
 # this separately; see below.
-TEMP=$(getopt -o mrcp: \
-    --long make,run,clean,project: \
+TEMP=$(getopt -o mrcvp: \
+    --long make,run,clean,verbose,project: \
     -n 'check_projects' -- "$@")
 
 if [ $? != 0 ] ; then display_usage ; exit 1 ; fi
@@ -64,6 +65,10 @@ while true; do
                 exit
             fi
             shift 2
+            ;;
+        --verbose | -v)
+            VERBOSE=1
+            shift
             ;;
         --use_valgrind)
             USE_VALGRIND=1
@@ -109,10 +114,24 @@ get_all_folders() {
 run_cmd () {
     local folder=$1
     local cmd_res=0
+    local answer=
 
-    (cd ${folder}; ${cmd[@]})
-
+    # "()" lets me run these commands is a sub-shell
+    (cd ${folder}; ${cmd[@]}) > ${tmp_file}
     cmd_res=$?
+
+    if [ ${VERBOSE} -eq 1 ]; then
+        if [ ${action} -eq ${RUNNING_ACTION} ]; then
+            while IFS= read -r line; do
+                answer=${line}
+            done < "${tmp_file}"
+            printf " ${answer} => "
+        else
+            cat ${tmp_file}
+        fi
+    else
+        printf " => "
+    fi
 
     if [ ${cmd_res} != 0 ]; then
         return 1
@@ -126,11 +145,14 @@ run_cmd_on_projects() {
         local folder=${all_euler_projects[${idx}]}
         local res=
 
-        if [ ${idx} -gt 0 ]; then
+        if [ ${VERBOSE} -eq 1 ] &&
+            [ ${action} -ne ${RUNNING_ACTION} ] && \
+            [ ${idx} -gt 0 ]
+        then
             printf "\n"
         fi
 
-        printf "${COLOR_BLUE}${action_str} ${folder}${RESET_COLOR}\n"
+        printf "${COLOR_BLUE}${action_str} ${folder}${RESET_COLOR}"
 
         run_cmd ${folder};
 
