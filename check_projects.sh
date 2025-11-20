@@ -19,9 +19,11 @@ action_str=
 project=
 USE_VALGRIND=0
 VERBOSE=0
+CHECK_RESULT=0
 
 tmp_file="tmp.txt"
 tmp_valgrind_file="valgrind_tmp.txt"
+expected_result_file="expected_result.txt"
 
 cmd=
 
@@ -35,7 +37,7 @@ display_usage() {
 # NOTE: This requires GNU getopt.  On Mac OS X and FreeBSD, you have to install
 # this separately; see below.
 TEMP=$(getopt -o mrcvp: \
-    --long make,run,clean,verbose,use_valgrind,project: \
+    --long make,run,clean,verbose,use_valgrind,project:,check_result \
     -n 'check_projects' -- "$@")
 
 if [ $? != 0 ] ; then display_usage ; exit 1 ; fi
@@ -162,6 +164,19 @@ run_cmd () {
             return 1
         fi
         rm ${tmp_valgrind_file_path}
+    fi
+
+    if [ ${CHECK_RESULT} -eq 1 ]; then
+        if [ ! -f ${folder}/${expected_result_file} ]; then
+            printf "\n${COLOR_YELLOW}the file ${folder}/expected_result.txt "\
+                "does not exist${RESET_COLOR}\n"
+            return 1
+        elif cmp -s ${tmp_file} ${folder}/${expected_result_file};  then
+            return 0
+        else
+            printf " ${COLOR_RED}unexpected result${RESET_COLOR}"
+            return 1
+        fi
     fi
 
     return ${res}
