@@ -173,6 +173,7 @@ run_cmd () {
                 cat ${tmp_valgrind_file_path}
             fi
         else
+            printf "\n"
             cat ${tmp_file}
         fi
     else
