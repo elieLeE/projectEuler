@@ -17,9 +17,11 @@ all_euler_projects=()
 action=
 action_str=
 project=
+USE_VALGRIND=0
 VERBOSE=0
 
 tmp_file="tmp.txt"
+tmp_valgrind_file="valgrind_tmp.txt"
 
 cmd=
 
@@ -33,7 +35,7 @@ display_usage() {
 # NOTE: This requires GNU getopt.  On Mac OS X and FreeBSD, you have to install
 # this separately; see below.
 TEMP=$(getopt -o mrcvp: \
-    --long make,run,clean,verbose,project: \
+    --long make,run,clean,verbose,use_valgrind,project: \
     -n 'check_projects' -- "$@")
 
 if [ $? != 0 ] ; then display_usage ; exit 1 ; fi
@@ -89,6 +91,13 @@ if [ ! ${action} ]; then
     exit
 fi
 
+if [ ${action} -ne ${RUNNING_ACTION} ]; then
+    if [ ${USE_VALGRIND} -eq 1 ]; then
+        printf "${COLOR_YELLOW}Valgrind can only be use on running project\n" \
+            "{RESET_COLOR}"
+    fi
+fi
+
 # }}}
 # {{{ Executing the command
 
@@ -115,6 +124,9 @@ run_cmd () {
     local folder=$1
     local cmd_res=0
     local answer=
+    local tmp_valgrind_file_path=
+
+    tmp_valgrind_file_path=${folder}/${tmp_valgrind_file}
 
     # "()" lets me run these commands is a sub-shell
     (cd ${folder}; ${cmd[@]}) > ${tmp_file}
@@ -125,7 +137,12 @@ run_cmd () {
             while IFS= read -r line; do
                 answer=${line}
             done < "${tmp_file}"
-            printf " ${answer} => "
+            printf " ${answer}"
+
+            if [ ${USE_VALGRIND} -eq 1 ]; then
+                printf "\n"
+                cat ${tmp_valgrind_file_path}
+            fi
         else
             cat ${tmp_file}
         fi
@@ -137,6 +154,16 @@ run_cmd () {
         return 1
     fi
 
+    if [ ${USE_VALGRIND} -eq 1 ]; then
+        grep -q "All heap blocks were freed -- no leaks are possible" \
+            ${tmp_valgrind_file_path}
+        if [ $? -ne 0 ]; then
+            printf "${COLOR_RED}memory leaks detected => ${RESET_COLOR}"
+            return 1
+        fi
+        rm ${tmp_valgrind_file_path}
+    fi
+
     return ${res}
 }
 
@@ -145,22 +172,29 @@ run_cmd_on_projects() {
         local folder=${all_euler_projects[${idx}]}
         local res=
 
-        if [ ${VERBOSE} -eq 1 ] &&
-            [ ${action} -ne ${RUNNING_ACTION} ] && \
-            [ ${idx} -gt 0 ]
-        then
-            printf "\n"
+        if [ ${VERBOSE} -eq 1 ] && [ ${idx} -gt 0 ]; then
+            if [ ${action} -ne ${RUNNING_ACTION} ] || [ ${USE_VALGRIND} -eq 1 ]
+            then
+                printf "\n"
+            fi
         fi
 
         printf "${COLOR_BLUE}${action_str} ${folder}${RESET_COLOR}"
 
         run_cmd ${folder};
-
         res=$?
+
+        if [ ${action} -eq ${RUNNING_ACTION} ]; then
+            if [ ${USE_VALGRIND} -ne 1 ]; then
+                printf " => "
+            fi
+        fi
+
         if [ ${res} != 0 ]; then
             printf "${COLOR_RED}FAILED${RESET_COLOR}\n"
             break
         fi
+
         printf "${COLOR_GREEN}SUCCESS${RESET_COLOR}\n"
 
     done
