@@ -22,6 +22,7 @@ USE_VALGRIND=0
 VERBOSE=0
 CHECK_RESULT=0
 STOP_ON_WARNING=0
+SKIP_ERRORS=0
 
 tmp_file="tmp.txt"
 tmp_valgrind_file="valgrind_tmp.txt"
@@ -39,7 +40,7 @@ display_usage() {
 # NOTE: This requires GNU getopt.  On Mac OS X and FreeBSD, you have to install
 # this separately; see below.
 TEMP=$(getopt -o mrcvp: \
-    --long make,run,clean,verbose,use_valgrind,project:,check_result,warnings_are_errors\
+    --long make,run,clean,verbose,use_valgrind,project:,check_result,warnings_are_errors,skip_errors\
     -n 'check_projects' -- "$@")
 
 if [ $? != 0 ] ; then display_usage ; exit 1 ; fi
@@ -86,6 +87,10 @@ while true; do
             ;;
         --warnings_are_errors)
             STOP_ON_WARNING=1
+            shift
+            ;;
+        --skip_errors)
+            SKIP_ERRORS=1
             shift
             ;;
         *)
@@ -238,10 +243,12 @@ run_cmd_on_projects() {
 
         if [ ${res} != 0 ]; then
             printf "${COLOR_RED}FAILED${RESET_COLOR}\n"
-            break
+            if [ ${SKIP_ERRORS} -eq 0 ]; then
+                break
+            fi
+        else
+            printf "${COLOR_GREEN}SUCCESS${RESET_COLOR}\n"
         fi
-
-        printf "${COLOR_GREEN}SUCCESS${RESET_COLOR}\n"
 
     done
 }
