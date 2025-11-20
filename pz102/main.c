@@ -19,7 +19,7 @@ int main(){
 	}
     }
 
-    printf("compt : %d\n", compt);
+    printf("%d\n", compt);
 
     fermerFichier(&f);
 

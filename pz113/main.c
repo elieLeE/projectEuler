@@ -1,4 +1,3 @@
-#include <stdbool.h>
 #include <stdio.h>
 
 #define NBER_OF_DIGITS 100

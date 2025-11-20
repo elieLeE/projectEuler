@@ -31,7 +31,7 @@ int main(){
 
     poidsFinal = poidsNetwork(tabArete, nbreCoTot);
 
-    printf("poidsInit : %d, poidsFinal : %d, poids saving : %d\n", poidsInit, poidsFinal, (poidsInit - poidsFinal));
+    printf("%d\n", (poidsInit - poidsFinal));
 
     free(tabArete);
     libTabSommets(tabSommets); 

@@ -48,7 +48,7 @@ int main(void)
         }
     }
 
-    printf("n: %ld\n", n);
+    printf("%ld\n", n);
 
     return 0;
 }

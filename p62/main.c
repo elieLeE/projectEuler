@@ -6,7 +6,7 @@
 void visuTab(char *tab){
     unsigned char i = 0;
     for(i=0; i<10; i++){
-	printf("tab[%d] : %d, ", i, tab[i]);
+        printf("tab[%d] : %d, ", i, tab[i]);
     }
     printf("\n");
 }
@@ -37,13 +37,12 @@ int main(){
     }
 
     if(p!= NULL){
-	if((p->nbre_perm) == NBRE_PERM){
-	    visuListePerm(p->perm);
-	    printf("\nmin : %ld\n", searchMin(p->perm));
-	}
-	else{
-	    printf("solution non trouvée\n");
-	}
+        if((p->nbre_perm) == NBRE_PERM){
+            printf("%ld\n", searchMin(p->perm));
+        }
+        else{
+            printf("solution non trouvée\n");
+        }
     }
 
     return 0;

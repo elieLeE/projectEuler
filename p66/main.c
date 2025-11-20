@@ -29,7 +29,8 @@ int main(){
 	}
     }
 
-    gmp_printf("max : %Zd, d : %d\n", max, d);
+    //gmp_printf("max : %Zd, d : %d\n", max, d);
+    gmp_printf("%d\n", d);
 
     return 0;
 }

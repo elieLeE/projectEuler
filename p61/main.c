@@ -80,8 +80,8 @@ int main(){
 	}
     }
 
-    printf("sum : %d\n", (p->left)*100+p->right+(t[0]->right)*100+p->left+(t[1]->right)*100+t[0]->right+(t[2]->right)*100+t[1]->right+
-	    (t[3]->right)*100+t[2]->right+(p->right)*100+t[3]->right);
+    printf("%d\n", (p->left)*100+p->right+(t[0]->right)*100+p->left+(t[1]->right)*100+t[0]->right+(t[2]->right)*100+t[1]->right+
+           (t[3]->right)*100+t[2]->right+(p->right)*100+t[3]->right);
     return 0;
 }
 

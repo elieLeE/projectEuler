@@ -35,7 +35,7 @@ int main(){
 	    compt++;
 	}
     }
-    printf("compt : %d\n", compt);
+    printf("%d\n", compt);
 
     return 0;
 }

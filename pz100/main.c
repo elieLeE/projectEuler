@@ -16,7 +16,7 @@ int main(){
 	t_n = t_n_plus_1;
     }
 
-    printf("t_n : %lf, b_n : %lf\n", t_n, b_n);
+    printf("%ld\n", (long)b_n);
 
     return 0;
 }

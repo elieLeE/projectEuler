@@ -11,7 +11,7 @@ int main(){
 	compt = compt + nbreFracIrr(i);
     }
 
-    printf("compt : %d\n", compt);
+    printf("%d\n", compt);
 
     return 0;
 }

@@ -49,5 +49,5 @@ int main()
 
     gv_wipe(&phi_n, NULL);
 
-    printf("n: %d\n", best_n);
+    printf("%d\n", best_n);
 }

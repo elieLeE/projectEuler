@@ -54,7 +54,7 @@ int main(){
 	}
     	i++;
     }
-    printf("ligne_max : %d\n", max.lig+1);
+    printf("%d\n", max.lig+1);
     fermerFichier(fichier);
     return 0;
 }

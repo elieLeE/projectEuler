@@ -54,6 +54,9 @@ void miseAJourGraphe(sommet *s){
 		if(newChemin < (s->voisins[i])->coutChemin){
 		    (s->voisins[i])->coutChemin = newChemin;
 		}
+        break;
+        case ADDED:
+        break;
 	}
     }
 }

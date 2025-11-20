@@ -37,7 +37,7 @@ int main(void)
         }
     }
 
-    printf("p : %d, => %d\n", answer, count_max);
+    printf("%d\n", answer);
 
     return 0;
 }

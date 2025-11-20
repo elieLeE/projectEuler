@@ -18,7 +18,7 @@ void nbreMaxCo(FILE* f, int* nbreMax, int *nbreTot){
     *nbreMax = max;
     *nbreTot = tot/2;
     fseek(f, 0L, SEEK_SET);
-    printf("max : %d, nbreTot : %d\n", *nbreMax, *nbreTot);
+    //printf("max : %d, nbreTot : %d\n", *nbreMax, *nbreTot);
 }
 
 

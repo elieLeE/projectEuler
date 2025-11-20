@@ -17,7 +17,7 @@
 int main(){
     long i = DEBUT;
     i = floor(i)+10;
-    printf("i : %ld\n", i);
+    //printf("i : %ld\n", i);
     bool b = true;
 
     while(i<FIN){
@@ -33,7 +33,7 @@ int main(){
 	    b = true;
 	}
     }
-    printf("nbre : %ld => i*i : %ld\n", i, i*i);
+    printf("%ld\n", i);
 
     return 0;
 }

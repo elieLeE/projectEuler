@@ -18,6 +18,6 @@ int main(){
         mpz_add(f1, f2, f3);
     }
 
-    gmp_printf("%d", compt);
+    gmp_printf("%d\n", compt);
     return 0;
 }

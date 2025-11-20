@@ -56,7 +56,8 @@ int main(){
 	i++;
     }
 
-    printf("long_max : %d, min de la chaine : %d\n", long_max, n_min);
+    //printf("long_max : %d, min de la chaine : %d\n", long_max, n_min);
+    printf("%d\n", n_min);
 
     return 0;
 }
