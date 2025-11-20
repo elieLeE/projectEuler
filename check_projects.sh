@@ -158,7 +158,7 @@ run_cmd () {
     tmp_valgrind_file_path=${folder}/${tmp_valgrind_file}
 
     # "()" lets me run these commands is a sub-shell
-    (cd ${folder}; ${cmd[@]}) > ${tmp_file}
+    (cd ${folder}; ${cmd[@]}) > ${tmp_file} 2>&1
     cmd_res=$?
 
     if [ ${VERBOSE} -eq 1 ]; then
