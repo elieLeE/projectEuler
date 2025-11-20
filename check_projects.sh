@@ -122,6 +122,33 @@ get_all_folders() {
     fi
 }
 
+check_running_cmd () {
+    local tmp_valgrind_file_path=$1
+
+    if [ ${USE_VALGRIND} -eq 1 ]; then
+        grep -q "All heap blocks were freed -- no leaks are possible" \
+            ${tmp_valgrind_file_path}
+        if [ $? -ne 0 ]; then
+            printf "${COLOR_RED}memory leaks detected => ${RESET_COLOR}"
+            return 1
+        fi
+        rm ${tmp_valgrind_file_path}
+    fi
+
+    if [ ${CHECK_RESULT} -eq 1 ]; then
+        if [ ! -f ${folder}/${expected_result_file} ]; then
+            printf "\n${COLOR_YELLOW}the file ${folder}/expected_result.txt "\
+                "does not exist${RESET_COLOR}\n"
+            return 1
+        elif cmp -s ${tmp_file} ${folder}/${expected_result_file};  then
+            return 0
+        else
+            printf " ${COLOR_RED}unexpected result${RESET_COLOR}"
+            return 1
+        fi
+    fi
+}
+
 run_cmd () {
     local folder=$1
     local cmd_res=0
