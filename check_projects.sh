@@ -17,9 +17,11 @@ all_euler_projects=()
 action=
 action_str=
 project=
+
 USE_VALGRIND=0
 VERBOSE=0
 CHECK_RESULT=0
+STOP_ON_WARNING=0
 
 tmp_file="tmp.txt"
 tmp_valgrind_file="valgrind_tmp.txt"
@@ -37,7 +39,7 @@ display_usage() {
 # NOTE: This requires GNU getopt.  On Mac OS X and FreeBSD, you have to install
 # this separately; see below.
 TEMP=$(getopt -o mrcvp: \
-    --long make,run,clean,verbose,use_valgrind,project:,check_result \
+    --long make,run,clean,verbose,use_valgrind,project:,check_result,warnings_are_errors\
     -n 'check_projects' -- "$@")
 
 if [ $? != 0 ] ; then display_usage ; exit 1 ; fi
@@ -82,6 +84,10 @@ while true; do
             CHECK_RESULT=1
             shift
             ;;
+        --warnings_are_errors)
+            STOP_ON_WARNING=1
+            shift
+            ;;
         *)
             break;
             ;;
@@ -120,6 +126,18 @@ get_all_folders() {
             fi
         done
     fi
+}
+
+check_compiling_cmd () {
+    if [ ${STOP_ON_WARNING} -eq 1 ]; then
+        grep -q "warning" ${tmp_file}
+        if [ $? -eq 0 ]; then
+            printf "${COLOR_RED}warning when compiling${RESET_COLOR}\n"
+            return 1
+        fi
+    fi
+
+    return 0
 }
 
 check_running_cmd () {
@@ -184,27 +202,12 @@ run_cmd () {
         return 1
     fi
 
-    if [ ${USE_VALGRIND} -eq 1 ]; then
-        grep -q "All heap blocks were freed -- no leaks are possible" \
-            ${tmp_valgrind_file_path}
-        if [ $? -ne 0 ]; then
-            printf "${COLOR_RED}memory leaks detected => ${RESET_COLOR}"
-            return 1
-        fi
-        rm ${tmp_valgrind_file_path}
-    fi
-
-    if [ ${CHECK_RESULT} -eq 1 ]; then
-        if [ ! -f ${folder}/${expected_result_file} ]; then
-            printf "\n${COLOR_YELLOW}the file ${folder}/expected_result.txt "\
-                "does not exist${RESET_COLOR}\n"
-            return 1
-        elif cmp -s ${tmp_file} ${folder}/${expected_result_file};  then
-            return 0
-        else
-            printf " ${COLOR_RED}unexpected result${RESET_COLOR}"
-            return 1
-        fi
+    if [ ${action} -eq ${COMPILATING_ACTION} ]; then
+        check_compiling_cmd
+        return $?
+    elif [ ${action} -eq ${RUNNING_ACTION} ]; then
+        check_running_cmd ${tmp_valgrind_file_path}
+        return $?
     fi
 
     return ${res}
