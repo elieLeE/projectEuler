@@ -35,5 +35,8 @@ int main(void)
 
     printf("%ld\n", n);
 
+    gv_wipe(&primes, NULL);
+    gv_wipe(&primes_factors, NULL);
+
     return 0;
 }
