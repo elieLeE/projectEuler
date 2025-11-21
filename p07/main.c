@@ -14,5 +14,7 @@ int main(void)
 
     printf("%ld\n", primes.tab[LIMIT - 1]);
 
+    gv_wipe(&primes, NULL);
+
     return 0;
 }
