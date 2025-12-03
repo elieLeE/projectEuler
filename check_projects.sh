@@ -140,7 +140,10 @@ check_compiling_cmd () {
     if [ ${STOP_ON_WARNING} -eq ${ENABLED} ]; then
         grep -q "warning" ${tmp_file}
         if [ $? -eq 0 ]; then
-            printf "${COLOR_RED}warning when compiling${RESET_COLOR}\n"
+            if [ ${VERBOSE} -eq ${DISABLED} ]; then
+                printf " => "
+            fi
+            printf "${COLOR_RED}got warning when compiling${RESET_COLOR}"
             return 1
         fi
     fi
@@ -168,10 +171,13 @@ check_running_cmd () {
                     expected_result=${line}
                 done < "${expected_result_file_path}"
 
-                if [ ${VERBOSE} -eq ${DISABLED} ]; then
+                if [ ${USE_VALGRIND} -eq ${DISABLED} ] || \
+                    [ ${VERBOSE} -eq ${DISABLED} ]; then
                     printf " / "
                 fi
                 printf "${COLOR_RED}expected result: ${expected_result}${RESET_COLOR}"
+                printf "${COLOR_RED} -- obtained results: "
+                cat ${tmp_file} | tr -d '\n'
                 res=1
             fi
         fi
@@ -226,8 +232,6 @@ run_cmd () {
             printf "\n"
             cat ${tmp_file}
         fi
-    else
-        printf " => "
     fi
 
     if [ ${cmd_res} != 0 ]; then
@@ -263,18 +267,22 @@ run_cmd_on_projects() {
         res=$?
 
         if [ ${action} -eq ${RUNNING_ACTION} ]; then
-            if [ ${USE_VALGRIND} -eq ${DISABLED} ]; then
+            if [ ${VERBOSE} -eq ${DISABLED} ] || \
+                [ ${USE_VALGRIND} -eq ${DISABLED} ] || \
+                [ ${res} -ne 0 ]; then
                 printf " => "
             fi
+        elif [ ${VERBOSE} -eq ${DISABLED} ]; then
+            printf " => "
         fi
 
         if [ ${res} != 0 ]; then
-            printf "${COLOR_RED}FAILED${RESET_COLOR}\n"
+            printf "${COLOR_RED}ECHEC${RESET_COLOR}\n"
             if [ ${SKIP_ERRORS} -eq 0 ]; then
                 break
             fi
         else
-            printf "${COLOR_GREEN}SUCCESS${RESET_COLOR}\n"
+            printf "${COLOR_GREEN}SUCCES${RESET_COLOR}\n"
         fi
 
     done
