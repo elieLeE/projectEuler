@@ -270,7 +270,8 @@ run_cmd_on_projects() {
         local res=
 
         if [ ${VERBOSE} -eq ${ENABLED} ] && [ ${idx} -gt 0 ]; then
-            if [ ${action} -ne ${RUNNING_ACTION} ] || [ ${USE_VALGRIND} -eq ${ENABLED} ]
+            if [ ${action} -ne ${RUNNING_ACTION} ] || \
+                [ ${USE_VALGRIND} -eq ${ENABLED} ]
             then
                 printf "\n"
             fi
