@@ -34,6 +34,10 @@ skip_projects_file="skip_projects.txt"
 
 cmd=
 
+count_success=0
+count_skip=0
+count_error=0
+
 # }}}
 # {{{ Parsing arguments
 
@@ -281,6 +285,8 @@ run_cmd_on_projects() {
 
         for project_to_skip in ${projects_to_skip[@]}; do
             if [ ${folder} = ${project_to_skip} ]; then
+                count_skip=$((count_skip + 1))
+
                 printf " => ${COLOR_YELLOW}SKIP\n"
                 continue 2
             fi
@@ -300,11 +306,15 @@ run_cmd_on_projects() {
         fi
 
         if [ ${res} != 0 ]; then
+            count_error=$((count_error + 1))
+
             printf "${COLOR_RED}ECHEC${RESET_COLOR}\n"
             if [ ${SKIP_ERRORS} -eq 0 ]; then
                 break
             fi
         else
+            count_success=$((count_success + 1))
+
             printf "${COLOR_GREEN}SUCCES${RESET_COLOR}\n"
         fi
 
@@ -350,3 +360,6 @@ fi
 if [ -f ${tmp_file} ]; then
     rm ${tmp_file}
 fi
+
+printf "\nRESUME: ${count_success} OK, ${count_error} ECHECS, "
+printf "${count_skip} NON FAIT\n"
