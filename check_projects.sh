@@ -150,29 +150,51 @@ check_compiling_cmd () {
 
 check_running_cmd () {
     local tmp_valgrind_file_path=$1
+    local res=0
+
+    if [ ${CHECK_RESULT} -eq ${ENABLED} ]; then
+        local expected_result_file_path=${folder}/${expected_result_file}
+
+        if [ ! -f ${expected_result_file_path} ]; then
+            printf "\n${COLOR_YELLOW}the file ${folder}/expected_result.txt " \
+                "does not exist${RESET_COLOR}\n"
+            res=1
+        else
+            cmp -s ${tmp_file} ${folder}/${expected_result_file}
+            if [ $? -eq 1 ]; then
+                local expected_result=
+
+                while IFS= read -r line; do
+                    expected_result=${line}
+                done < "${expected_result_file_path}"
+
+                if [ ${VERBOSE} -eq ${DISABLED} ]; then
+                    printf " / "
+                fi
+                printf "${COLOR_RED}expected result: ${expected_result}${RESET_COLOR}"
+                res=1
+            fi
+        fi
+    fi
 
     if [ ${USE_VALGRIND} -eq ${ENABLED} ]; then
         grep -q "All heap blocks were freed -- no leaks are possible" \
             ${tmp_valgrind_file_path}
         if [ $? -ne 0 ]; then
-            printf "${COLOR_RED}memory leaks detected => ${RESET_COLOR}"
-            return 1
+            if [ ${res} -eq 0 ]; then
+                if [ ${VERBOSE} -eq ${DISABLED} ]; then
+                    printf " / "
+                fi
+            else
+                printf " + "
+            fi
+            printf "${COLOR_RED}memory leaks detected${RESET_COLOR}"
+            res=1
         fi
         rm ${tmp_valgrind_file_path}
     fi
 
-    if [ ${CHECK_RESULT} -eq 1 ]; then
-        if [ ! -f ${folder}/${expected_result_file} ]; then
-            printf "\n${COLOR_YELLOW}the file ${folder}/expected_result.txt "\
-                "does not exist${RESET_COLOR}\n"
-            return 1
-        elif cmp -s ${tmp_file} ${folder}/${expected_result_file};  then
-            return 0
-        else
-            printf " ${COLOR_RED}unexpected result${RESET_COLOR}"
-            return 1
-        fi
-    fi
+    return ${res}
 }
 
 run_cmd () {
