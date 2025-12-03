@@ -24,6 +24,9 @@ CHECK_RESULT=1
 STOP_ON_WARNING=0
 SKIP_ERRORS=0
 
+ENABLED=1
+DISABLED=0
+
 tmp_file="tmp.txt"
 tmp_valgrind_file="valgrind_tmp.txt"
 expected_result_file="expected_result.txt"
@@ -74,23 +77,23 @@ while true; do
             shift 2
             ;;
         --verbose | -v)
-            VERBOSE=1
+            VERBOSE=${ENABLED}
             shift
             ;;
         --use_valgrind)
-            USE_VALGRIND=1
+            USE_VALGRIND=${ENABLED}
             shift
             ;;
         --skip_checking_result)
-            CHECK_RESULT=0
+            CHECK_RESULT=${DISABLED}
             shift
             ;;
         --warnings_are_errors)
-            STOP_ON_WARNING=1
+            STOP_ON_WARNING=${ENABLED}
             shift
             ;;
         --skip_errors)
-            SKIP_ERRORS=1
+            SKIP_ERRORS=${ENABLED}
             shift
             ;;
         *)
@@ -134,7 +137,7 @@ get_all_folders() {
 }
 
 check_compiling_cmd () {
-    if [ ${STOP_ON_WARNING} -eq 1 ]; then
+    if [ ${STOP_ON_WARNING} -eq ${ENABLED} ]; then
         grep -q "warning" ${tmp_file}
         if [ $? -eq 0 ]; then
             printf "${COLOR_RED}warning when compiling${RESET_COLOR}\n"
@@ -148,7 +151,7 @@ check_compiling_cmd () {
 check_running_cmd () {
     local tmp_valgrind_file_path=$1
 
-    if [ ${USE_VALGRIND} -eq 1 ]; then
+    if [ ${USE_VALGRIND} -eq ${ENABLED} ]; then
         grep -q "All heap blocks were freed -- no leaks are possible" \
             ${tmp_valgrind_file_path}
         if [ $? -ne 0 ]; then
@@ -191,9 +194,9 @@ run_cmd () {
         printf " ${answer}"
     fi
 
-    if [ ${VERBOSE} -eq 1 ]; then
+    if [ ${VERBOSE} -eq ${ENABLED} ]; then
         if [ ${action} -eq ${RUNNING_ACTION} ]; then
-            if [ ${USE_VALGRIND} -eq 1 ]; then
+            if [ ${USE_VALGRIND} -eq ${ENABLED} ]; then
                 printf "\n"
                 cat ${tmp_valgrind_file_path}
             fi
@@ -225,8 +228,8 @@ run_cmd_on_projects() {
         local folder=${all_euler_projects[${idx}]}
         local res=
 
-        if [ ${VERBOSE} -eq 1 ] && [ ${idx} -gt 0 ]; then
-            if [ ${action} -ne ${RUNNING_ACTION} ] || [ ${USE_VALGRIND} -eq 1 ]
+        if [ ${VERBOSE} -eq ${ENABLED} ] && [ ${idx} -gt 0 ]; then
+            if [ ${action} -ne ${RUNNING_ACTION} ] || [ ${USE_VALGRIND} -eq ${ENABLED} ]
             then
                 printf "\n"
             fi
@@ -238,7 +241,7 @@ run_cmd_on_projects() {
         res=$?
 
         if [ ${action} -eq ${RUNNING_ACTION} ]; then
-            if [ ${USE_VALGRIND} -ne 1 ]; then
+            if [ ${USE_VALGRIND} -eq ${DISABLED} ]; then
                 printf " => "
             fi
         fi
