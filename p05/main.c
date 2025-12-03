@@ -50,7 +50,7 @@ int main()
             current_prime_factor = &(current_primes_factors.tab[pos]);
 
             pos2 = gv_find(&all_primes_factors, *current_prime_factor,
-                           cmp_primes_factors);
+                           GV_DICHOTOMY_SEARCH, cmp_primes_factors);
 
             if (pos2 != -1) {
                 tmp = &(all_primes_factors.tab[pos2]);

@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "../libC/src/math/nber_helper.h"
+#include "../libC/src/vector/vector.h"
 
 static bool can_become_a_pandigital(unsigned int nbre)
 {
@@ -32,26 +33,31 @@ static bool can_become_a_pandigital(unsigned int nbre)
 
 static unsigned long get_pandigital_nber_from_n(int n)
 {
-    unsigned int nbre_digits = 0;
     unsigned int total_nber_digits = 0;
     unsigned char all_digits[10] = {0};
+    gv_t(uint8) current_digits;
+
+    gv_init(&current_digits);
 
     while (true) {
-        unsigned char current_digits[10] = {0};
+        get_digits_from_number(n, &current_digits);
 
-        nbre_digits = get_digits_from_number(n, current_digits);
-
-        total_nber_digits += nbre_digits;
+        total_nber_digits += current_digits.len;
         if (total_nber_digits <= 9) {
-            memcpy(&all_digits[9 - total_nber_digits], current_digits,
-                   nbre_digits);
+            /* add a method join about tab ! */
+            memcpy(&all_digits[9 - total_nber_digits], current_digits.tab,
+                   current_digits.len);
         }
 
         if (total_nber_digits >= 9) {
             break;
         }
         n += n;
+
+        gv_clear(&current_digits, NULL);
     }
+
+    gv_wipe(&current_digits, NULL);
 
     return build_number_from_digits_rev(all_digits, 0, 9);
 }

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "../libC/src/math/nbre.h"
+#include "../libC/src/math/nber_helper.h"
 #include "../libC/src/macros.h"
 #include "../libC/src/mem/mem.h"
 

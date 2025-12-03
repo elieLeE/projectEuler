@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../libC/src/math/nbre.h"
+#include "../libC/src/math/nber_helper.h"
 
 /* this method produces the next configuration of the dice from the previous
  * one.
@@ -75,23 +75,28 @@ static int get_next_dice_config(bool dice[10])
 /* just build of the squares to verify by the dices */
 static void build_squares(int squares[10][2])
 {
+    gv_t(uint8) digits;
+
+    gv_init(&digits);
+
     for (int i = 1; i < 10; i++) {
-        unsigned char digits[2];
-        unsigned int digits_nber;
-
-        digits_nber = get_digits_from_number(i * i, digits);
-        if (digits_nber > 2) {
-            fprintf(stderr, "We got %d digits for the square of %d (%d)\n",
-                    digits_nber, i, i * i);
+        get_digits_from_number(i * i, &digits);
+        if (digits.len > 2) {
+            fprintf(stderr, "We got %ld digits for the square of %d (%d)\n",
+                    digits.len, i, i * i);
         }
-        squares[i][0] = digits[0];
+        squares[i][0] = digits.tab[0];
 
-        if (digits_nber == 1) {
+        if (digits.len == 1) {
             squares[i][1] = 0;
         } else {
-            squares[i][1] = digits[1];
+            squares[i][1] = digits.tab[1];
         }
+
+        gv_clear(&digits, NULL);
     }
+
+    gv_wipe(&digits, NULL);
 }
 
 /* As 6 and 9 can be used with each other (6 is 9 and 9 is 6), when a dice has

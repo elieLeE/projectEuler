@@ -1,7 +1,5 @@
 #include <stdbool.h>
-#include <string.h>
-
-#include "../libC/libc.h"
+#include <stdio.h>
 
 #define SKIP_LOG 1
 
