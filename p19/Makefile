@@ -1,0 +1,33 @@
+#Makefile
+#cible: dependances
+#commandes
+#$@ : cible
+#$< : nom de la premiere dependance
+#$^ : liste des dependances
+#$? : liste des dependances plus recentes que la cible
+#$* : nom du fichier sans le suffixe
+
+CC=gcc
+CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
+LDFLAGS=
+EXEC=prog
+LIB_C=../libC/src
+SRC= $(wildcard *.c $(LIB_C)/logger/logger.c $(LIB_C)/mem/mem.c)
+OBJ= $(SRC:.c=.o)
+OBJ_PATH=./obj
+
+all: $(EXEC) cleanSimple
+
+$(EXEC): $(OBJ)
+	$(CC) -o $@ $^
+
+%.o: %.c
+	$(CC) -o $@ -c $< $(CFLAGS)
+
+.PHONY: cleanSimple clean
+
+cleanSimple:
+	rm -rf $(OBJ)
+
+clean: cleanSimple
+	rm -rf $(EXEC)
