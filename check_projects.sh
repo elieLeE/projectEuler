@@ -20,7 +20,7 @@ project=
 
 USE_VALGRIND=0
 VERBOSE=0
-CHECK_RESULT=0
+CHECK_RESULT=1
 STOP_ON_WARNING=0
 SKIP_ERRORS=0
 
@@ -40,7 +40,7 @@ display_usage() {
 # NOTE: This requires GNU getopt.  On Mac OS X and FreeBSD, you have to install
 # this separately; see below.
 TEMP=$(getopt -o mrcvp: \
-    --long make,run,clean,verbose,use_valgrind,project:,check_result,warnings_are_errors,skip_errors\
+    --long make,run,clean,verbose,use_valgrind,project:,skip_checking_result,warnings_are_errors,skip_errors\
     -n 'check_projects' -- "$@")
 
 if [ $? != 0 ] ; then display_usage ; exit 1 ; fi
@@ -81,8 +81,8 @@ while true; do
             USE_VALGRIND=1
             shift
             ;;
-        --check_result)
-            CHECK_RESULT=1
+        --skip_checking_result)
+            CHECK_RESULT=0
             shift
             ;;
         --warnings_are_errors)
