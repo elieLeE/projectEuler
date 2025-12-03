@@ -30,6 +30,7 @@ DISABLED=0
 tmp_file="tmp.txt"
 tmp_valgrind_file="valgrind_tmp.txt"
 expected_result_file="expected_result.txt"
+skip_projects_file="skip_projects.txt"
 
 cmd=
 
@@ -43,7 +44,7 @@ display_usage() {
 # NOTE: This requires GNU getopt.  On Mac OS X and FreeBSD, you have to install
 # this separately; see below.
 TEMP=$(getopt -o mrcvp: \
-    --long make,run,clean,verbose,use_valgrind,project:,skip_checking_result,warnings_are_errors,skip_errors\
+    --long make,run,clean,verbose,use_valgrind,project:,skip_checking_result,warnings_are_errors,skip_errors,skip_projects:\
     -n 'check_projects' -- "$@")
 
 if [ $? != 0 ] ; then display_usage ; exit 1 ; fi
@@ -95,6 +96,10 @@ while true; do
         --skip_errors)
             SKIP_ERRORS=${ENABLED}
             shift
+            ;;
+        --skip_projects)
+            skip_projects_file=$2
+            shift 2
             ;;
         *)
             break;
@@ -250,6 +255,16 @@ run_cmd () {
 }
 
 run_cmd_on_projects() {
+    local projects_to_skip=()
+
+    if [ ${action} -eq ${RUNNING_ACTION} ]; then
+        if [ ${skip_projects_file} ]; then
+            while IFS= read -r line; do
+                projects_to_skip+=(${line})
+            done < "${skip_projects_file}"
+        fi
+    fi
+
     for ((idx = 0; idx < ${#all_euler_projects[@]}; idx++)) do
         local folder=${all_euler_projects[${idx}]}
         local res=
@@ -262,6 +277,13 @@ run_cmd_on_projects() {
         fi
 
         printf "${COLOR_BLUE}${action_str} ${folder}${RESET_COLOR}"
+
+        for project_to_skip in ${projects_to_skip[@]}; do
+            if [ ${folder} = ${project_to_skip} ]; then
+                printf " => ${COLOR_YELLOW}SKIP\n"
+                continue 2
+            fi
+        done
 
         run_cmd ${folder};
         res=$?
