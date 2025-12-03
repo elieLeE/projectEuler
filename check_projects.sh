@@ -184,13 +184,15 @@ run_cmd () {
     (cd ${folder}; ${cmd[@]}) > ${tmp_file} 2>&1
     cmd_res=$?
 
+    if [ ${action} -eq ${RUNNING_ACTION} ]; then
+        while IFS= read -r line; do
+            answer=${line}
+        done < "${tmp_file}"
+        printf " ${answer}"
+    fi
+
     if [ ${VERBOSE} -eq 1 ]; then
         if [ ${action} -eq ${RUNNING_ACTION} ]; then
-            while IFS= read -r line; do
-                answer=${line}
-            done < "${tmp_file}"
-            printf " ${answer}"
-
             if [ ${USE_VALGRIND} -eq 1 ]; then
                 printf "\n"
                 cat ${tmp_valgrind_file_path}
