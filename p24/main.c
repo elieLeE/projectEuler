@@ -27,9 +27,7 @@ int search_perm_rec(unsigned char digits_nbre[NBRE_OF_DIGIT],
         digits_nbre[depth] = i;
         digits_done[i] = true;
 
-        if (search_perm_rec(digits_nbre, digits_done,
-                            count, depth + 1) == 0)
-        {
+        if (search_perm_rec(digits_nbre, digits_done, count, depth + 1) == 0) {
             return 0;
         }
         digits_done[i] = false;
