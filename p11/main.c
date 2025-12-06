@@ -9,15 +9,14 @@
  * product maximum of four numbers) */
 #define COMMON_INDEX_MAX SIDE_LENGTH - NBER_PRODUCT_COUNT + 1
 
-int read_numbers(unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH])
+static int read_numbers(unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH])
 {
-    FILE *f = ouv_fichier("grid.txt", "r");
+    FILE *f;
     int c;
     unsigned index_lig = 0, index_col = 0;
 
-    if (f == NULL) {
-        return -1;
-    }
+    f = RETHROW_PN(ouv_fichier("grid.txt", "r"));
+
     while ((c = fscanf(f, "%d", &nbers[index_lig][index_col])) != EOF) {
         index_col++;
 
@@ -40,7 +39,7 @@ int read_numbers(unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH])
  *    N2
  * N1
  */
-unsigned long
+static unsigned long
 get_max_product_diagonal_up(unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH])
 {
     unsigned long max = 0;
@@ -78,7 +77,7 @@ get_max_product_diagonal_up(unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH])
  *      N3
  *         N4
  */
-unsigned long
+static unsigned long
 get_max_product_diagonal_down(unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH])
 {
     unsigned long max = 0;
@@ -123,7 +122,7 @@ get_max_product_diagonal_down(unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH])
  * N3
  * N4
  */
-unsigned long
+static unsigned long
 get_max_product_vertical(unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH])
 {
     unsigned long max = 1;
@@ -155,7 +154,7 @@ get_max_product_vertical(unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH])
  * with the positions of N[1-4] like these ones:
  * N1 N2 N3 N4
  */
-unsigned long
+static unsigned long
 get_max_product_horizontal(unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH])
 {
     unsigned long max = 1;
@@ -185,7 +184,8 @@ get_max_product_horizontal(unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH])
     return max;
 }
 
-unsigned long get_max_product(unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH])
+static unsigned long
+get_max_product(unsigned int nbers[SIDE_LENGTH][SIDE_LENGTH])
 {
     unsigned long max, tmp;
 
