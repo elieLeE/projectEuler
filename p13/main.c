@@ -2,21 +2,20 @@
 
 #include "../libC/src/io/io.h"
 #include "../libC/src/mem/mem.h"
+#include "../libC/src/macros.h"
 
 #define NBER_OF_NBERS 100
 #define NBER_OF_PART 5
 #define SIZE_PART 10
 
-int read_numbers(unsigned long nbers[NBER_OF_NBERS][NBER_OF_PART])
+static int read_numbers(unsigned long nbers[NBER_OF_NBERS][NBER_OF_PART])
 {
-    FILE *f = ouv_fichier("numbers.txt", "r");
+    FILE *f;
     char c;
     unsigned int number_counter = 0, digit_counter = 0, part_counter = 0;
     unsigned long tmp = 0;
 
-    if (f == NULL) {
-        return -1;
-    }
+    f = RETHROW_PN(ouv_fichier("numbers.txt", "r"));
 
     while ((c = getc(f)) != EOF) {
         if (c < 48 || c > 57) {
@@ -51,7 +50,7 @@ int read_numbers(unsigned long nbers[NBER_OF_NBERS][NBER_OF_PART])
    return 0;
 }
 
-unsigned long
+static unsigned long
 get_sum_part_numbers(unsigned long nbers[NBER_OF_NBERS][NBER_OF_PART],
                      int idx_part)
 {
@@ -64,8 +63,8 @@ get_sum_part_numbers(unsigned long nbers[NBER_OF_NBERS][NBER_OF_PART],
     return sum;
 }
 
-void get_sum(unsigned long nbers[NBER_OF_NBERS][NBER_OF_PART],
-             unsigned long out[NBER_OF_PART])
+static void get_sum(unsigned long nbers[NBER_OF_NBERS][NBER_OF_PART],
+                    unsigned long out[NBER_OF_PART])
 {
     unsigned long tmp;
     int carry = 0;
