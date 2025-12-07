@@ -1,14 +1,7 @@
 #include "../libC/src/io/io.h"
 #include "../libC/src/vector/vector.h"
 #include "../libC/src/macros.h"
-
-static int cmp_str(const void *_str1, const void *_str2)
-{
-    const char **str1 = (const char **)_str1;
-    const char **str2 = (const char **)_str2;
-
-    return strcmp(*str1, *str2);
-}
+#include "../libC/src/utils.h"
 
 static int read_names(gv_t(string) *names)
 {
@@ -33,7 +26,7 @@ static int read_names(gv_t(string) *names)
                 logger_error("reading data from the file has failed\n");
             }
 
-            gv_insert_elem_sorted(names, name, cmp_str);
+            gv_insert_elem_sorted(names, name, g_cmp_str);
 
             name_lenght = 0;
         } else {
@@ -64,8 +57,8 @@ int main(void)
 
     gv_init_size(&names, 5000);
 
-    if (read_names(&names) != 0) {
-        logger_error("the readling of the file has failed\n");
+    if (read_names(&names) < 0) {
+        logger_error("the reading of the file has failed\n");
         return 0;
     }
     gv_for_each_pos(pos, &names) {
