@@ -16,7 +16,7 @@ int main()
      * Moreover, if we have a number n, p one of its divisors and q the
      * associated divisor, then either p or q are less than or equal to n.
      * So, we just need to get all primes less then or equal the square of n.
-     * */
+     */
     gv_init_size(&phi_n, LIMITE);
 
     get_all_phi_from_1_to_n(LIMITE, &phi_n);
@@ -36,7 +36,6 @@ int main()
          * and n-1 will be never permutations from each other. So, we try with
          * numbers that are only the product of two prime numbers. */
         quotient = ((double)n) / (phi_n.tab[n]);
-        //printf("n: %d, phi_n: %d, quotient: %f\n", n, phi_n, quotient);
 
         if (are_permutation_nbers(n, phi_n.tab[n])) {
             if (quotient < quotient_min) {
