@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "../libC/src/math/sum.h"
+#include "../libC/src/math/calculs.h"
 
 #define LIMITE 999
 #define NBRE_1 3

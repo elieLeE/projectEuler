@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "../libC/src/math/sum.h"
+#include "../libC/src/math/calculs.h"
 #include "../libC/src/math/nber_helper.h"
 #include "../libC/src/utils.h"
 

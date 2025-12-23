@@ -12,7 +12,7 @@ CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
 LDFLAGS=
 EXEC=prog
 LIB_C=../libC/src
-SRC= $(wildcard *.c $(LIB_C)/math/sum.c)
+SRC= $(wildcard *.c $(LIB_C)/math/calculs.c)
 OBJ= $(SRC:.c=.o)
 OBJ_PATH=./obj
 

@@ -42,6 +42,7 @@ int main(void)
         n += 10;
 
         tmp = get_all_fractions_counter_for_n(n);
+        printf("n: %ld => %d\n", n, tmp);
 
         if (tmp > counter_max) {
             counter_max = tmp;
