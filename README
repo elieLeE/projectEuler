@@ -1,4 +1,9 @@
 My resolution of some projet euler problems.
 
-All problems below 100 (except 84) have been resolved but I lost the code resolving some of them... I will redo them and add the code when I wull have time.
-Some code are very old and need a big refactoring (all of projects with a number bigger than 43, except the ones recently resolved (70, 90, 108, 109, 112, 113, 125, 135, 136, 122, 124, 131).
+All problems below 100 (except 84) have been resolved but I lost the code
+resolving some of them...
+I will redo them and add the code when I will have time.
+
+Some code are very old and need a big refactoring (all of projects with a
+number bigger than 43, except the ones recently resolved (70, 90, 108, 109,
+112, 113, 125, 135, 136, 122, 124, 131).
