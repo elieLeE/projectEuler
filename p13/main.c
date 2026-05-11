@@ -96,7 +96,7 @@ int main(void)
      get_sum(&nbers, &sum);
 
      sum_str = bn_to_str(&sum);
-     sum_str[11] = '\0';
+     sum_str[10] = '\0';
 
      printf("%s\n", sum_str);
 
