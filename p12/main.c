@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../libC/src/math/nber_helper.h"
+#include "../libC/src/math/calculs.h"
 #include "../libC/src/math/prime.h"
 
 #define DIVISORS_NBER_LIMITE 500

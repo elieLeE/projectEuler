@@ -21,7 +21,7 @@ void fill_seq_size_values(unsigned long n, gv_t(uint64) *seq_sizes,
     do {
         seq_size++;
 
-        gv_add(intermediates_term, n);
+        gv_append(intermediates_term, n);
         n = get_next_term(n);
     } while (n != 1);
 

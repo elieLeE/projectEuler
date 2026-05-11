@@ -17,7 +17,7 @@ int main(void)
     gv_init(&n);
     gv_init(&digits);
 
-    gv_add(&n, 2);
+    gv_append(&n, 2);
 
     for (int i = 2; i <= POWER; i++) {
         int carry = 0;
@@ -35,7 +35,7 @@ int main(void)
         }
 
         if (carry != 0) {
-            gv_add(&n, carry);
+            gv_append(&n, carry);
         }
     }
 

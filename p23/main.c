@@ -23,7 +23,7 @@ int main()
         divisors_sum = get_proper_divisors_sum_of_n(i, &primes);
 
         if (divisors_sum > i) {
-            gv_add(&abundant_nbers, i);
+            gv_append(&abundant_nbers, i);
         }
     }
 

@@ -29,7 +29,7 @@ static int read_triangle(gv_t(triangle_paths) *triangle_paths)
             max_nber_current_line++;
             nber_count = 0;
         }
-        gv_add(current_line, val);
+        gv_append(current_line, val);
         nber_count++;
     }
 

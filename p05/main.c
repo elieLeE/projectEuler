@@ -59,7 +59,7 @@ int main()
                 }
             } else {
                 /* the prime factor has not been found. We add it. */
-                gv_add(&all_primes_factors, *current_prime_factor);
+                gv_append(&all_primes_factors, *current_prime_factor);
             }
         }
         gv_clear(&current_primes_factors, NULL);

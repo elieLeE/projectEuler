@@ -27,7 +27,7 @@ int main()
     get_all_primes_below_n(limit, &primes);
 
     for (unsigned long i = 1; i < 2 * limit; i++) {
-        gv_add(&cubes, i * i * i);
+        gv_append(&cubes, i * i * i);
     }
 
     gv_for_each_pos(pos, &cubes) {
