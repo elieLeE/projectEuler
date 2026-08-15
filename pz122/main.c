@@ -5,12 +5,12 @@
 
 /* To resolve this problem, I have decided to create a tree. The top node is
  * the one associated to power = 1. Then, for the previous levels, the new
- * node corresponding to the newt power are created (only the level greater
+ * node corresponding to the new power are created (only the level greater
  * or equal than power / 2 are taken in account. So, if we want to create the
  * nodes of the power '10', the nodes from the powers 5 to 9 will be taken in
  * account.
  * It is important to notice that we will not create a single node foe the
- * power '4' (for example). We will create as much node as necessaries for all
+ * power '4' (for example). We will create as many node as necessary for all
  * the path leading to the powers '4'.
  * Indeed, for The four level, we will have that:
  *                      1
@@ -20,6 +20,7 @@
  *                    3   \
  *                    |    \
  *                    4     4
+ *
  * So, we have two path that can leading to 4. But, this two paths does not
  * have the same cost and does not let create the same next nodes. For example,
  * the path that does not go by the power 3 can not create the power '7'.
