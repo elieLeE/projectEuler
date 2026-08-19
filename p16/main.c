@@ -2,6 +2,7 @@
 
 #include "../libC/src/vector/vector.h"
 #include "../libC/src/math/nber_helper.h"
+#include "../libC/src/math/big_numbers.h"
 
 #define POWER 1000
 #define LIMIT 100000000000000000
@@ -10,46 +11,17 @@ int main(void)
 {
     /* From a certain idx, 2^X is just to big to be stocked in a variable.
      * I could use mpz library but I do not think that the spirit. */
-    gv_t(uint64) n;
-    gv_t(uint8) digits;
+    big_number_t n;
     unsigned long sum = 0;
 
-    gv_init(&n);
-    gv_init(&digits);
+    bn_init_multiplying(&n);
 
-    gv_append(&n, 2);
+    bn_ul_pow_ul(2, 1000, &n);
+    sum = bn_get_digits_sum(&n);
 
-    for (int i = 2; i <= POWER; i++) {
-        int carry = 0;
-
-        gv_for_each_pos(pos, &n) {
-            unsigned long tmp = n.tab[pos] * 2 + carry;
-
-            carry = 0;
-            if (tmp > LIMIT) {
-                carry = tmp / LIMIT;
-                tmp -= LIMIT * carry;
-            }
-
-            n.tab[pos] = tmp;
-        }
-
-        if (carry != 0) {
-            gv_append(&n, carry);
-        }
-    }
-
-    gv_for_each_pos(pos, &n) {
-        get_digits_from_number(n.tab[pos], &digits);
-    }
-
-    gv_for_each_pos(pos, &digits) {
-        sum += digits.tab[pos];
-    }
     printf("%ld\n", sum);
 
-    gv_wipe(&n, NULL);
-    gv_wipe(&digits, NULL);
+    bn_wipe(&n);
 
     return 0;
 }
