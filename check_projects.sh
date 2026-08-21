@@ -20,7 +20,6 @@ project=
 
 USE_VALGRIND=0
 VERBOSE=0
-CHECK_RESULT=1
 STOP_ON_WARNING=0
 SKIP_ERRORS=0
 
@@ -48,7 +47,7 @@ display_usage() {
 # NOTE: This requires GNU getopt.  On Mac OS X and FreeBSD, you have to install
 # this separately; see below.
 TEMP=$(getopt -o mrcvp: \
-    --long make,run,clean,verbose,use_valgrind,project:,skip_checking_result,warnings_are_errors,skip_errors,skip_projects:\
+    --long make,run,clean,verbose,use_valgrind,project:,warnings_are_errors,skip_errors,skip_projects:\
     -n 'check_projects' -- "$@")
 
 if [ $? != 0 ] ; then display_usage ; exit 1 ; fi
@@ -87,10 +86,6 @@ while true; do
             ;;
         --use_valgrind)
             USE_VALGRIND=${ENABLED}
-            shift
-            ;;
-        --skip_checking_result)
-            CHECK_RESULT=${DISABLED}
             shift
             ;;
         --warnings_are_errors)
@@ -163,32 +158,29 @@ check_compiling_cmd () {
 check_running_cmd () {
     local tmp_valgrind_file_path=$1
     local res=0
+    local expected_result_file_path=${folder}/${expected_result_file}
 
-    if [ ${CHECK_RESULT} -eq ${ENABLED} ]; then
-        local expected_result_file_path=${folder}/${expected_result_file}
+    if [ ! -f ${expected_result_file_path} ]; then
+        printf "\n${COLOR_YELLOW}the file ${folder}/expected_result.txt " \
+            "does not exist${RESET_COLOR}\n"
+        res=1
+    else
+        cmp -s ${tmp_file} ${folder}/${expected_result_file}
+        if [ $? -eq 1 ]; then
+            local expected_result=
 
-        if [ ! -f ${expected_result_file_path} ]; then
-            printf "\n${COLOR_YELLOW}the file ${folder}/expected_result.txt " \
-                "does not exist${RESET_COLOR}\n"
-            res=1
-        else
-            cmp -s ${tmp_file} ${folder}/${expected_result_file}
-            if [ $? -eq 1 ]; then
-                local expected_result=
+            while IFS= read -r line; do
+                expected_result=${line}
+            done < "${expected_result_file_path}"
 
-                while IFS= read -r line; do
-                    expected_result=${line}
-                done < "${expected_result_file_path}"
-
-                if [ ${USE_VALGRIND} -eq ${DISABLED} ] || \
-                    [ ${VERBOSE} -eq ${DISABLED} ]; then
-                    printf " / "
-                fi
-                printf "${COLOR_RED}expected result: ${expected_result}${RESET_COLOR}"
-                printf "${COLOR_RED} -- obtained results: "
-                cat ${tmp_file} | tr -d '\n'
-                res=1
+            if [ ${USE_VALGRIND} -eq ${DISABLED} ] || \
+                [ ${VERBOSE} -eq ${DISABLED} ]; then
+                printf " / "
             fi
+            printf "${COLOR_RED}expected result: ${expected_result}${RESET_COLOR}"
+            printf "${COLOR_RED} -- obtained results: "
+            cat ${tmp_file} | tr -d '\n'
+            res=1
         fi
     fi
 
