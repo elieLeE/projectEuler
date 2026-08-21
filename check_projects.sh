@@ -21,7 +21,7 @@ project=
 USE_VALGRIND=0
 VERBOSE=0
 STOP_ON_WARNING=0
-SKIP_ERRORS=0
+CONTINUE_AFTER_ERRORS=0
 
 ENABLED=1
 DISABLED=0
@@ -47,7 +47,7 @@ display_usage() {
 # NOTE: This requires GNU getopt.  On Mac OS X and FreeBSD, you have to install
 # this separately; see below.
 TEMP=$(getopt -o mrcvp: \
-    --long make,run,clean,verbose,use_valgrind,project:,warnings_are_errors,skip_errors,skip_projects:\
+    --long make,run,clean,verbose,use_valgrind,project:,warnings,continue_after_errors,skip_projects:\
     -n 'check_projects' -- "$@")
 
 if [ $? != 0 ] ; then display_usage ; exit 1 ; fi
@@ -92,8 +92,8 @@ while true; do
             STOP_ON_WARNING=${ENABLED}
             shift
             ;;
-        --skip_errors)
-            SKIP_ERRORS=${ENABLED}
+        --continue_after_errors)
+            CONTINUE_AFTER_ERRORS=${ENABLED}
             shift
             ;;
         --skip_projects)
@@ -301,7 +301,7 @@ run_cmd_on_projects() {
             count_error=$((count_error + 1))
 
             printf "${COLOR_RED}ECHEC${RESET_COLOR}\n"
-            if [ ${SKIP_ERRORS} -eq 0 ]; then
+            if [ ${CONTINUE_AFTER_ERRORS} -eq 0 ]; then
                 break
             fi
         else
