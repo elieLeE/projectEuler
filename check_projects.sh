@@ -314,7 +314,7 @@ run_cmd_on_projects() {
         else
             count_success=$((count_success + 1))
 
-            printf "${COLOR_GREEN}SUCCES${RESET_COLOR}\n"
+            printf "${COLOR_GREEN}SUCCESS${RESET_COLOR}\n"
         fi
 
     done
