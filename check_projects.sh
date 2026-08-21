@@ -41,7 +41,39 @@ count_error=0
 # {{{ Parsing arguments
 
 display_usage() {
-    printf "usage: ./run_project.sh a ACTION [ -p PROJECT ]\n"
+    echo "./run_project.sh - scripts letting me check the changes done on libC"
+    echo -e "\t -m, --make"
+    echo -e "\t\t run 'make all' on all the projects"
+    echo
+    echo -e "\t -r, --run"
+    echo -e "\t\t run './prog' on all the projects"
+    echo
+    echo -e "\t -c, --clean"
+    echo -e "\t\t run 'make clean' on all the projects"
+    echo
+    echo -e "\t -v, --verbose"
+    echo -e "\t\t enable verbose mode"
+    echo
+    echo -e "\t -p, --project"
+    echo -e "\t\t restrain command to only the project given in argument"
+    echo
+    echo -e "\t --use_valgrind"
+    echo -e "\t\t when running prog, run them with valgrind"
+    echo -e "\t\t Useless for others commands"
+    echo
+    echo -e "\t --warning_are_errors"
+    echo -e "\t\t set compiling of the project as error if a warning has been"\
+        "detected"
+    echo -e "\t\t Useless for others commands"
+    echo
+    echo -e "\t --continue_after_errors"
+    echo -e "\t\t by default, script stop on first error"
+    echo -e "\t\tthis option lets continue the execution after errors"
+    echo -e "\t\t Useless for others commands"
+    echo
+    echo -e "\t --skip_projects"
+    echo -e "\t\t filepath where are indicated the projects to skip"
+    echo -e "\t\ta default filepath can also be used on './skip_projects.txt'"
 }
 
 # NOTE: This requires GNU getopt.  On Mac OS X and FreeBSD, you have to install
