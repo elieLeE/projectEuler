@@ -293,6 +293,13 @@ run_cmd_on_projects() {
                 [ ${res} -ne 0 ]; then
                 printf " => "
             fi
+        elif [ ${action} -eq ${COMPILATING_ACTION} ]; then
+            if [ ${VERBOSE} -eq ${DISABLED} ]; then
+                printf " => "
+            elif [ ${WARNING_ARE_ERRORS} -eq ${ENABLED} ] && \
+                [ ${res} -ne 0 ]; then
+                printf " => "
+            fi
         elif [ ${VERBOSE} -eq ${DISABLED} ]; then
             printf " => "
         fi
