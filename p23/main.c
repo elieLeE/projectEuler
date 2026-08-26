@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "../libC/src/vector/vector.h"
+#include "../libC/src/containers/vector.h"
 #include "../libC/src/math/prime.h"
 
 #define LIMIT 28124

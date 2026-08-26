@@ -1,7 +1,5 @@
 #include <stdio.h>
 
-#include "../libC/src/vector/vector.h"
-#include "../libC/src/math/nber_helper.h"
 #include "../libC/src/math/big_numbers.h"
 
 #define POWER 1000

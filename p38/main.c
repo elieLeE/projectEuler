@@ -2,12 +2,12 @@
 #include <string.h>
 
 #include "../libC/src/math/nber_helper.h"
-#include "../libC/src/vector/vector.h"
+#include "../libC/src/containers/vector.h"
 
 static bool can_become_a_pandigital(unsigned int nbre)
 {
     unsigned int n = nbre, nbre_digits = 0, total_nber_digits = 0;
-    unsigned char all_digits[10] = {0};
+    uint32_t all_digits[10] = {0};
 
     while (true) {
         nbre_digits = get_digits_iterations_from_number(n, all_digits);

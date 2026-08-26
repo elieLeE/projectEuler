@@ -12,9 +12,13 @@ CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
 LDFLAGS=-lm
 EXEC=prog
 LIBC=../libC/src
-SRC= $(wildcard *.c $(LIBC)/mem/mem.c $(LIBC)/math/prime.c\
-	 $(LIBC)/logger/logger.c $(LIBC)/vector/vector.c $(LIBC)/math/calculs.c)
-OBJ= $(SRC:.c=.o)
+SRC=$(wildcard *.c\
+	$(LIBC)/mem/mem.c\
+	$(LIBC)/math/prime.c\
+	$(LIBC)/logger/logger.c\
+	$(LIBC)/containers/vector.c\
+	$(LIBC)/math/calculs.c)
+OBJ=$(SRC:.c=.o)
 
 all: $(EXEC) cleanSimple
 

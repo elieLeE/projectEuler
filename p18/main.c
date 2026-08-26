@@ -1,5 +1,5 @@
 #include "../libC/src/io/io.h"
-#include "../libC/src/vector/vector.h"
+#include "../libC/src/containers/vector.h"
 #include "../libC/src/macros.h"
 
 generic_vector_t(triangle_paths, gv_t(uint64));

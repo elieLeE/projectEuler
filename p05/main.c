@@ -4,7 +4,7 @@
 #include "limits.h"
 
 #include "../libC/src/math/prime.h"
-#include "../libC/src/vector/vector.h"
+#include "../libC/src/containers/vector.h"
 
 #define MAX_DIVISOR 20
 

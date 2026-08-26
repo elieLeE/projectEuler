@@ -12,14 +12,14 @@ CFLAGS=-std=c99 -Wextra -Wall# -ansi -pedantic
 LDFLAGS=-lm
 EXEC=prog
 LIB_C=../libC/src
-SRC= $(wildcard *.c\
-	 $(LIB_C)/mem/mem.c \
-	 $(LIB_C)/vector/vector.c\
-	 $(LIB_C)/logger/logger.c \
-	 $(LIB_C)/math/nber_helper.c \
-	 $(LIB_C)/math/calculs.c \
-	 $(LIB_C)/math/big_numbers.c)
-OBJ= $(SRC:.c=.o)
+SRC=$(wildcard *.c\
+	$(LIB_C)/mem/mem.c \
+	$(LIB_C)/containers/vector.c\
+	$(LIB_C)/logger/logger.c \
+	$(LIB_C)/math/nber_helper.c \
+	$(LIB_C)/math/calculs.c \
+	$(LIB_C)/math/big_numbers.c)
+OBJ=$(SRC:.c=.o)
 
 all: $(EXEC) cleanSimple
 
