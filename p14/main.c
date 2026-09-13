@@ -4,7 +4,7 @@
 
 #define LIMIT 1000000
 
-unsigned long get_next_term(unsigned long n)
+static inline unsigned long get_next_term(unsigned long n)
 {
     if (n % 2 == 0) {
         return n / 2;
@@ -13,16 +13,21 @@ unsigned long get_next_term(unsigned long n)
     }
 }
 
-void fill_seq_size_values(unsigned long n, gv_t(uint64) *seq_sizes,
-                          gv_t(uint64) *intermediates_term)
+static void fill_seq_size_values(unsigned long n, gv_t(uint64) *seq_sizes,
+                                 gv_t(uint64) *intermediates_term)
 {
-    unsigned long seq_size = 0;
+    uint64_t seq_size = 0;
 
     do {
         seq_size++;
 
         gv_append(intermediates_term, n);
         n = get_next_term(n);
+
+        if (n < LIMIT && seq_sizes->tab[n] != 0) {
+            seq_size += seq_sizes->tab[n];
+            break;
+        }
     } while (n != 1);
 
     gv_for_each_pos(pos, intermediates_term) {
