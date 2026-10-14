@@ -17,7 +17,7 @@ SRC=$(wildcard *.c\
 	$(LIBC)/math/prime.c\
 	$(LIBC)/logger/logger.c\
 	$(LIBC)/containers/vector.c\
-	$(LIBC)/math/calculs.c)
+	)
 OBJ=$(SRC:.c=.o)
 
 all: $(EXEC) cleanSimple

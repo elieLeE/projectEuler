@@ -17,7 +17,6 @@ SRC=$(wildcard *.c\
 	$(LIB_C)/containers/vector.c\
 	$(LIB_C)/logger/logger.c\
 	$(LIB_C)/math/nber_helper.c \
-	$(LIB_C)/math/calculs.c\
 	$(LIB_C)/math/big_numbers.c)
 OBJ=$(SRC:.c=.o)
 

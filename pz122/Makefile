@@ -16,7 +16,7 @@ SRC=$(wildcard *.c\
 	$(LIB_C)/containers/vector.c\
 	$(LIB_C)/mem/mem.c\
 	$(LIB_C)/logger/logger.c\
-	$(LIB_C)/math/calculs.c)
+	)
 OBJ=$(SRC:.c=.o)
 OBJ_PATH=./obj
 
